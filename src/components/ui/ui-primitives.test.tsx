@@ -1,5 +1,5 @@
 import React, { createRef } from "react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import {
   Button,
@@ -105,27 +105,26 @@ describe("UI Primitives", () => {
   });
 
   describe("Card", () => {
-    it("renders Card with surface background and border", () => {
+    it("renders Card with surface background, border, and data-card attribute", () => {
       const html = renderToStaticMarkup(<Card>Nội dung thẻ</Card>);
+      expect(html).toContain("data-card");
       expect(html).toContain("bg-surface");
       expect(html).toContain("border-border");
       expect(html).toContain("rounded-xl");
       expect(html).toContain("Nội dung thẻ");
     });
 
-    it("warns and strips borders when Card is nested in another Card", () => {
-      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+    it("renders nested Card with data-card attribute on both parent and child for CSS rule matching", () => {
       const html = renderToStaticMarkup(
         <Card>
           Thẻ ngoài
           <Card>Thẻ trong</Card>
         </Card>
       );
-      expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringContaining("Tuyệt đối không lồng Card")
-      );
-      expect(html).toContain("bg-transparent border-0");
-      warnSpy.mockRestore();
+      const matches = html.match(/data-card/g);
+      expect(matches).toHaveLength(2);
+      expect(html).toContain("Thẻ ngoài");
+      expect(html).toContain("Thẻ trong");
     });
   });
 

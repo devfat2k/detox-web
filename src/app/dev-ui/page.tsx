@@ -85,7 +85,7 @@ export default function DevUIPage() {
               </Heading>
               <Card>
                 <p className="text-text-muted font-body text-sm">
-                  Card con bị lồng: tự động hủy bỏ viền/nền thừa và cảnh báo trong console dev.
+                  Card con bị lồng: tự động hủy bỏ viền/nền thừa qua CSS selector [data-card] [data-card].
                 </p>
               </Card>
             </Card>

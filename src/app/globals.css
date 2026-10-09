@@ -96,3 +96,11 @@ select {
   }
 }
 
+/* DESIGN.md §5: Card lồng nhau tự bỏ viền, nền và padding thừa */
+[data-card] [data-card] {
+  background-color: transparent;
+  border-width: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
