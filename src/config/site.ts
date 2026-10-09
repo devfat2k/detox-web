@@ -1,4 +1,11 @@
 /**
+ * Ngoại lệ duy nhất cho quy tắc không dùng mã hex ngoài globals.css:
+ * Hằng số này phục vụ trực tiếp cho Viewport metadata (themeColor) của Next.js
+ * và nằm hoàn toàn ngoài component/UI styling.
+ */
+export const THEME_COLOR = "#FBF7F0";
+
+/**
  * Thông tin cấu hình website "Ép Xanh Chữa Lành".
  */
 export const SITE_CONFIG = {

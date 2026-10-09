@@ -3,6 +3,9 @@
  * Tuyệt đối không thêm câu chữ ngoài danh sách này.
  */
 export const FIXED_LABELS = {
+  // Trợ năng / Accessibility
+  SKIP_TO_CONTENT: "Bỏ qua đến nội dung",
+
   // Nhãn menu điều hướng
   NAV_CONSULTATION: "Tư vấn",
   NAV_PLANS: "Liệu trình",
