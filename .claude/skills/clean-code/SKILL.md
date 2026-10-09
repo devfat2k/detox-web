@@ -1,6 +1,7 @@
 ---
 name: clean-code
-description: Pragmatic coding standards - concise, direct, no over-engineering, no unnecessary comments
+description: >-
+  Chuẩn hóa code tinh gọn, hàm ngắn đơn trách nhiệm, xử lý sớm guard clauses và loại bỏ code thừa. Dùng khi: "refactor", "dọn code", "đơn giản hóa", "review code style", "tối ưu code gọn", "xóa code thừa". KHÔNG dùng cho thẩm mỹ UI (dùng frontend-design), hàm pure domain (dùng domain-fn), hoặc tối ưu hiệu năng React (dùng react-best-practices).
 allowed-tools: Read, Write, Edit
 version: 2.0
 priority: CRITICAL

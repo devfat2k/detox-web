@@ -1,6 +1,7 @@
 ---
 name: frontend-design
-description: Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.
+description: >-
+  Định hình thẩm mỹ giao diện, typography, phối màu, animation và bố cục tránh rập khuôn mặc định. Dùng khi: "thiết kế giao diện", "chọn màu và typography", "tạo phong cách UI", "chống AI-slop visual", "hiệu ứng animation", "bố cục thẩm mỹ". KHÔNG dùng khi dựng route mới (dùng new-page), viết logic tính toán (dùng domain-fn), hoặc kiểm tra Playwright (dùng ui-review).
 license: Complete terms in LICENSE.txt
 ---
 

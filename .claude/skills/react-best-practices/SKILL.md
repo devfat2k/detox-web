@@ -1,6 +1,7 @@
 ---
 name: react-best-practices
-description: Comprehensive React and Next.js performance optimization guide with 40+ rules for eliminating waterfalls, optimizing bundles, and improving rendering. Use when optimizing React apps, reviewing performance, or refactoring components.
+description: >-
+  Tối ưu hóa hiệu năng React 19 và Next.js App Router theo các quy tắc khử waterfall, giảm bundle và chống re-render. Dùng khi: "render", "re-render", "performance", "memo", "hooks", "tối ưu bundle", "khử waterfall". KHÔNG dùng khi tạo route mới (dùng new-page), viết logic pure domain (dùng domain-fn), hoặc chỉnh sửa thẩm mỹ UI (dùng frontend-design).
 version: 1.0.0
 author: Vercel Engineering
 license: MIT
@@ -75,8 +76,11 @@ const MonacoEditor = dynamic(
 
 ## Using the guidelines
 
+> **Quy tắc tra cứu (Progressive Disclosure):** Đọc [references/INDEX.md](references/INDEX.md) trước, chỉ mở file rule liên quan trong `references/rules/` khi cần đối chiếu hoặc xử lý vấn đề cụ thể để tránh nạp thừa context.
+
 The complete performance guidelines are available in the references folder:
 
+- **[references/INDEX.md](references/INDEX.md)**: Quick index of all 40+ rules grouped into 8 categories.
 - **react-performance-guidelines.md**: Complete guide with all 40+ rules, code examples, and impact analysis
 
 Each rule includes:

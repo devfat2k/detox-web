@@ -1,6 +1,7 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: >-
+  Khám phá ý định, làm rõ yêu cầu và so sánh các phương án thiết kế trước khi lập trình. Dùng khi: "brainstorm", "lên ý tưởng", "nên làm thế nào", "so sánh phương án", "thảo luận thiết kế", "tìm giải pháp". KHÔNG dùng khi đã có spec rõ ràng cần tạo trang mới (dùng new-page) hoặc viết hàm logic (dùng domain-fn).
 ---
 
 # Brainstorming Ideas Into Designs
