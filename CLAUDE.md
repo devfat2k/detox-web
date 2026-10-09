@@ -82,3 +82,19 @@ Next.js 16 (App Router) + React 19 + TypeScript strict + Tailwind CSS v4 (CSS-fi
 
 - Do not add a dependency without saying why and asking first.
 - Do not edit `.env*` or commit secrets. Keep `next` on the latest patch release.
+
+## Token and context discipline
+
+- Be specific: read only the files and spec sections needed for the current step. Never read node_modules, .next, build output, bun.lock, or the whole product-spec.md; use grep or a section heading.
+- One step per session. After a step is committed, tell me whether I should /clear before the next one.
+- Delegate verbose work (full test runs, e2e, build logs, fetching docs) to a subagent that returns only failures, file:line, and a short summary.
+- Do not paste or restate large file contents or logs; quote only the relevant lines.
+- Plan first and wait for approval when a change touches more than 3 files.
+- Never skip typecheck, lint, or tests to save tokens. Never guess when a short targeted read answers the question.
+- For src/domain and screening rules, take the careful path: read the spec section and existing tests first.
+- Do not start background or recurring work (loops, scheduled tasks, goals, agent teams) unless I ask.
+
+# Compact instructions
+
+When compacting, keep: the current plan and step, files changed, decisions and why, failing test output. Drop: exploration logs, rejected approaches, long tool output.
+
