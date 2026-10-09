@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-6 md:p-12">
+    <div className="flex flex-1 flex-col items-center justify-between p-6 md:p-12">
       <div className="w-full max-w-xl space-y-8">
         <header className="space-y-3 text-center md:text-left">
           <span className="inline-block text-xs font-medium text-text-muted">
@@ -40,6 +40,6 @@ export default function Home() {
           <p>Dữ liệu khảo sát tính toán 100% trên trình duyệt và không được lưu trữ.</p>
         </footer>
       </div>
-    </main>
+    </div>
   );
 }
