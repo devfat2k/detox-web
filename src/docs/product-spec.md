@@ -1,6 +1,6 @@
-# Product spec v1.1 — Detox Experience Web ("Ép Xanh Chữa Lành")
+# Product spec v1.2 — Detox Experience Web ("Ép Xanh Chữa Lành")
 
-Bản chốt sau khi bổ sung yêu cầu ngày 09/10/2026. Thay thế các bản đặc tả trước. Nếu có mâu thuẫn, bản này thắng.
+Cập nhật ngày 09/10/2026. Thay thế v1.1. Nếu có mâu thuẫn, bản này thắng.
 
 ## 1. Mục tiêu và nguyên tắc
 
@@ -8,19 +8,30 @@ Bản chốt sau khi bổ sung yêu cầu ngày 09/10/2026. Thay thế các bả
 
 **Nguyên tắc cố định:**
 
-1. Miễn phí hoàn toàn. Không giá, không giỏ hàng, không thanh toán, không bán liệu trình, không bán khóa học, không bán công thức, không phát sinh bất kỳ giao dịch nào.
+1. Miễn phí hoàn toàn. Không giá, không giỏ hàng, không thanh toán, không bán liệu trình, không bán khóa học, không bán công thức, không bán sách, không kêu gọi ủng hộ hoặc quyên góp, không kêu gọi bán hàng, không seeding bẩn, không phát sinh bất kỳ giao dịch nào.
 2. **Không đăng nhập.** Vào là xem được ngay trang chủ, mục tư vấn liệu trình nổi bật ngay đầu trang.
 3. **Không thu thập CCCD, email, số điện thoại** của bất kỳ ai. Dữ liệu khảo sát chỉ dùng để tính tại chỗ, không lưu trữ tại Frontend.
 4. Nội dung chỉ nói về các sản phẩm shop đang bán, không đi xa hơn. Mọi công thức được chính tác giả trích xuất từ sách có kiểm chứng.
 5. **Về ngôn từ và y tế:**
-   - Không xây dựng web để tư vấn chữa bệnh, tư vấn chữa lành bệnh hay khẳng định chữa được bệnh.
-   - Không sử dụng các từ khóa mang tính khẳng định/cam kết như "sẽ", "đảm bảo giảm cân".
-   - Tên **"Ép Xanh Chữa Lành" thuần túy là tên thương hiệu**, không dùng từ "chữa" để đảm bảo hay cam kết về mặt y tế.
+   - Không xây dựng web để tư vấn chữa bệnh hay khẳng định chữa được bệnh.
+   - Không khẳng định hay cam kết kết quả, ví dụ "sẽ giảm 3 kg", "đảm bảo giảm cân"; dùng cách nói ước lượng, mang tính tham khảo.
+   - "Ép Xanh Chữa Lành" thuần túy là tên thương hiệu, không dùng từ "chữa" để cam kết về y tế.
+   - Không cần soi từng từ: ưu tiên diễn đạt trung thực, dễ hiểu; kiểm tra ở bước review nội dung.
 6. Mọi thông tin lộ trình chỉ là **ước lượng mang tính chất tham khảo dựa trên cá nhân hoá**, có kiểm chứng, không thay thế chẩn đoán y khoa.
 7. Liên hệ: một **đường link** tới Threads của shop (QR bỏ). URL của web đã nằm trong bio Threads nên khách vào web từ Threads, và quay lại Threads khi muốn hỏi thêm.
 
+## 1A. Nguyên tắc trải nghiệm
+
+1. Vào web hiện ngắn lời chào thương hiệu rồi đến Trang chủ ngay, lời chào không chặn nội dung.
+2. Thao tác liền mạch, một tay, ít bước, chỉ hỏi điều thực sự cần.
+3. Có kịch bản dẫn dắt ở các điểm khách dễ bỏ (đầu Trang chủ, Bước 1, Bước 2, kết quả), mỗi điểm nói rõ lợi ích, không hứa kết quả.
+4. Không dùng thủ thuật ép buộc như khan hiếm giả hay đếm ngược.
+5. Thông tin ở mức phổ thông, ai cũng hiểu, không làm méo mó.
+6. Vì không có analytics, kiểm tra điểm bỏ cuộc bằng cách cho 5 đến 7 người thật dùng thử.
+
 ## 2. Người dùng
 
+- Nhóm chính: phụ nữ trẻ, năng động, quan tâm sức khỏe và đặc biệt là cân nặng; nhu cầu tham khảo lộ trình detox xuất phát từ đây.
 - Khách quan tâm detox, thường đến từ Threads, dùng điện thoại một tay.
 - Khách cũ muốn xem lại thực đơn, mẹo, công thức.
 - Chủ shop: giảm tin nhắn hỏi lặp lại, khách đến nhắn với hiểu biết sẵn.
@@ -100,7 +111,7 @@ Thẻ "Khuyên dùng" gắn theo **kết quả khảo sát**, không cố địn
 3. **Mỗi câu về dinh dưỡng/sức khỏe phải gắn nguồn** (id trong danh bạ nguồn). Build thất bại nếu thiếu.
 4. **Nguồn ưu tiên:** Viện Dinh dưỡng Quốc gia, Bộ Y tế, WHO, Harvard Health và The Nutrition Source của Harvard, NIH Office of Dietary Supplements, Mayo Clinic, USDA FoodData Central (số liệu dinh dưỡng). Ghi tên tổ chức, tiêu đề, link, ngày xem.
 5. **Không sao chép bài báo.** Viết lại bằng lời của shop, tóm tắt ngắn, kèm link tới bài gốc (bản quyền thuộc tác giả).
-6. Từ cấm: thải độc, thanh lọc sâu, đốt mỡ, giảm mỡ rõ rệt, chữa, trị, đảm bảo (trừ cụm "Chữa Lành" trong tên thương hiệu).
+6. Cụm cần tránh (ví dụ): thải độc, thanh lọc sâu, đốt mỡ, giảm mỡ rõ rệt, chữa, trị, đảm bảo (trừ cụm "Chữa Lành" trong tên thương hiệu). Mục đích là tránh tuyên bố y tế và cam kết kết quả, không phải danh sách cấm máy móc.
 7. Số kcal và dinh dưỡng của từng chai nên được tính từ bảng thành phần thực phẩm (Viện Dinh dưỡng hoặc USDA) và **người có chuyên môn dinh dưỡng duyệt** menu và mức kcal.
 
 ## 8. Quy tắc nghiệp vụ
@@ -116,9 +127,9 @@ Thẻ "Khuyên dùng" gắn theo **kết quả khảo sát**, không cố địn
 | Từng detox, hơi mệt hoặc bỏ dở | 1 hoặc 3 ngày                   |
 | 6 ngày chỉ gợi ý khi           | từng detox ổn **và** BMI ≥ 20   |
 
-**Menu:** đúng menu của shop. 1 ngày = Ngày 1; 3 ngày = Ngày 1 đến 3; 6 ngày = lặp hai vòng hoặc 6 ngày riêng nếu shop viết thêm. 5 chai/ngày: tổng chai 5, 15, 30. Không có lộ trình 9 ngày.
+**Menu:** đúng menu của shop. 1 ngày = Ngày 1; 3 ngày là Ngày 1 đến 3. 6 ngày là lộ trình riêng do chủ shop tự viết, không lặp hai vòng. 5 chai/ngày: tổng chai 5, 15, 30. Không có lộ trình 9 ngày.
 
-**Khoảng cân nặng:** năng lượng tiêu hao (Mifflin-St Jeor × hệ số vận động) trừ kcal menu, nhân số ngày, chia 7.700 ra phần mỡ; cộng biên độ nước giảm dần theo ngày; hiển thị **khoảng** (làm tròn 0,1 kg) kèm câu "Ước tính tham khảo. Phần lớn là nước và đỡ đầy bụng. Mỗi người một khác." Hệ số nước là đề xuất, cần chuyên gia duyệt. Có thể bỏ hẳn phần này nếu muốn giảm số trường phải nhập (cân nặng, chiều cao).
+**Khoảng cân nặng:** năng lượng tiêu hao (Mifflin-St Jeor × hệ số vận động) trừ kcal menu, nhân số ngày, chia 7.700 ra phần mỡ; cộng biên độ nước giảm dần theo ngày; hiển thị **khoảng** (làm tròn 0,1 kg) kèm câu "Ước tính tham khảo. Phần lớn là nước và đỡ đầy bụng. Mỗi người một khác." Hệ số nước là đề xuất, cần chuyên gia duyệt. Phần này chưa chốt giữ hay bỏ (xem mục 13). Lưu ý: bỏ phần ước lượng không làm giảm số trường nhập, vì sàng lọc và gợi ý vẫn dùng BMI (chiều cao, cân nặng).
 
 ## 9. Quyền riêng tư và Kiến trúc Công nghệ
 
@@ -137,7 +148,7 @@ Thẻ "Khuyên dùng" gắn theo **kết quả khảo sát**, không cố địn
 
 **Có (v1):** trang chủ, khảo sát 4 bước, kết quả cá nhân hóa, trang liệu trình 1/3/6 ngày, danh mục và chi tiết thức uống, blog (mẹo vặt, công thức, kiến thức) có nguồn kiểm chứng, link Threads, chính sách.
 
-**Không (v1):** đăng nhập, thanh toán, giá, QR, đặt hàng, thu thập liên hệ, bán khóa học/công thức/liệu trình, analytics, AI, serverless.
+**Không (v1):** đăng nhập, thanh toán, giá, QR, đặt hàng, thu thập liên hệ, bán khóa học/công thức/liệu trình, bán sách, kêu gọi ủng hộ hoặc quyên góp, analytics, tính năng AI dành cho người dùng cuối, serverless.
 
 ## 11. Giá trị mang lại
 
@@ -148,7 +159,7 @@ Thẻ "Khuyên dùng" gắn theo **kết quả khảo sát**, không cố địn
 ## 12. Nội dung chủ shop cần chuẩn bị
 
 1. Danh sách đầy đủ thức uống: tên, loại, thành phần, thể tích, chất gây dị ứng, ảnh thật
-2. Menu từng ngày (3 ngày mẫu, thêm 6 ngày nếu muốn khác), kcal từng chai (đã được tính và duyệt)
+2. Menu từng ngày cho 3 ngày và lộ trình 6 ngày riêng, kcal từng chai đã được tính và duyệt.
 3. Với mỗi thức uống và mỗi ngày: 1 đến 3 ý "công dụng/giá trị" kèm nguồn đã kiểm tra
 4. Lời khuyên cho từng mục tiêu, cách uống 5 chai trong ngày, chuẩn bị và ăn lại sau liệu trình
 5. 5 đến 10 bài viết đầu (mẹo, công thức, kiến thức), tự viết, có link nguồn
@@ -157,6 +168,18 @@ Thẻ "Khuyên dùng" gắn theo **kết quả khảo sát**, không cố địn
 
 ## 13. Điểm còn mở
 
-- Giữ hay bỏ phần ước lượng cân nặng (kéo theo trường cân nặng/chiều cao)?
-- 6 ngày: lặp hai vòng hay viết 6 ngày riêng?
+- Giữ hay bỏ phần ước lượng cân nặng? Lưu ý: bỏ phần này không bỏ được chiều cao và cân nặng vì sàng lọc dùng BMI.
 - Phần dữ liệu (CMS/DB/backend): sẽ nghiên cứu sau; v1 để nội dung dưới dạng file trong dự án.
+
+## 14. Lịch sử thay đổi
+
+### v1.2 (09/10/2026)
+
+- §1: Bổ sung không bán sách, không kêu gọi ủng hộ hoặc quyên góp, không giỏ hàng, không thanh toán, không kêu gọi bán hàng, seeding bẩn.
+- §1: Viết lại nguyên tắc ngôn từ và y tế theo hướng diễn đạt trung thực, dễ hiểu, không soi từng từ máy móc.
+- Thêm §1A: 6 nguyên tắc trải nghiệm người dùng (lời chào không chặn nội dung, thao tác một tay, kịch bản dẫn dắt, kiểm tra qua 5–7 người dùng thật...).
+- §2: Thêm nhóm đối tượng chính (phụ nữ trẻ, năng động, quan tâm sức khỏe và cân nặng).
+- §7: Đổi "Từ cấm" thành "Cụm cần tránh (ví dụ)" mang tính định hướng, tránh cam kết y tế/kết quả.
+- §8 & §12: Chốt lộ trình 6 ngày là riêng biệt do chủ shop tự viết, không lặp hai vòng.
+- §8 & §13: Lưu ý giữ/bỏ ước lượng cân nặng không làm giảm trường nhập vì BMI vẫn dùng chiều cao, cân nặng.
+- §10: Bổ sung phạm vi không làm (bán sách, quyên góp, tính năng AI dành cho người dùng cuối).
