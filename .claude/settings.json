@@ -10,6 +10,14 @@
       "Bash(git diff *)",
       "Bash(git log *)"
     ],
+    "deny": [
+      "Read(.env*)",
+      "Edit(.env*)",
+      "Bash(git push *)",
+      "Bash(rm -rf *)",
+      "Bash(rm -r *)",
+      "Bash(rmdir *)"
+    ],
     "ask": [
       "Bash(git commit *)",
       "Bash(bun add *)",
@@ -20,14 +28,6 @@
       "Bash(npm i *)",
       "Bash(pnpm add *)",
       "Bash(yarn add *)"
-    ],
-    "deny": [
-      "Read(.env*)",
-      "Edit(.env*)",
-      "Bash(git push *)",
-      "Bash(rm -rf *)",
-      "Bash(rm -r *)",
-      "Bash(rmdir *)"
     ]
   },
   "hooks": {
@@ -63,5 +63,9 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true
   }
 }

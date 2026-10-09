@@ -1,6 +1,7 @@
 ---
 name: domain-fn
-description: Viết hàm domain trong src/domain/ theo phương pháp TDD (Red-Green-Refactor), pure TypeScript và unit test cạnh file.
+description: >-
+  Viết hoặc chỉnh sửa hàm pure TypeScript trong src/domain/ theo chuẩn TDD (Red-Green-Refactor) và test vitest cạnh file. Dùng khi: "viết hàm domain", "thêm logic screening", "tính calo/năng lượng", "hàm tính cân nặng", "domain logic". KHÔNG dùng cho UI React, routes Next.js, hoặc mock data.
 ---
 
 1. **Đọc rules & spec**:

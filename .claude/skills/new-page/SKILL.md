@@ -1,6 +1,7 @@
 ---
 name: new-page
-description: Dựng route mới mỏng cho Next.js App Router theo Server Component, đối chiếu spec, ui.md và thêm test e2e cơ bản.
+description: >-
+  Dựng route mới cho Next.js App Router (Server Component) chuẩn spec và DESIGN.md. Dùng khi: "tạo trang mới", "thêm route", "dựng page", "thêm trang /policy", "tạo layout". KHÔNG dùng khi chỉ sửa component UI nhỏ (dùng frontend-design) hoặc viết logic tính toán (dùng domain-fn).
 ---
 
 1. **Đọc tài liệu**:

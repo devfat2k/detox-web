@@ -1,6 +1,7 @@
 ---
 name: commit-step
-description: Chạy typecheck, lint, test rồi tạo một commit conventional cho bước vừa làm. Dùng khi bước hiện tại đã xong.
+description: >-
+  Chạy chuỗi kiểm tra typecheck, lint, vitest rồi tạo git commit conventional sau khi hoàn thành một bước làm việc. Dùng khi: "commit bước này", "xong bước rồi commit", "tạo commit", "commit code", "lưu thay đổi bước này". KHÔNG dùng khi đang làm dở công việc hoặc chỉ cần push code, tạo nhánh.
 disable-model-invocation: true
 ---
 

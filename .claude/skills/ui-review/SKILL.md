@@ -1,6 +1,7 @@
 ---
 name: ui-review
-description: Kiểm tra giao diện ở 2 viewport 390px và 1280px bằng Playwright, đối chiếu DESIGN.md và checklist chống slop. Chỉ báo cáo, không sửa code.
+description: >-
+  Chạy Playwright kiểm tra giao diện ở 2 viewport (Mobile 390px và Desktop 1280px), đối chiếu token DESIGN.md và checklist chống AI-slop (chỉ báo cáo, không sửa code). Dùng khi: "kiểm tra UI", "review giao diện", "test responsive 390px", "check visual DESIGN.md". KHÔNG dùng khi review logic code hoặc sửa code UI.
 ---
 
 1. **Kiểm tra kích thước màn hình**:
