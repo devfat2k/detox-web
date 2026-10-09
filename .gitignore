@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+tests/screenshots/
+test-results/
+playwright-report/
 
 # next.js
 /.next/
@@ -39,3 +42,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# claude
+.claude/settings.local.json
+.claude/worktrees
