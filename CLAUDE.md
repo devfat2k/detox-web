@@ -8,7 +8,7 @@ Free, non-commercial, no-login Vietnamese website for a detox juice shop ("Ép X
 
 ## Source of Truth
 
-- `src/docs/product-spec.md` là nguồn chuẩn duy nhất cho nghiệp vụ và nội dung.
+- `docs/product-spec.md` là nguồn chuẩn duy nhất cho nghiệp vụ và nội dung.
 - `DESIGN.md` là nguồn chuẩn duy nhất cho giao diện, tokens và gu thẩm mỹ.
 - `CLAUDE.md` chỉ quy định cách làm việc, câu lệnh, kiến trúc kỹ thuật.
 - Không chép lại nội dung spec vào `CLAUDE.md` hay `.claude/rules/`, chỉ trỏ mục tương ứng.
@@ -47,7 +47,7 @@ Next.js 16 (App Router) + React 19 + TypeScript strict + Tailwind CSS v4 (CSS-fi
 
 ## Medical Compliance & Principles
 
-- Không tư vấn chữa bệnh hay cam kết kết quả (ví dụ "giảm 3kg", "đảm bảo"). "Ép Xanh Chữa Lành" là tên thương hiệu, không dùng từ "chữa" để cam kết y tế. Ưu tiên diễn đạt trung thực, không soi từng từ máy móc (xem `src/docs/product-spec.md` §1 & §7).
+- Không tư vấn chữa bệnh hay cam kết kết quả (ví dụ "giảm 3kg", "đảm bảo"). "Ép Xanh Chữa Lành" là tên thương hiệu, không dùng từ "chữa" để cam kết y tế. Ưu tiên diễn đạt trung thực, không soi từng từ máy móc (xem `docs/product-spec.md` §1 & §7).
 - Trích dẫn nguồn: Mọi khẳng định dinh dưỡng/sức khỏe phải gắn `sourceIds` hợp lệ từ `sources.ts`.
 - "Công dụng": Đóng góp dinh dưỡng của nguyên liệu và cảm nhận vị giác/cơ thể, không phải khẳng định chữa bệnh hay thải độc.
 - Khoảng cân nặng: Ước tính tham khảo, phần lớn là nước và giảm đầy bụng.
@@ -66,10 +66,10 @@ Next.js 16 (App Router) + React 19 + TypeScript strict + Tailwind CSS v4 (CSS-fi
 
 ## Hard Rules (Chi tiết xem trong .claude/rules/)
 
-- **Privacy & Zero-Backend:** Khảo sát chạy 100% trên client qua React Context trong `src/app/consultation/layout.tsx`. Không lưu trữ, không gửi ra ngoài (xem `src/docs/product-spec.md` §9 & `.claude/rules/privacy.md`).
-- **Content & Medical:** Tiếng Việt "mình"/"bạn", phi thương mại 100%. Trích dẫn nguồn theo `sourceIds` (xem `src/docs/product-spec.md` §7 & `.claude/rules/content.md`).
+- **Privacy & Zero-Backend:** Khảo sát chạy 100% trên client qua React Context trong `src/app/consultation/layout.tsx`. Không lưu trữ, không gửi ra ngoài (xem `docs/product-spec.md` §9 & `.claude/rules/privacy.md`).
+- **Content & Medical:** Tiếng Việt "mình"/"bạn", phi thương mại 100%. Trích dẫn nguồn theo `sourceIds` (xem `docs/product-spec.md` §7 & `.claude/rules/content.md`).
 - **UI & Design:** Chỉ dùng token từ `globals.css`, font Bricolage Grotesque & Be Vietnam Pro, mobile-first 390px (xem `DESIGN.md` & `.claude/rules/ui.md`).
-- **Domain:** TypeScript thuần 100%, hàm thuần, unit test cạnh file (xem `src/docs/product-spec.md` §8 & `.claude/rules/domain.md`).
+- **Domain:** TypeScript thuần 100%, hàm thuần, unit test cạnh file (xem `docs/product-spec.md` §8 & `.claude/rules/domain.md`).
 - **Testing:** Chạy qua `bun run test` / `bun run test:e2e`, kiểm thử bắt buộc với `src/domain/` and `src/content/schema.ts` (xem `.claude/rules/testing.md`).
 
 ## Workflow

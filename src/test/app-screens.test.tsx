@@ -13,10 +13,10 @@ vi.mock("next/font/google", () => ({
 }));
 
 import { renderToStaticMarkup } from "react-dom/server";
-import NotFound from "./not-found";
-import ErrorPage from "./error";
-import GlobalError from "./global-error";
-import Loading from "./loading";
+import NotFound from "@/app/not-found";
+import ErrorPage from "@/app/error";
+import GlobalError from "@/app/global-error";
+import Loading from "@/app/loading";
 import { SITE_CONFIG } from "@/config/site";
 import { FIXED_LABELS } from "@/config/copy";
 

@@ -4,7 +4,7 @@ paths: src/components/**, src/app/**/*.tsx, src/app/globals.css
 
 # UI & Design Rules
 
-- Nguồn chuẩn: Tuân thủ toàn diện `DESIGN.md` (tokens, typography, spacing, checklist chống slop) và `src/docs/product-spec.md` §1A (nguyên tắc trải nghiệm), §3 (routes & nhãn cố định).
+- Nguồn chuẩn: Tuân thủ toàn diện `DESIGN.md` (tokens, typography, spacing, checklist chống slop) và `docs/product-spec.md` §1A (nguyên tắc trải nghiệm), §3 (routes & nhãn cố định).
 - Next.js: Server Components mặc định; chỉ dùng `"use client"` cho luồng khảo sát và interactive widgets.
 - Tokens & CSS: Chỉ dùng tokens từ `src/app/globals.css`. Tuyệt đối không dùng mã hex thô, không dùng trắng tinh `#fff`/`#ffffff`, không dùng đen đậm inline (`#000`, `black`), không dùng default Tailwind palette và shadow mặc định.
 - Typography & Icon: Phông `Bricolage Grotesque` và `Be Vietnam Pro` qua `next/font`. Biểu tượng duy nhất từ `lucide-react`. Chi tiết xem `DESIGN.md` §3 & §6.

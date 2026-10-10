@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
   Button,
@@ -10,6 +11,13 @@ import {
   Notice,
   Skeleton,
 } from "@/components/ui";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 /**
  * Trang xem thử toàn bộ thành phần UI cơ sở (chỉ hoạt động ở môi trường development).

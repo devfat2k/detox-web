@@ -8,7 +8,7 @@ description: >-
    - Chạy kiểm tra Playwright ở 2 viewport: Mobile 390px trước, Desktop 1280px sau.
 
 2. **Đối chiếu Checklist chống "AI Slop" (CHỈ BÁO CÁO, KHÔNG SỬA CODE)**:
-   - Đọc `.claude/rules/ui.md`, `DESIGN.md`, `CLAUDE.md` (Routes & Fixed Labels, Medical Compliance), và `src/docs/product-spec.md` §1A, §3.
+   - Đọc `.claude/rules/ui.md`, `DESIGN.md`, `CLAUDE.md` (Routes & Fixed Labels, Medical Compliance), và `docs/product-spec.md` §1A, §3.
    - Đối chiếu theo `DESIGN.md` (hành động chính, badge/tag, bề mặt & viền, thang cỡ chữ, motion budget, spacing 4-point grid, token màu sắc, typography, mobile-first 390px, icon `lucide-react`, tap target ≥ 48px, input ≥ 16px).
    - Kiểm tra nhãn cố định và quy tắc câu chữ sentence case ("mình"/"bạn"), nguyên tắc y tế & cụm từ cần tránh.
 

@@ -6,7 +6,7 @@ description: >-
 
 1. **Đọc tài liệu**:
    - Đọc `.claude/rules/ui.md`.
-   - Đọc mục liên quan đến route trong `src/docs/product-spec.md` (chỉ đọc mục liên quan, không đọc cả file).
+   - Đọc mục liên quan đến route trong `docs/product-spec.md` (chỉ đọc mục liên quan, không đọc cả file).
    - Đọc `DESIGN.md` (nếu có).
 2. **Lập plan**:
    - Xác định route slug tiếng Anh (ví dụ: `/consultation`, `/plans`, `/drinks`, `/articles`, `/policy`).

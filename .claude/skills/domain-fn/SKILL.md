@@ -6,7 +6,7 @@ description: >-
 
 1. **Đọc rules & spec**:
    - Đọc `.claude/rules/domain.md` và `.claude/rules/testing.md`.
-   - Đọc quy tắc nghiệp vụ liên quan trong `src/docs/product-spec.md`.
+   - Đọc quy tắc nghiệp vụ liên quan trong `docs/product-spec.md`.
 2. **Red (Test trước)**:
    - Tạo file test `src/domain/<name>.test.ts` cạnh hàm domain.
    - Viết các test case (đầu vào hợp lệ, biên, lỗi).
