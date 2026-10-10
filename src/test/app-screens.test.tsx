@@ -2,14 +2,6 @@ import React from "react";
 import { describe, it, expect, vi } from "vitest";
 
 vi.mock("next/font/google", () => ({
-  Newsreader: () => ({
-    variable: "--font-newsreader",
-    className: "font-newsreader",
-  }),
-  Bricolage_Grotesque: () => ({
-    variable: "--font-bricolage",
-    className: "font-bricolage",
-  }),
   Be_Vietnam_Pro: () => ({
     variable: "--font-be-vietnam-pro",
     className: "font-be-vietnam-pro",

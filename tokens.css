@@ -1,7 +1,7 @@
 /* Hallmark · detox-web · tokens.css
  * theme: studied-DNA (source: https://www.usehallmark.com/examples/hum-07/)
  * macrostructure: Narrative Workflow · tone: editorial-calm · anchor hue: 150 (sage green)
- * fonts: Newsreader (display serif 600) + Be Vietnam Pro (body sans 400/500)
+ * font: Be Vietnam Pro (single clean sans 300/400/500/600)
  */
 
 :root {
@@ -19,7 +19,7 @@
   --color-error:         #8F3D30;
 
   /* Typography */
-  --font-display: var(--font-newsreader), "Newsreader", Georgia, serif;
+  --font-display: var(--font-be-vietnam-pro), "Be Vietnam Pro", system-ui, sans-serif;
   --font-body:    var(--font-be-vietnam-pro), "Be Vietnam Pro", system-ui, sans-serif;
 
   --text-xs:   0.75rem;

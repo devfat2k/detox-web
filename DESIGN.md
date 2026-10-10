@@ -54,9 +54,12 @@ Tất cả các cặp màu chữ và nền đều đạt chuẩn **WCAG AA** (v�
 
 ## 3. Chữ (Typography)
 
-Tối đa 2 họ phông chữ, tối đa 3 trọng số (weight) trên toàn bộ hệ thống:
-- **Phông tiêu đề:** `Newsreader` (Serif cổ điển, ấm áp, uy tín), trọng số **600** (semibold), kiểu đứng roman.
-- **Phông thân bài:** `Be Vietnam Pro` (Sans-serif chuẩn mực tiếng Việt), trọng số **400** (regular) và **500** (medium).
+Sử dụng duy nhất và chính thức 1 họ phông chữ: **Be Vietnam Pro**.
+
+- **Phong cách:** Thanh mảnh, nhẹ nhàng, tối giản hữu cơ.
+- **Trọng số (Weights):** `300` (light), `400` (regular), `500` (medium), `600` (semibold). Tuyệt đối không dùng `bold` (700) hoặc trọng số quá dày thô.
+- **Tiêu đề & Nhãn:** Trọng số tối đa `500` hoặc `600`, kích thước vừa phải, thanh thoát.
+- **Câu chữ:** Ngắn gọn, súc tích, đơn giản; không viết dài dòng cầu kỳ làm vỡ layout.
 
 - **Thang cỡ chữ (6 bậc):**
   - `xs`: 12px (`0.75rem`) / line-height 1.4 (nhãn micro, kicker)
@@ -64,9 +67,10 @@ Tối đa 2 họ phông chữ, tối đa 3 trọng số (weight) trên toàn b�
   - `base`: 16px (`1rem`) / line-height 1.6 (thân bài, input)
   - `xl`: 20px (`1.25rem`) / line-height 1.4 (tiêu đề nhỏ)
   - `2xl`: 24px (`1.5rem`) / line-height 1.3 (tiêu đề vừa)
-  - `3xl`: 30px (`1.875rem`) / line-height 1.2 (tiêu đề lớn)
+  - `3xl`: 30px (`1.875rem`) / line-height 1.2 (tiêu đề lớn nhất, thanh lịch)
 - **Giới hạn độ dài dòng:** Tối đa 60–65 ký tự (`max-w-prose`). Chữ trên mobile từ 16px trở lên.
 - **Quy tắc câu chữ:** Tiếng Việt sentence case, xưng hô "mình"/"bạn". Không dùng ALL CAPS cho đoạn văn bản dài.
+- **Biểu tượng:** Chỉ dùng Lucide React icons với nét mảnh (`strokeWidth={1.75}`). Tuyệt đối CẤM dùng emoji hoặc text để làm icon.
 
 ---
 

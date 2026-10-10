@@ -26,7 +26,7 @@ export function Header() {
         {/* Logo / Brand Name */}
         <Link
           href={ROUTES.HOME}
-          className="font-heading text-lg sm:text-xl font-bold tracking-tight text-text hover:text-primary transition-colors duration-fast select-none"
+          className="font-heading text-lg sm:text-xl font-semibold tracking-tight text-text hover:text-primary transition-colors duration-fast select-none"
         >
           {SITE_CONFIG.name}
         </Link>

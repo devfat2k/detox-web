@@ -141,21 +141,21 @@ export default function DevUIPage() {
           <div className="space-y-1">
             <Kicker>02 · Chữ & Thang cỡ</Kicker>
             <Heading level={2} size="xl">
-              Thang chữ (Newsreader Serif + Be Vietnam Pro Sans)
+              Thang chữ (Be Vietnam Pro thanh mảnh)
             </Heading>
           </div>
           <div className="space-y-4 border border-border bg-surface p-6 rounded-xl">
             <div className="space-y-2 border-b border-border pb-4">
-              <Heading level={1}>Heading 1 — 3xl (Newsreader Serif 600)</Heading>
-              <p className="text-xs text-text-muted font-body">1.875rem (30px) · line-height 1.2 · Semibold Roman</p>
+              <Heading level={1}>Heading 1 — 3xl (Be Vietnam Pro 600)</Heading>
+              <p className="text-xs text-text-muted font-body">1.875rem (30px) · line-height 1.2 · Semibold</p>
             </div>
             <div className="space-y-2 border-b border-border pb-4">
-              <Heading level={2}>Heading 2 — 2xl (Newsreader Serif 600)</Heading>
-              <p className="text-xs text-text-muted font-body">1.5rem (24px) · line-height 1.3 · Semibold Roman</p>
+              <Heading level={2}>Heading 2 — 2xl (Be Vietnam Pro 600)</Heading>
+              <p className="text-xs text-text-muted font-body">1.5rem (24px) · line-height 1.3 · Semibold</p>
             </div>
             <div className="space-y-2 border-b border-border pb-4">
-              <Heading level={3}>Heading 3 — xl (Newsreader Serif 600)</Heading>
-              <p className="text-xs text-text-muted font-body">1.25rem (20px) · line-height 1.4 · Semibold Roman</p>
+              <Heading level={3}>Heading 3 — xl (Be Vietnam Pro 500)</Heading>
+              <p className="text-xs text-text-muted font-body">1.25rem (20px) · line-height 1.4 · Medium</p>
             </div>
             <div className="space-y-2 border-b border-border pb-4">
               <p className="font-body text-base font-medium">Text Base — 1rem (Be Vietnam Pro 500/400)</p>

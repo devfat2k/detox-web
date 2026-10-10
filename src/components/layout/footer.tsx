@@ -16,7 +16,7 @@ export function Footer() {
       <Container className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border pb-6">
           <div className="space-y-1">
-            <span className="font-heading text-lg font-bold tracking-tight text-text">
+            <span className="font-heading text-lg font-semibold tracking-tight text-text">
               {SITE_CONFIG.name}
             </span>
             <p className="text-text-muted font-body text-sm max-w-prose">

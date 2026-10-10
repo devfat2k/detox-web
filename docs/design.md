@@ -31,9 +31,12 @@ Chỉ sử dụng đúng 4 nhóm vai trò màu chính trên toàn site. Mọi c�
 
 ## 3. Thang chữ (Typography)
 
-Tối đa 2 họ phông chữ, tối đa 3 độ đậm (weights) trên toàn bộ dự án, hỗ trợ tiếng Việt trọn vẹn:
-- **Tiêu đề (Display / Headings):** `Newsreader` (Serif cổ điển, ấm áp, uy tín), trọng số **600** (semibold), kiểu chữ đứng (roman - cấm italic ở tiêu đề).
-- **Thân bài & Nhãn (Body & Labels):** `Be Vietnam Pro` (Sans-serif hiện đại, tối ưu dấu tiếng Việt), trọng số **400** (regular) và **500** (medium).
+Sử dụng duy nhất và chính thức 1 họ phông chữ: **Be Vietnam Pro**.
+
+- **Phong cách:** Thanh mảnh, nhẹ nhàng, tối giản hữu cơ.
+- **Trọng số (Weights):** `300` (light), `400` (regular), `500` (medium), `600` (semibold). Tuyệt đối không dùng `bold` (700+) hoặc trọng số quá dày thô.
+- **Tiêu đề & Nhãn:** Trọng số tối đa `500` hoặc `600`, thanh thoát, không font size quá to, câu chữ ngắn gọn không làm vỡ layout.
+- **Biểu tượng:** Chỉ dùng Lucide React icons (`strokeWidth={1.75}`). Tuyệt đối CẤM dùng emoji hoặc text làm icon.
 
 ### Thang cỡ chữ (Type Scale)
 - `xs`: `0.75rem` (12px) · line-height `1.4` (nhãn micro, kicker)

@@ -1,6 +1,6 @@
 /* Hallmark · macrostructure: Narrative Workflow · tone: editorial-calm · anchor hue: 150 (sage green)
  * theme: studied-DNA (source: https://www.usehallmark.com/examples/hum-07/)
- * fonts: Newsreader (display serif 600) + Be Vietnam Pro (body sans 400/500)
+ * font: Be Vietnam Pro (single clean sans 300/400/500/600)
  */
 @import "tailwindcss";
 
@@ -17,8 +17,8 @@
   --color-border: #E6DFD2;
   --color-error: #8F3D30;
 
-  /* Fonts: 1 serif display + 1 sans body */
-  --font-heading: var(--font-newsreader), serif;
+  /* Font: Single Be Vietnam Pro for both heading and body */
+  --font-heading: var(--font-be-vietnam-pro), sans-serif;
   --font-body: var(--font-be-vietnam-pro), sans-serif;
 
   /* Type scale: 6 steps */
@@ -81,6 +81,8 @@ h5,
 h6 {
   font-family: var(--font-heading);
   font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 /* Ensure input, textarea, select have font size >= 16px to prevent iOS auto-zoom */

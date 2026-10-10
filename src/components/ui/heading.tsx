@@ -20,16 +20,16 @@ const defaultSizes: Record<HeadingLevel, HeadingSize> = {
 };
 
 const sizeClasses: Record<HeadingSize, string> = {
-  xs: "text-xs font-semibold",
-  sm: "text-sm font-semibold",
-  base: "text-base font-semibold",
-  xl: "text-xl font-semibold",
-  "2xl": "text-2xl font-bold tracking-tight",
-  "3xl": "text-3xl font-bold tracking-tight",
+  xs: "text-xs font-medium",
+  sm: "text-sm font-medium",
+  base: "text-base font-medium",
+  xl: "text-xl font-medium",
+  "2xl": "text-2xl font-semibold tracking-tight",
+  "3xl": "text-3xl font-semibold tracking-tight",
 };
 
 /**
- * Tiêu đề theo thang chữ và phông Bricolage Grotesque chuẩn.
+ * Tiêu đề theo thang chữ thanh mảnh Be Vietnam Pro.
  * Server Component mặc định.
  */
 export function Heading({

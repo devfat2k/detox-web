@@ -42,7 +42,7 @@ export function StepperHeader({ currentStep }: StepperHeaderProps) {
                   <span
                     className={`hidden text-xs font-medium sm:inline ${
                       isCurrent
-                        ? "text-text font-bold"
+                        ? "text-text font-semibold"
                         : isCompleted
                           ? "text-text-muted"
                           : "text-text-muted/60"
