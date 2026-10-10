@@ -6,7 +6,7 @@ import { buttonVariants, type ButtonVariant } from "./button";
 
 export interface LinkButtonProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> {
-  href: LinkProps["href"];
+  href: LinkProps<string>["href"];
   variant?: ButtonVariant;
   isExternal?: boolean;
   showExternalIcon?: boolean;

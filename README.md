@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Detox Experience Web ("Ép Xanh Chữa Lành")
 
-## Getting Started
+Website tư vấn và trải nghiệm lộ trình nước ép detox cá nhân hóa (1, 3, 6 ngày) từ thực đơn thật của quán "Ép Xanh Chữa Lành".
+Dự án phi thương mại, không đăng nhập, không lưu trữ thông tin người dùng lên server (Zero-Backend Privacy).
 
-First, run the development server:
+## Công nghệ sử dụng
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework:** Next.js 16 (App Router) + React 19 + TypeScript (Strict mode)
+- **Styling:** Tailwind CSS v4 (CSS-first design tokens trong `src/app/globals.css`)
+- **State & Form:** Zustand (in-memory client state), Zod, React Hook Form
+- **Package Manager:** Bun
+- **Kiểm thử:** Vitest (Unit tests), Playwright (E2E & Accessibility)
+
+## Cấu trúc thư mục
+
+```text
+detox-web/
+├── docs/                           # Tài liệu đặc tả sản phẩm (product-spec.md)
+├── e2e/                            # Kiểm thử Playwright E2E và a11y
+├── src/
+│   ├── app/                        # Next.js App Router (Chỉ chứa shell page mỏng)
+│   │   ├── (site)/                 # Nhóm route dùng chung Header & Footer
+│   │   │   ├── page.tsx            # Trang chủ (/)
+│   │   │   ├── consultation/       # Khảo sát tư vấn (/consultation, /body, /goals, /experience, /result, /ineligible)
+│   │   │   ├── plans/              # Liệu trình (/plans, /plans/[planId])
+│   │   │   ├── drinks/             # Thức uống (/drinks, /drinks/[slug])
+│   │   │   ├── articles/           # Bài viết (/articles, /articles/[slug])
+│   │   │   └── policy/             # Chính sách & miễn trừ (/policy)
+│   │   ├── dev-ui/                 # Thư viện xem thử UI components (chỉ dev)
+│   │   ├── globals.css             # Design tokens CSS-first
+│   │   ├── robots.ts & sitemap.ts  # Cấu hình SEO
+│   │   └── layout.tsx, error.tsx, loading.tsx, not-found.tsx
+│   ├── components/                 # Thành phần giao diện dùng chung
+│   │   ├── layout/                 # Header, Footer, MobileNav, NavLink
+│   │   └── ui/                     # Primitives cơ sở (Button, Card, Container, Section, Heading, Chip, Notice, Skeleton)
+│   ├── config/                     # Cấu hình routes, copy text, site metadata
+│   ├── data/                       # Dữ liệu tĩnh định kiểu (plans, drinks, articles, goals)
+│   ├── domain/                     # Nghiệp vụ thuần TypeScript (screening, recommend, calculation)
+│   ├── features/                   # Module theo tính năng (consultation, plans, drinks, articles, policy)
+│   │   └── [feature]/
+│   │       ├── components/         # Giao diện cụ thể của tính năng
+│   │       ├── schemas/            # Zod validation schema
+│   │       ├── store/              # State quản lý tại client
+│   │       ├── hooks/              # Custom hooks nghiệp vụ
+│   │       └── index.ts            # Barrel export
+│   ├── lib/                        # Tiện ích chung (cn, tailwind merge)
+│   ├── services/                   # Lớp truy cập dữ liệu async (trả về Promise)
+│   └── test/                       # Test tích hợp màn hình (app-screens.test.tsx)
+└── DESIGN.md                       # Quy chuẩn thiết kế và checklist chống "AI Slop"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Quy ước đặt tên & Kiến trúc
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Server Components mặc định:** Chỉ dùng `"use client"` cho form tương tác và stepper khảo sát.
+2. **Page mỏng:** Mỗi `page.tsx` chỉ export `metadata`, lấy copy từ `config/copy.ts` và render component từ `features/`.
+3. **Định tuyến tập trung:** Tuyệt đối không hardcode URL string trong components; luôn gọi qua `routes` trong `config/routes.ts`.
+4. **Data Service abstraction:** Mọi truy xuất dữ liệu từ page phải gọi qua `services/*` (trả về Promise) để sẵn sàng mở rộng backend NestJS sau này.
+5. **Quyền riêng tư (Zero-Backend):** Khảo sát chạy 100% trên trình duyệt trong bộ nhớ, không gửi ra ngoài, không dùng cookie hay lưu trữ bền vững.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Lệnh phát triển (Chạy bằng Bun)
 
-## Learn More
+> **Lưu ý:** Luôn sử dụng `bun run <script>`. Tuyệt đối không chạy bare `bun test` vì Bun sẽ chạy test runner riêng thay vì Vitest.
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Cài đặt thư viện
+bun install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Khởi chạy máy chủ phát triển
+bun run dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Kiểm tra kiểu dữ liệu TypeScript
+bun run typecheck
 
-## Deploy on Vercel
+# Kiểm tra lỗi cú pháp (Lint)
+bun run lint
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Định dạng mã nguồn
+bun run format
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Chạy Unit Tests (Vitest)
+bun run test
+
+# Chạy E2E Tests & Accessibility (Playwright)
+bun run test:e2e
+
+# Biên dịch sản phẩm (Production Build)
+bun run build
+```

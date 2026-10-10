@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export interface NavLinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> {
-  href: LinkProps["href"];
+  href: LinkProps<string>["href"];
   activeClassName?: string;
   ref?: React.Ref<HTMLAnchorElement>;
 }

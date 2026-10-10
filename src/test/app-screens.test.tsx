@@ -76,3 +76,87 @@ describe("System Screens (Stage C)", () => {
     });
   });
 });
+
+import ConsultationStep1Page from "@/app/(site)/consultation/page";
+import ConsultationBodyPage from "@/app/(site)/consultation/body/page";
+import ConsultationGoalsPage from "@/app/(site)/consultation/goals/page";
+import ConsultationExperiencePage from "@/app/(site)/consultation/experience/page";
+import ConsultationResultPage from "@/app/(site)/consultation/result/page";
+import ConsultationIneligiblePage from "@/app/(site)/consultation/ineligible/page";
+import PlansPage from "@/app/(site)/plans/page";
+import PlanDetailPage from "@/app/(site)/plans/[planId]/page";
+import DrinksPage from "@/app/(site)/drinks/page";
+import DrinkDetailPage from "@/app/(site)/drinks/[slug]/page";
+import ArticlesPage from "@/app/(site)/articles/page";
+import ArticleDetailPage from "@/app/(site)/articles/[slug]/page";
+import PolicyPage from "@/app/(site)/policy/page";
+
+describe("Scaffolded Route Screens Smoke Test", () => {
+  it("renders consultation step 1 page", () => {
+    const html = renderToStaticMarkup(<ConsultationStep1Page />);
+    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_STEP1_TITLE);
+  });
+
+  it("renders consultation body page", () => {
+    const html = renderToStaticMarkup(<ConsultationBodyPage />);
+    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_STEP2_TITLE);
+  });
+
+  it("renders consultation goals page", () => {
+    const html = renderToStaticMarkup(<ConsultationGoalsPage />);
+    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_STEP3_TITLE);
+  });
+
+  it("renders consultation experience page", () => {
+    const html = renderToStaticMarkup(<ConsultationExperiencePage />);
+    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_STEP4_TITLE);
+  });
+
+  it("renders consultation result page", () => {
+    const html = renderToStaticMarkup(<ConsultationResultPage />);
+    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_RESULT_TITLE);
+  });
+
+  it("renders consultation ineligible page", () => {
+    const html = renderToStaticMarkup(<ConsultationIneligiblePage />);
+    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_INELIGIBLE_TITLE);
+  });
+
+  it("renders plans list and detail pages", async () => {
+    const listHtml = renderToStaticMarkup(await PlansPage());
+    expect(listHtml).toContain(FIXED_LABELS.PAGE_PLANS_TITLE);
+
+    const detailHtml = renderToStaticMarkup(
+      await PlanDetailPage({ params: Promise.resolve({ planId: "1-day" }) })
+    );
+    expect(detailHtml).toContain("Liệu trình Khởi đầu 1 ngày");
+  });
+
+  it("renders drinks list and detail pages", async () => {
+    const listHtml = renderToStaticMarkup(await DrinksPage());
+    expect(listHtml).toContain(FIXED_LABELS.PAGE_DRINKS_TITLE);
+
+    const detailHtml = renderToStaticMarkup(
+      await DrinkDetailPage({ params: Promise.resolve({ slug: "ep-can-tay-tao" }) })
+    );
+    expect(detailHtml).toContain("Xanh Tươi Cần Tây Táo");
+  });
+
+  it("renders articles list and detail pages", async () => {
+    const listHtml = renderToStaticMarkup(await ArticlesPage());
+    expect(listHtml).toContain(FIXED_LABELS.PAGE_ARTICLES_TITLE);
+
+    const detailHtml = renderToStaticMarkup(
+      await ArticleDetailPage({
+        params: Promise.resolve({ slug: "huong-dan-chuan-bi-truoc-khi-detox" }),
+      })
+    );
+    expect(detailHtml).toContain("Hướng dẫn chuẩn bị cơ thể 2 ngày trước khi detox");
+  });
+
+  it("renders policy page", () => {
+    const html = renderToStaticMarkup(<PolicyPage />);
+    expect(html).toContain(FIXED_LABELS.PAGE_POLICY_TITLE);
+    expect(html).toContain(FIXED_LABELS.MEDICAL_DISCLAIMER);
+  });
+});

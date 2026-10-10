@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ROUTES } from "./routes";
+import { ROUTES, routes } from "./routes";
 
 describe("ROUTES config", () => {
   it("defines all primary route paths starting with slash", () => {
@@ -25,5 +25,22 @@ describe("ROUTES config", () => {
     expect(ROUTES.CONSULTATION_EXPERIENCE).toBe("/consultation/experience");
     expect(ROUTES.CONSULTATION_RESULT).toBe("/consultation/result");
     expect(ROUTES.CONSULTATION_INELIGIBLE).toBe("/consultation/ineligible");
+  });
+
+  it("provides routes helper functions matching route constants", () => {
+    expect(routes.home()).toBe("/");
+    expect(routes.consultation()).toBe("/consultation");
+    expect(routes.consultationBody()).toBe("/consultation/body");
+    expect(routes.consultationGoals()).toBe("/consultation/goals");
+    expect(routes.consultationExperience()).toBe("/consultation/experience");
+    expect(routes.consultationResult()).toBe("/consultation/result");
+    expect(routes.consultationIneligible()).toBe("/consultation/ineligible");
+    expect(routes.plans()).toBe("/plans");
+    expect(routes.plan("3-day")).toBe("/plans/3-day");
+    expect(routes.drinks()).toBe("/drinks");
+    expect(routes.drink("cam-ca-rot")).toBe("/drinks/cam-ca-rot");
+    expect(routes.articles()).toBe("/articles");
+    expect(routes.article("bai-1")).toBe("/articles/bai-1");
+    expect(routes.policy()).toBe("/policy");
   });
 });
