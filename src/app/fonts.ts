@@ -1,16 +1,18 @@
-import { Bricolage_Grotesque, Be_Vietnam_Pro } from "next/font/google";
+import { Newsreader, Be_Vietnam_Pro } from "next/font/google";
 
-export const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+export const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["vietnamese", "latin"],
+  weight: "600",
+  style: "normal",
   display: "swap",
 });
 
 export const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
   subsets: ["vietnamese", "latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
-export const fontVariables = `${bricolage.variable} ${beVietnamPro.variable}`;
+export const fontVariables = `${newsreader.variable} ${beVietnamPro.variable}`;

@@ -7,3 +7,5 @@ export * from "./card";
 export * from "./chip";
 export * from "./notice";
 export * from "./skeleton";
+export * from "./kicker";
+export * from "./reveal";

@@ -11,6 +11,8 @@ import {
   Chip,
   Notice,
   Skeleton,
+  Kicker,
+  Reveal,
 } from "./index";
 
 describe("UI Primitives", () => {
@@ -171,7 +173,8 @@ describe("UI Primitives", () => {
         <Notice variant="error">Lỗi nghiêm trọng</Notice>
       );
       expect(errorHtml).toContain('role="alert"');
-      expect(errorHtml).toContain("border-l-error");
+      expect(errorHtml).toContain("text-error");
+      expect(errorHtml).toContain("border-border");
       expect(errorHtml).toContain("Cảnh báo");
     });
   });
@@ -182,6 +185,38 @@ describe("UI Primitives", () => {
       expect(html).toContain('aria-hidden="true"');
       expect(html).toContain("bg-accent-soft/60");
       expect(html).toContain("border-border");
+    });
+  });
+
+  describe("Kicker", () => {
+    it("renders Kicker with uppercase tracking and muted token", () => {
+      const html = renderToStaticMarkup(<Kicker>01 · Thông tin cơ thể</Kicker>);
+      expect(html).toContain("<p");
+      expect(html).toContain("text-xs");
+      expect(html).toContain("tracking-wider");
+      expect(html).toContain("text-text-muted");
+      expect(html).toContain("01 · Thông tin cơ thể");
+    });
+
+    it("supports rendering as different HTML elements", () => {
+      const html = renderToStaticMarkup(
+        <Kicker as="span">02 · Lựa chọn</Kicker>
+      );
+      expect(html).toContain("<span");
+      expect(html).toContain("02 · Lựa chọn");
+    });
+  });
+
+  describe("Reveal", () => {
+    it("renders Reveal wrapper with opacity and transform transitions", () => {
+      const html = renderToStaticMarkup(
+        <Reveal>
+          <div>Nội dung chuyển động</div>
+        </Reveal>
+      );
+      expect(html).toContain("duration-300");
+      expect(html).toContain("motion-reduce:opacity-100");
+      expect(html).toContain("Nội dung chuyển động");
     });
   });
 });

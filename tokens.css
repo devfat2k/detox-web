@@ -1,0 +1,56 @@
+/* Hallmark · detox-web · tokens.css
+ * theme: studied-DNA (source: https://www.usehallmark.com/examples/hum-07/)
+ * macrostructure: Narrative Workflow · tone: editorial-calm · anchor hue: 150 (sage green)
+ * fonts: Newsreader (display serif 600) + Be Vietnam Pro (body sans 400/500)
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Color tokens */
+  --color-bg:            #FBF7F0;
+  --color-surface:       #FFFDF9;
+  --color-text:          #24332B;
+  --color-text-muted:    #5E6B63;
+  --color-primary:       #4F7A5A;
+  --color-accent-soft:   #E3EDDD;
+  --color-accent-subtle: #D9A98B;
+  --color-border:        #E6DFD2;
+  --color-error:         #8F3D30;
+
+  /* Typography */
+  --font-display: var(--font-newsreader), "Newsreader", Georgia, serif;
+  --font-body:    var(--font-be-vietnam-pro), "Be Vietnam Pro", system-ui, sans-serif;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+
+  --lh-tight:   1.2;
+  --lh-snug:    1.3;
+  --lh-normal:  1.4;
+  --lh-body:    1.6;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Radius & Rules */
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --rule-hairline: 1px;
+
+  /* Motion */
+  --dur-fast: 200ms;
+  --dur-normal: 300ms;
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+}

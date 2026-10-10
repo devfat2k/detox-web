@@ -19,72 +19,83 @@ Tài liệu này định hình giao diện, gu thẩm mỹ và các tokens thi�
 - **Không phải phòng khám:** không xanh dương trắng vô trùng, không khung cảnh báo dày, không biểu tượng y tế. Điều này cũng giúp web không có cảm giác “chữa bệnh”.
 - **Không phải trang bán hàng giảm giá:** không badge chồng badge, không đỏ cam kêu gọi, không hiệu ứng chớp nháy. Web này miễn phí và không có giao dịch, nên giao diện cũng không nên trông như đang bán.
 
-### Quy tắc cấm bổ sung
+### Quy tắc cấm bổ sung (Anti-patterns)
 
-- **Cấm tuyệt đối** sử dụng badge status nhiều màu sắc chớp nháy.
-- **Cấm tuyệt đối** badge status không có mục đích (chỉ cho phép tối đa 1 tag "Khuyên dùng" tại đúng 1 lộ trình phù hợp với kết quả khảo sát).
-- **Cấm tuyệt đối** sử dụng hình ảnh AI (Midjourney, DALL-E, v.v.).
+- **Cấm tuyệt đối** gradient blob, glassmorphism, bóng đổ nặng, hiệu ứng ánh sáng neon.
+- **Cấm tuyệt đối** lưới 3 card "icon trên - tiêu đề giữa - mô tả dưới" lặp lại vô tận.
+- **Cấm tuyệt đối** sử dụng badge status nhiều màu sắc chớp nháy hoặc nhiều kiểu chip/badge cùng lúc.
+- **Cấm tuyệt đối** badge status không có mục đích (chỉ cho phép tối đa 1 tag "Khuyên dùng" tại đúng 1 lộ trình phù hợp với kết quả khảo sát trong mỗi viewport).
+- **Cấm tuyệt đối** sử dụng hình ảnh AI (Midjourney, DALL-E, v.v.) hoặc ảnh stock vô hồn.
 - **Cấm tuyệt đối** sử dụng emoji trang trí hoặc làm icon.
 - **Cấm tuyệt đối** circle/badge bọc nhiều màu sắc bên ngoài icon.
-- **Cấm tuyệt đối** sử dụng màu đen đậm thô inline (`#000`, `black`, `#000000`).
+- **Cấm tuyệt đối** sử dụng màu đen đậm thô inline (`#000`, `black`, `#000000`) và trắng tinh (`#fff`, `white`, `#ffffff`).
+- **Cấm tuyệt đối** thẻ có viền màu dày lệch cạnh (side-stripe card 4-6px).
+- **Cấm tuyệt đối** dùng font nghiêng (italic) cho tiêu đề/display text.
+- **Cấm tuyệt đối** hiệu ứng nhấp nháy, lặp vô hạn, tự chạy (bounce, shimmer, ping).
 
 ---
 
 ## 2. Thang màu theo vai trò (Tokens)
 
-Tất cả các cặp màu chữ và nền đều đạt chuẩn **WCAG AA** (văn bản thường ≥ 4.5:1, văn bản lớn ≥ 3.0:1).
+Tất cả các cặp màu chữ và nền đều đạt chuẩn **WCAG AA** (văn bản thường ≥ 4.5:1, văn bản lớn ≥ 3.0:1). Bảng màu gồm đúng 4 nhóm vai trò màu chính.
 
 | Vai trò | CSS Token | Mã Hex | Ghi chú & Quy tắc |
 | :--- | :--- | :--- | :--- |
 | **Nền (Background)** | `--color-bg` | `#FBF7F0` | Kem ấm, thay cho trắng tinh. Tuyệt đối không dùng trắng tinh `#FFF` hoặc `#FFFFFF` |
 | **Bề mặt (Surface)** | `--color-surface` | `#FFFDF9` | Thẻ và khối nổi nhẹ |
-| **Chữ (Text)** | `--color-text` | `#24332B` | Xanh than đậm, thay cho đen thuần |
+| **Chữ (Text)** | `--color-text` | `#24332B` | Mực xanh than đậm hữu cơ, thay cho đen thuần. Tuyệt đối không dùng `#000000` |
 | **Chữ phụ (Muted)** | `--color-text-muted` | `#5E6B63` | Mô tả, ghi chú |
-| **Nhấn chính (Primary)** | `--color-primary` | `#4F7A5A` | Xanh lá dịu, chỉ dùng cho hành động chính, tối đa ~10% diện tích |
+| **Nhấn chính (Primary)** | `--color-primary` | `#4F7A5A` | Xanh lá trầm dịu (sage/forest), chỉ dùng cho hành động chính, tối đa ~10% diện tích |
 | **Nhấn nhạt (Soft)** | `--color-accent-soft` | `#E3EDDD` | Nền chip, vùng được chọn |
-| **Nhấn phụ (Subtle)** | `--color-accent-subtle` | `#D9A98B` | Đào đất, chỉ cho chi tiết nhỏ. **Không dùng làm màu chữ** |
-| **Viền (Border)** | `--color-border` | `#E6DFD2` | Viền mảnh thay cho bóng đổ |
-| **Lỗi (Error)** | `--color-error` | `#B24A3A` | Đỏ gạch, không dùng đỏ tươi |
+| **Viền (Border)** | `--color-border` | `#E6DFD2` | Viền mảnh hairline 1px thay cho bóng đổ |
+| **Cảnh báo trầm (Notice/Error)** | `--color-error` | `#8F3D30` | Sắc đỏ đất nung trầm tự nhiên, không dùng đỏ/vàng chói gắt |
 
 ---
 
 ## 3. Chữ (Typography)
 
-- **Phông tiêu đề:** `Bricolage Grotesque` (headings).
-- **Phông thân bài:** `Be Vietnam Pro` (body).
+Tối đa 2 họ phông chữ, tối đa 3 trọng số (weight) trên toàn bộ hệ thống:
+- **Phông tiêu đề:** `Newsreader` (Serif cổ điển, ấm áp, uy tín), trọng số **600** (semibold), kiểu đứng roman.
+- **Phông thân bài:** `Be Vietnam Pro` (Sans-serif chuẩn mực tiếng Việt), trọng số **400** (regular) và **500** (medium).
+
 - **Thang cỡ chữ (6 bậc):**
-  - `xs`: 12px / line-height 1.4
-  - `sm`: 14px / line-height 1.5
-  - `base`: 16px / line-height 1.6
-  - `xl`: 20px / line-height 1.4
-  - `2xl`: 24px / line-height 1.3
-  - `3xl`: 30px / line-height 1.2
-- **Giới hạn độ dài dòng:** Tối đa 65 ký tự (`max-w-prose`). Chữ trên mobile từ 16px trở lên.
-- **Quy tắc câu chữ:** Tiếng Việt sentence case, xưng hô "mình"/"bạn". Không dùng ALL CAPS.
+  - `xs`: 12px (`0.75rem`) / line-height 1.4 (nhãn micro, kicker)
+  - `sm`: 14px (`0.875rem`) / line-height 1.5 (chú thích, mô tả phụ)
+  - `base`: 16px (`1rem`) / line-height 1.6 (thân bài, input)
+  - `xl`: 20px (`1.25rem`) / line-height 1.4 (tiêu đề nhỏ)
+  - `2xl`: 24px (`1.5rem`) / line-height 1.3 (tiêu đề vừa)
+  - `3xl`: 30px (`1.875rem`) / line-height 1.2 (tiêu đề lớn)
+- **Giới hạn độ dài dòng:** Tối đa 60–65 ký tự (`max-w-prose`). Chữ trên mobile từ 16px trở lên.
+- **Quy tắc câu chữ:** Tiếng Việt sentence case, xưng hô "mình"/"bạn". Không dùng ALL CAPS cho đoạn văn bản dài.
 
 ---
 
 ## 4. Không gian và hình khối
 
-- **Thang spacing (4-point grid):** `4px`, `8px`, `12px`, `16px`, `24px`, `32px`, `48px`.
+- **Thang spacing (4-point grid):** `4px`, `8px`, `12px`, `16px`, `24px`, `32px`, `48px`, `64px`.
 - **Bo góc (2 giá trị):**
-  - `rounded-lg` (8px): Dành cho input, nút bấm, chip.
-  - `rounded-xl` (12px): Dành cho thẻ (card), khối container.
+  - `rounded-lg` (8px): Dành cho input, nút bấm, chip, kicker.
+  - `rounded-xl` (12px): Dành cho thẻ (card), khối container, hộp thông báo (notice).
 - **Không dùng bóng đổ (`shadow: none`):** Sử dụng đường viền mảnh 1px (`#E6DFD2`) để phân tách bề mặt.
 
 ---
 
 ## 5. Thành phần chính (Core Components)
 
-1. **Nút bấm (Button):**
-   - *Primary:* Màu Nhấn chính (`#4F7A5A`) với chữ Kem ấm (`#FBF7F0`). Tap target ≥ 48px.
-   - *Secondary:* Viền mảnh (`#E6DFD2`) hoặc chữ trần.
+1. **Nút bấm (Button / LinkButton):**
+   - *Primary:* Nền Nhấn chính (`#4F7A5A`), chữ Kem ấm (`#FBF7F0`). Tap target ≥ 48px (tối thiểu 44px).
+   - *Secondary:* Viền mảnh (`#E6DFD2`), nền Bề mặt (`#FFFDF9`).
+   - *Ghost:* Chữ trần không viền.
 2. **Thẻ (Card):**
    - Nền Bề mặt (`#FFFDF9`), viền 1px (`#E6DFD2`), bo góc 12px. **Tuyệt đối không card lồng card.**
-3. **Chip / Radio chọn:**
-   - Nền `#FBF7F0`, viền `#E6DFD2`; khi chọn: nền Nhấn nhạt (`#E3EDDD`) và viền `#4F7A5A`.
-4. **Bottle Row (5 chai/ngày):**
-   - Khối hiển thị 5 chai ép trong ngày, rõ dung tích và màu sắc tự nhiên của từng chai.
+3. **Chip lựa chọn:**
+   - Chỉ 1 kiểu duy nhất trên toàn site: nền `#FBF7F0`, viền `#E6DFD2`; khi chọn: nền Nhấn nhạt (`#E3EDDD`) và viền `#4F7A5A`.
+4. **Hộp thông báo (Notice):**
+   - Dùng viền hairline toàn phần `#E6DFD2`, nền `#FFFDF9`, biểu tượng và nhãn ngữ nghĩa (không dùng viền lệch dày 4px).
+5. **Kicker:**
+   - Nhãn nhỏ dẫn dắt dạng "01 · Thông tin cơ thể", font Be Vietnam Pro medium, tracking rộng.
+6. **Reveal:**
+   - Hiệu ứng xuất hiện khi cuộn bằng IntersectionObserver, chỉ chạy 1 lần duy nhất, tắt khi prefers-reduced-motion.
 
 ---
 
@@ -99,9 +110,9 @@ Tất cả các cặp màu chữ và nền đều đạt chuẩn **WCAG AA** (v�
 
 ### Chuyển động (Motion Budget)
 
-- Chỉ dùng `opacity` và `transform`, thời gian dưới 200ms (`150ms ease-out`).
+- Chỉ dùng `opacity` và `transform`, thời gian 200–300ms (`cubic-bezier(0.22, 0.61, 0.36, 1)`).
 - **Cấm lặp vô hạn, cấm pulse, bounce, ping, shimmer.**
-- Luôn tôn trọng cấu hình `prefers-reduced-motion`.
+- Luôn tôn trọng cấu hình `prefers-reduced-motion` (tắt hẳn chuyển động).
 
 ---
 

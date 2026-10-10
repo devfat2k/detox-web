@@ -1,3 +1,7 @@
+/* Hallmark · macrostructure: Narrative Workflow · tone: editorial-calm · anchor hue: 150 (sage green)
+ * theme: studied-DNA (source: https://www.usehallmark.com/examples/hum-07/)
+ * fonts: Newsreader (display serif 600) + Be Vietnam Pro (body sans 400/500)
+ */
 @import "tailwindcss";
 
 @theme {
@@ -11,10 +15,10 @@
   --color-accent-soft: #E3EDDD;
   --color-accent-subtle: #D9A98B;
   --color-border: #E6DFD2;
-  --color-error: #B24A3A;
+  --color-error: #8F3D30;
 
-  /* Fonts */
-  --font-heading: var(--font-bricolage), sans-serif;
+  /* Fonts: 1 serif display + 1 sans body */
+  --font-heading: var(--font-newsreader), serif;
   --font-body: var(--font-be-vietnam-pro), sans-serif;
 
   /* Type scale: 6 steps */
@@ -31,7 +35,7 @@
   --text-3xl: 1.875rem;
   --text-3xl--line-height: 1.2;
 
-  /* Spacing scale: 7 steps */
+  /* Spacing scale: 4-point grid */
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
   --spacing-3: 0.75rem;
@@ -39,6 +43,7 @@
   --spacing-6: 1.5rem;
   --spacing-8: 2rem;
   --spacing-12: 3rem;
+  --spacing-16: 4rem;
 
   /* Border radius: 2 values */
   --radius-lg: 0.5rem;
@@ -48,8 +53,10 @@
   --shadow-*: initial;
 
   /* Motion tokens */
-  --duration-fast: 150ms;
-  --ease-default: cubic-bezier(0, 0, 0.2, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --ease-default: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 :root {
@@ -73,9 +80,10 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
+  font-style: normal;
 }
 
-/* Ensure input and textarea have font size >= 16px to prevent iOS auto-zoom */
+/* Ensure input, textarea, select have font size >= 16px to prevent iOS auto-zoom */
 input,
 textarea,
 select {
@@ -107,4 +115,3 @@ select {
   padding: 0;
   border-radius: 0;
 }
-

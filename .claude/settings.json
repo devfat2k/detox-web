@@ -9,7 +9,10 @@
       "Bash(git status *)",
       "Bash(git diff *)",
       "Bash(git log *)",
-      "Edit(/.claude/skills/ui-review/**)"
+      "Edit(/.claude/skills/ui-review/**)",
+      "WebFetch(domain:www.usehallmark.com)",
+      "Bash(curl -s https://www.usehallmark.com/examples/hum-07/)",
+      "Bash(curl -s https://www.usehallmark.com/examples/hum-07/tokens.css)"
     ],
     "deny": [
       "Read(.env*)",

@@ -18,8 +18,9 @@ const defaultStatusLabels: Record<NoticeVariant, string> = {
 };
 
 /**
- * Hộp thông báo, cảnh báo y tế hoặc miễn trừ trách nhiệm.
- * Thể hiện trạng thái rõ ràng bằng viền và chữ ngữ nghĩa (WCAG 1.4.1), không chỉ bằng màu sắc.
+ * Hộp thông báo, cảnh báo y tế hoặc miễn trừ trách nhiệm theo DESIGN.md §5.
+ * Dùng viền hairline toàn phần 1px border-border, không dùng viền dày lệch cạnh (side-stripe anti-pattern).
+ * Thể hiện trạng thái rõ ràng bằng nhãn ngữ nghĩa và icon (WCAG 1.4.1), không chói gắt.
  * Server Component mặc định.
  */
 export function Notice({
@@ -32,14 +33,6 @@ export function Notice({
   ...props
 }: NoticeProps) {
   const label = statusLabel ?? defaultStatusLabels[variant];
-
-  const variantStyles: Record<NoticeVariant, string> = {
-    info: "border border-border bg-surface text-text",
-    warning:
-      "border-y border-r border-border border-l-4 border-l-primary bg-surface text-text",
-    error:
-      "border-y border-r border-border border-l-4 border-l-error bg-surface text-text",
-  };
 
   const IconComponent =
     variant === "info"
@@ -54,8 +47,7 @@ export function Notice({
       role={variant === "error" ? "alert" : "region"}
       aria-label={title ?? label}
       className={cn(
-        "rounded-xl p-4 sm:p-6 flex items-start gap-3",
-        variantStyles[variant],
+        "rounded-xl p-4 sm:p-6 flex items-start gap-3 border border-border bg-surface text-text",
         className
       )}
       {...props}
@@ -74,7 +66,11 @@ export function Notice({
           <span
             className={cn(
               "text-xs font-semibold uppercase tracking-wider",
-              variant === "error" ? "text-error" : "text-text-muted"
+              variant === "error"
+                ? "text-error"
+                : variant === "warning"
+                  ? "text-primary"
+                  : "text-text-muted"
             )}
           >
             {label}

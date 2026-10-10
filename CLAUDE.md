@@ -68,7 +68,7 @@ Next.js 16 (App Router) + React 19 + TypeScript strict + Tailwind CSS v4 (CSS-fi
 
 - **Privacy & Zero-Backend:** Khảo sát chạy 100% trên client qua React Context trong `src/app/consultation/layout.tsx`. Không lưu trữ, không gửi ra ngoài (xem `docs/product-spec.md` §9 & `.claude/rules/privacy.md`).
 - **Content & Medical:** Tiếng Việt "mình"/"bạn", phi thương mại 100%. Trích dẫn nguồn theo `sourceIds` (xem `docs/product-spec.md` §7 & `.claude/rules/content.md`).
-- **UI & Design:** Chỉ dùng token từ `globals.css`, font Bricolage Grotesque & Be Vietnam Pro, mobile-first 390px (xem `DESIGN.md` & `.claude/rules/ui.md`).
+- **UI & Design:** Chỉ dùng token từ `globals.css`, font Newsreader & Be Vietnam Pro, mobile-first 390px (xem `DESIGN.md` & `.claude/rules/ui.md`).
 - **Domain:** TypeScript thuần 100%, hàm thuần, unit test cạnh file (xem `docs/product-spec.md` §8 & `.claude/rules/domain.md`).
 - **Testing:** Chạy qua `bun run test` / `bun run test:e2e`, kiểm thử bắt buộc với `src/domain/` and `src/content/schema.ts` (xem `.claude/rules/testing.md`).
 
