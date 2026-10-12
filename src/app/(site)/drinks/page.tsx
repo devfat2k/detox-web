@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { getDrinks } from "@/services/drinks.service";
-import { DrinkList } from "@/features/drinks";
+import { DrinkCatalog } from "@/features/drinks";
 import { FIXED_LABELS } from "@/config/copy";
 
 export const metadata: Metadata = {
@@ -8,12 +7,10 @@ export const metadata: Metadata = {
   description: FIXED_LABELS.PAGE_DRINKS_DESC,
 };
 
-export default async function DrinksPage() {
-  const drinks = await getDrinks();
-
+export default function DrinksPage() {
   return (
     <main>
-      <DrinkList drinks={drinks} />
+      <DrinkCatalog />
     </main>
   );
 }
