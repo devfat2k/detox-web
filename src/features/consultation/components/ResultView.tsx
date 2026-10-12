@@ -19,45 +19,8 @@ import { FIXED_LABELS } from "@/config/copy";
 import { ROUTES, routes } from "@/config/routes";
 import { PLANS_DATA } from "@/data/plans";
 import { SITE_CONFIG } from "@/config/site";
-import { Check, Sparkles, ArrowRight } from "lucide-react";
-
-const DAILY_SCHEDULE = [
-  {
-    time: "07:00",
-    name: "Xanh Cần Tây Táo",
-    desc: "Đánh thức tiêu hóa, thanh mát nhẹ bụng",
-    color: "green" as const,
-    level: 60,
-  },
-  {
-    time: "10:00",
-    name: "Cam Cà Rốt Gừng",
-    desc: "Bổ sung vitamin, giữ ấm bụng giữa buổi",
-    color: "warm" as const,
-    level: 75,
-  },
-  {
-    time: "13:00",
-    name: "Xanh Đậm Kale Dưa Leo",
-    desc: "Cung cấp khoáng chất diệp lục dồi dào",
-    color: "green" as const,
-    level: 70,
-  },
-  {
-    time: "16:00",
-    name: "Đỏ Rực Củ Dền Thơm",
-    desc: "Hỗ trợ tuần hoàn, vị ngọt thanh tự nhiên",
-    color: "warm" as const,
-    level: 80,
-  },
-  {
-    time: "19:00",
-    name: "Sữa Hạt Ấm Dịu",
-    desc: "Chất béo lành tính, giúp thư giãn giấc ngủ",
-    color: "soft" as const,
-    level: 85,
-  },
-];
+import { Check, Sparkles } from "lucide-react";
+import { PlanDayScheduleView } from "@/features/plans";
 
 const GOAL_LABELS: Record<string, string> = {
   digestion: "khó tiêu, đầy bụng, ậm ạch",
@@ -349,66 +312,8 @@ export function ResultView() {
           </div>
         </Card>
 
-        {/* Lịch 5 chai mẫu phân bổ theo khung giờ */}
-        <Card className="p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div className="space-y-1">
-              <span className="text-xs font-medium text-primary tracking-wide block">
-                Thực đơn mẫu trong ngày
-              </span>
-              <Heading
-                level={2}
-                size="xl"
-                className="font-semibold text-xl text-text"
-              >
-                Lịch 5 chai nước ép phân bổ nhịp nhàng
-              </Heading>
-              <p className="text-xs text-text-muted font-body">
-                Nước ép tươi ép chậm mỗi sáng, uống chậm rãi từng ngụm cách nhau 2,5 đến 3 tiếng.
-              </p>
-            </div>
-
-            <LinkButton
-              href={routes.plan(matchedPlan.id)}
-              variant="secondary"
-              className="text-xs font-medium self-start sm:self-auto shrink-0"
-            >
-              <span>Xem chi tiết gói {matchedPlan.durationDays} ngày</span>
-              <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" />
-            </LinkButton>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            {DAILY_SCHEDULE.map((item) => (
-              <div
-                key={item.time}
-                className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-bg border border-border/80 hover:border-primary/40 hover:bg-surface transition-all duration-200 ease-soft hover:-translate-y-0.5 group"
-              >
-                <div className="shrink-0 transition-transform duration-300 group-hover:scale-105">
-                  <DetoxBottle
-                    size="sm"
-                    color={item.color}
-                    level={item.level}
-                    label={item.name}
-                  />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded text-xs font-heading font-semibold bg-accent-soft text-primary transition-colors duration-200 group-hover:bg-accent-soft/80">
-                      {item.time}
-                    </span>
-                    <span className="font-body text-sm sm:text-base font-semibold text-text truncate">
-                      {item.name}
-                    </span>
-                  </div>
-                  <p className="text-xs text-text-muted font-body truncate mt-1">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Card>
+        {/* Lịch nước ép phân bổ theo ngày */}
+        <PlanDayScheduleView plan={matchedPlan} />
 
         {/* Khối trao đổi cùng quán & sao chép gửi Threads */}
         <div className="p-6 rounded-3xl bg-accent-soft/30 border border-border flex flex-col sm:flex-row items-center justify-between gap-4">
