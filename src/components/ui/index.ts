@@ -10,3 +10,4 @@ export * from "./skeleton";
 export * from "./kicker";
 export * from "./reveal";
 export * from "./detox-bottle";
+export * from "./input";
