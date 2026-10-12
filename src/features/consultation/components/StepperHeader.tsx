@@ -6,51 +6,57 @@ export interface StepperHeaderProps {
 }
 
 const STEPS = [
-  { step: 1, label: "Lưu ý an toàn" },
-  { step: 2, label: "Thông tin cơ thể" },
-  { step: 3, label: "Mục tiêu" },
-  { step: 4, label: "Kinh nghiệm" },
+  { step: 1, label: "01 Lưu ý" },
+  { step: 2, label: "02 Cơ thể" },
+  { step: 3, label: "03 Mục tiêu" },
+  { step: 4, label: "04 Kinh nghiệm" },
 ] as const;
 
 export function StepperHeader({ currentStep }: StepperHeaderProps) {
   return (
-    <div className="border-b border-border bg-surface py-4">
-      <Container>
-        <nav aria-label="Tiến trình khảo sát tư vấn">
-          <ol className="flex items-center justify-between gap-2 sm:justify-center sm:gap-8">
-            {STEPS.map(({ step, label }) => {
+    <div className="border-b border-border bg-surface/50 py-3 sm:py-4 select-none">
+      <Container className="flex justify-center">
+        <nav aria-label="Tiến trình khảo sát">
+          <ol className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 rounded-full bg-surface border border-border shadow-2xs">
+            {STEPS.map(({ step, label }, idx) => {
               const isCurrent = step === currentStep;
               const isCompleted = step < currentStep;
+              const isLast = idx === STEPS.length - 1;
 
               return (
-                <li
-                  key={step}
-                  className="flex items-center gap-2"
-                  aria-current={isCurrent ? "step" : undefined}
-                >
-                  <span
-                    className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold ${
-                      isCurrent
-                        ? "bg-primary text-primary-fg"
-                        : isCompleted
-                          ? "bg-accent-soft text-accent"
-                          : "bg-surface-elevated text-text-muted"
-                    }`}
+                <React.Fragment key={step}>
+                  <li
+                    className="flex items-center gap-1.5 text-xs font-body"
+                    aria-current={isCurrent ? "step" : undefined}
                   >
-                    {step}
-                  </span>
-                  <span
-                    className={`hidden text-xs font-medium sm:inline ${
-                      isCurrent
-                        ? "text-text font-semibold"
-                        : isCompleted
-                          ? "text-text-muted"
+                    <span
+                      className={`h-2 w-2 rounded-full transition-colors ${
+                        isCurrent
+                          ? "bg-primary"
+                          : isCompleted
+                          ? "bg-primary/50"
+                          : "bg-border"
+                      }`}
+                      aria-hidden="true"
+                    />
+                    <span
+                      className={`font-medium tracking-wide ${
+                        isCurrent
+                          ? "text-primary font-semibold"
+                          : isCompleted
+                          ? "text-text"
                           : "text-text-muted/60"
-                    }`}
-                  >
-                    {label}
-                  </span>
-                </li>
+                      }`}
+                    >
+                      {label}
+                    </span>
+                  </li>
+                  {!isLast ? (
+                    <span aria-hidden="true" className="text-border px-0.5 text-xs">
+                      ───
+                    </span>
+                  ) : null}
+                </React.Fragment>
               );
             })}
           </ol>

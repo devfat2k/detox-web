@@ -3,6 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { StepperHeader } from "@/features/consultation";
+import { ConsultationProvider } from "@/features/consultation/context";
 
 export default function ConsultationLayout({
   children,
@@ -22,9 +23,11 @@ export default function ConsultationLayout({
     !pathname.includes("/result") && !pathname.includes("/ineligible");
 
   return (
-    <div className="flex min-h-[calc(100vh-160px)] flex-col">
-      {isStepperPage && <StepperHeader currentStep={getStep(pathname)} />}
-      <div className="flex-1">{children}</div>
-    </div>
+    <ConsultationProvider>
+      <div className="flex min-h-[calc(100vh-160px)] flex-col">
+        {isStepperPage && <StepperHeader currentStep={getStep(pathname)} />}
+        <div className="flex-1">{children}</div>
+      </div>
+    </ConsultationProvider>
   );
 }

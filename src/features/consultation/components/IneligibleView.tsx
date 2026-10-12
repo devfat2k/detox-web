@@ -1,34 +1,58 @@
+"use client";
+
 import React from "react";
 import { Container, Section, Heading, Card, Notice, LinkButton } from "@/components/ui";
+import { useConsultation } from "../context";
 import { FIXED_LABELS } from "@/config/copy";
-import { routes } from "@/config/routes";
+import { ROUTES } from "@/config/routes";
 
 export function IneligibleView() {
+  const { ineligibleReason, reset } = useConsultation();
+
+  const message =
+    ineligibleReason ??
+    "Theo nguyên tắc an toàn, thể trạng hiện tại của bạn chưa phù hợp để áp dụng chế độ nhịn ăn chỉ uống nước ép nhiều ngày liên tục.";
+
   return (
     <Section spacing="md">
-      <Container className="max-w-2xl">
-        <Card className="space-y-6">
-          <header className="space-y-2 border-b border-border pb-4">
-            <p className="text-xs font-semibold tracking-wide uppercase text-accent">
-              Thông báo an toàn
-            </p>
-            <Heading level={1} size="2xl">
-              {FIXED_LABELS.PAGE_CONSULTATION_INELIGIBLE_TITLE}
+      <Container className="max-w-xl space-y-6">
+        <Card className="p-6 sm:p-8 space-y-6">
+          <div className="space-y-2">
+            <span className="text-xs font-semibold tracking-widest text-primary uppercase block">
+              KHÔNG PHÙ HỢP THAM GIA
+            </span>
+            <Heading level={1} size="2xl" className="font-semibold text-2xl sm:text-3xl text-text">
+              Chưa thích hợp áp dụng lộ trình
             </Heading>
-            <p className="font-body text-sm text-text-muted">
-              {FIXED_LABELS.PAGE_CONSULTATION_INELIGIBLE_DESC}
-            </p>
-          </header>
+          </div>
 
           <Notice variant="warning">
-            {FIXED_LABELS.UNDER_CONSTRUCTION_NOTICE}
+            {message}
           </Notice>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
-            <LinkButton href={routes.consultation()} variant="ghost">
+          <div className="space-y-3 font-body text-sm text-text-muted leading-relaxed">
+            <p>
+              Sức khỏe và sự an toàn của bạn luôn là ưu tiên hàng đầu tại Ép Xanh Chữa Lành. Chúng mình không khuyến khích việc ép cơ thể theo bất kỳ chế độ kiêng khem nào khi thể trạng chưa sẵn sàng.
+            </p>
+            <p>
+              Bạn vẫn có thể ghé quán hoặc tự thưởng cho mình một ly nước ép rau củ tươi sau bữa ăn chính để bổ sung vitamin và khoáng chất tự nhiên một cách an toàn nhất!
+            </p>
+          </div>
+
+          <div className="pt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border/60">
+            <LinkButton
+              href={ROUTES.CONSULTATION}
+              variant="ghost"
+              onClick={reset}
+              className="px-6 rounded-full"
+            >
               {FIXED_LABELS.ACTION_RETRY}
             </LinkButton>
-            <LinkButton href={routes.home()} variant="secondary">
+            <LinkButton
+              href={ROUTES.HOME}
+              variant="secondary"
+              className="px-6 rounded-full"
+            >
               {FIXED_LABELS.ACTION_BACK_TO_HOME}
             </LinkButton>
           </div>

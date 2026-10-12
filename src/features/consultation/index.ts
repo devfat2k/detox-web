@@ -8,4 +8,5 @@ export * from "./components/ResultView";
 export * from "./components/IneligibleView";
 export * from "./schemas";
 export * from "./store";
+export * from "./context";
 export * from "./hooks/use-step-guard";
