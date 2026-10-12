@@ -8,6 +8,17 @@ vi.mock("next/font/google", () => ({
   }),
 }));
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    back: vi.fn(),
+    prefetch: vi.fn(),
+  }),
+  usePathname: () => "/consultation",
+  useSearchParams: () => new URLSearchParams(),
+}));
+
 import { renderToStaticMarkup } from "react-dom/server";
 import NotFound from "@/app/not-found";
 import ErrorPage from "@/app/error";
@@ -181,9 +192,11 @@ describe("Scaffolded Route Screens Smoke Test", () => {
     expect(detailHtml).toContain("Xanh Tươi Cần Tây Táo");
   });
 
-  it("renders articles list and detail pages", async () => {
+  it("renders articles list and detail pages without construction notices", async () => {
     const listHtml = renderToStaticMarkup(await ArticlesPage());
     expect(listHtml).toContain(FIXED_LABELS.PAGE_ARTICLES_TITLE);
+    expect(listHtml).toContain("NGUỒN Y KHOA KIỂM CHỨNG");
+    expect(listHtml).not.toContain(FIXED_LABELS.UNDER_CONSTRUCTION_NOTICE);
 
     const detailHtml = renderToStaticMarkup(
       await ArticleDetailPage({
@@ -191,6 +204,9 @@ describe("Scaffolded Route Screens Smoke Test", () => {
       })
     );
     expect(detailHtml).toContain("Hướng dẫn chuẩn bị cơ thể 2 ngày trước khi detox");
+    expect(detailHtml).toContain("Nguồn tài liệu tham khảo &amp; Kiểm chứng khoa học");
+    expect(detailHtml).toContain("Mayo Clinic");
+    expect(detailHtml).not.toContain(FIXED_LABELS.UNDER_CONSTRUCTION_NOTICE);
   });
 
   it("renders policy page", () => {

@@ -75,7 +75,7 @@ const PLAN_STAGE_DETAILS: Record<
 
 export default function HomePage() {
   const featuredDrinks = DRINKS_DATA.slice(0, 2);
-  const featuredArticle = ARTICLES_DATA[1] ?? ARTICLES_DATA[0];
+  const featuredArticle = ARTICLES_DATA[0];
 
   return (
     <div className="flex flex-col w-full">
