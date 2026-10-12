@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 export type BottleColor = "green" | "warm" | "soft";
-export type BottleSize = "sm" | "md" | "lg";
+export type BottleSize = "sm" | "md" | "lg" | "xl";
 
 export interface DetoxBottleProps extends React.HTMLAttributes<HTMLDivElement> {
   color?: BottleColor;
@@ -65,6 +65,15 @@ const SIZE_CLASSES: Record<
     lidRim: "w-22 sm:w-24 h-4 sm:h-4.5 rounded-md",
     border: "border-[2.5px] border-text",
     bubbleLg: "w-2 h-2",
+    bubbleSm: "w-1.5 h-1.5",
+  },
+  xl: {
+    container: "w-52 sm:w-60 h-68 sm:h-76",
+    jar: "w-40 sm:w-48 h-52 sm:h-60 rounded-t-3xl rounded-b-[2rem]",
+    lidTop: "w-22 sm:w-26 h-4 sm:h-4.5 rounded-t-md",
+    lidRim: "w-30 sm:w-36 h-5 sm:h-5.5 rounded-md",
+    border: "border-[3px] border-text",
+    bubbleLg: "w-2.5 h-2.5",
     bubbleSm: "w-1.5 h-1.5",
   },
 };

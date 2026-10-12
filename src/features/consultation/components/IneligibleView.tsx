@@ -18,8 +18,8 @@ export function IneligibleView() {
       <Container className="max-w-xl space-y-6">
         <Card className="p-6 sm:p-8 space-y-6">
           <div className="space-y-2">
-            <span className="text-xs font-semibold tracking-widest text-primary uppercase block">
-              KHÔNG PHÙ HỢP THAM GIA
+            <span className="text-xs font-medium text-primary tracking-wide block">
+              Lưu ý an toàn sức khỏe
             </span>
             <Heading level={1} size="2xl" className="font-semibold text-2xl sm:text-3xl text-text">
               Chưa thích hợp áp dụng lộ trình

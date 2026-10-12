@@ -41,10 +41,10 @@ export function Header() {
       className={`sticky top-0 z-40 w-full transition-all duration-fast select-none pt-[env(safe-area-inset-top)]`}
     >
       <div
-        className={`mx-auto transition-all duration-300 ${
+        className={`mx-auto transition-all duration-300 border ${
           scrolled
-            ? "max-w-5xl rounded-full bg-surface px-4 sm:px-8 h-14 sm:h-16 flex items-center justify-between mt-4 border border-border shadow-xs"
-            : "max-w-5xl px-4 py-4 sm:px-6 sm:py-6 sm:h-20 flex items-center justify-between"
+            ? "max-w-5xl rounded-full bg-surface px-4 sm:px-8 h-14 sm:h-16 flex items-center justify-between mt-4 border-border/70 shadow-2xs"
+            : "max-w-5xl px-4 py-4 sm:px-6 sm:py-6 sm:h-20 flex items-center justify-between border-transparent"
         }`}
       >
         {/* Logo / Brand Name (Dùng màu xanh lá tươi dịu text-primary) */}

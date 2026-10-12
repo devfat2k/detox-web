@@ -53,9 +53,9 @@ export function ResultView() {
     <Section spacing="md">
       <Container className="max-w-3xl space-y-8">
         <div className="space-y-3 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-soft text-primary font-heading font-semibold text-xs border border-border">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-soft text-primary font-heading font-medium text-xs border border-border">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
-            KẾT QUẢ CÁ NHÂN HÓA
+            Kết quả cá nhân hóa
           </div>
           <Heading level={1} size="3xl" className="font-semibold text-2xl sm:text-3xl lg:text-4xl text-text">
             Lộ trình gợi ý dành cho {greetingName}
@@ -73,22 +73,22 @@ export function ResultView() {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="p-4 rounded-2xl bg-surface border border-border space-y-1">
-            <span className="text-xs font-semibold text-primary uppercase block">Thời gian</span>
+            <span className="text-xs font-medium text-primary block">Thời gian</span>
             <span className="text-xl font-heading font-semibold text-text block">{matchedPlan.durationDays} ngày</span>
             <span className="text-xs text-text-muted">Nhịp sinh học nhẹ</span>
           </div>
           <div className="p-4 rounded-2xl bg-surface border border-border space-y-1">
-            <span className="text-xs font-semibold text-primary uppercase block">Số lượng</span>
+            <span className="text-xs font-medium text-primary block">Số lượng</span>
             <span className="text-xl font-heading font-semibold text-text block">{matchedPlan.durationDays * 5} chai</span>
             <span className="text-xs text-text-muted">5 chai mỗi ngày</span>
           </div>
           <div className="p-4 rounded-2xl bg-surface border border-border space-y-1">
-            <span className="text-xs font-semibold text-primary uppercase block">Năng lượng</span>
+            <span className="text-xs font-medium text-primary block">Năng lượng</span>
             <span className="text-xl font-heading font-semibold text-text block">~850</span>
             <span className="text-xs text-text-muted">kcal mỗi ngày</span>
           </div>
           <div className="p-4 rounded-2xl bg-surface border border-border space-y-1">
-            <span className="text-xs font-semibold text-primary uppercase block">Ước tính nhẹ</span>
+            <span className="text-xs font-medium text-primary block">Ước tính nhẹ</span>
             <span className="text-xl font-heading font-semibold text-text block">0.5 - 1.5 kg</span>
             <span className="text-xs text-text-muted">Chủ yếu nước & tiêu hóa</span>
           </div>
@@ -96,8 +96,8 @@ export function ResultView() {
 
         <Card className="p-6 sm:p-8 space-y-6">
           <div className="space-y-1">
-            <span className="text-xs font-semibold text-primary tracking-widest uppercase block">
-              LỊCH 5 CHAI MẪU TRONG NGÀY
+            <span className="text-xs font-medium text-primary tracking-wide block">
+              Lịch 5 chai mẫu trong ngày
             </span>
             <Heading level={2} size="xl" className="font-semibold text-xl text-text">
               Thực đơn phân bổ nhịp nhàng từ sáng đến tối
@@ -134,8 +134,8 @@ export function ResultView() {
 
         {goals.length > 0 ? (
           <div className="p-5 rounded-2xl bg-surface border border-border space-y-2">
-            <span className="text-xs font-semibold text-primary uppercase block">
-              LỜI KHUYÊN DÀNH CHO MỤC TIÊU CỦA BẠN
+            <span className="text-xs font-medium text-primary block">
+              Lời khuyên dành cho mục tiêu của bạn
             </span>
             <p className="text-sm text-text font-body leading-relaxed">
               Bạn đang quan tâm đến việc cải thiện thể trạng. Hãy uống thêm ít nhất 1.5 - 2 lít nước lọc ấm mỗi ngày, hạn chế đồ uống có cồn và ngủ đủ 7 tiếng để cơ thể hấp thu tối ưu lượng vitamin từ rau củ tươi.

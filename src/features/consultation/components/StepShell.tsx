@@ -15,7 +15,7 @@ export function StepShell({ step, title, description, children }: StepShellProps
       <Container className="max-w-2xl">
         <Card className="space-y-6">
           <header className="space-y-2 border-b border-border pb-4">
-            <p className="text-xs font-semibold tracking-wide uppercase text-accent">
+            <p className="text-xs font-medium tracking-wide text-primary">
               Bước {step}/4
             </p>
             <Heading level={1} size="2xl">

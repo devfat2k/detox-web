@@ -2,32 +2,84 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Container, Section, Heading, Card, Button, Chip } from "@/components/ui";
+import { ArrowRight, ArrowLeft, Check, Sparkles } from "lucide-react";
+import { Container, Section, Heading, Card, Button } from "@/components/ui";
 import { useConsultation } from "../context";
+import { FIXED_LABELS } from "@/config/copy";
 
-const AVAILABLE_GOALS = [
-  { id: "weight", label: "Hỗ trợ giảm nhẹ cân nặng" },
-  { id: "digestion", label: "Khó tiêu, đầy bụng" },
-  { id: "heat", label: "Nóng trong, háo nước" },
-  { id: "acne", label: "Mụn ẩn, da kém tươi" },
-  { id: "sleep", label: "Ngủ chập chờn, mệt mỏi" },
-  { id: "hair", label: "Rụng tóc, thiếu chất" },
-  { id: "other", label: "Khởi đầu thói quen lành mạnh khác" },
+interface GoalItem {
+  id: string;
+  label: string;
+  desc: string;
+  isPopular?: boolean;
+}
+
+const AVAILABLE_GOALS: GoalItem[] = [
+  {
+    id: "digestion",
+    label: "Khó tiêu, đầy bụng, ậm ạch",
+    desc: "Cần xoa dịu đường ruột và nhẹ bụng sau những ngày ăn uống quá tải",
+    isPopular: true,
+  },
+  {
+    id: "heat",
+    label: "Nóng trong, háo nước, khô người",
+    desc: "Bổ sung lượng nước tự nhiên và khoáng chất thực vật tươi mát",
+    isPopular: true,
+  },
+  {
+    id: "weight",
+    label: "Hỗ trợ cảm giác nhẹ nhõm vóc dáng",
+    desc: "Giảm tích nước và hỗ trợ thói quen ăn uống thanh đạm",
+  },
+  {
+    id: "acne",
+    label: "Mụn ẩn, da kém tươi sáng",
+    desc: "Bổ sung vitamin tự nhiên từ rau củ tươi giúp da sáng khỏe",
+  },
+  {
+    id: "sleep",
+    label: "Uể oải, ngủ chập chờn",
+    desc: "Tạo nhịp nghỉ cho hệ tiêu hóa vào buổi tối giúp ngủ sâu giấc hơn",
+  },
+  {
+    id: "other",
+    label: "Mục tiêu khác hoặc duy trì lối sống xanh",
+    desc: "Thưởng thức rau củ tự nhiên hàng ngày như một thói quen tích cực",
+  },
 ];
+
+const DEFAULT_PRESET_GOALS = ["digestion", "heat"];
 
 export function Step3Form() {
   const router = useRouter();
   const { goals: savedGoals, updateGoals } = useConsultation();
-  const [selected, setSelected] = useState<string[]>(savedGoals);
+  // If user has saved goals use them, otherwise default to digestion & heat for fast-track
+  const [selected, setSelected] = useState<string[]>(
+    savedGoals.length > 0 ? savedGoals : DEFAULT_PRESET_GOALS
+  );
   const [error, setError] = useState<string | null>(null);
+
+  const isDefaultPreset =
+    selected.length === DEFAULT_PRESET_GOALS.length &&
+    DEFAULT_PRESET_GOALS.every((id) => selected.includes(id));
+
+  const applyDefaultPreset = () => {
+    setError(null);
+    setSelected(DEFAULT_PRESET_GOALS);
+  };
 
   const toggleGoal = (id: string) => {
     setError(null);
     if (selected.includes(id)) {
-      setSelected((prev) => prev.filter((item) => item !== id));
+      const next = selected.filter((item) => item !== id);
+      if (next.length === 0) {
+        setError("Vui lòng chọn ít nhất 1 mục tiêu sức khỏe.");
+      }
+      setSelected(next);
     } else {
       if (selected.length >= 3) {
-        setError("Bạn chỉ có thể chọn tối đa 3 mục tiêu chính.");
+        setError("Bạn có thể chọn tối đa 3 mục tiêu để thực đơn tập trung nhất.");
         return;
       }
       setSelected((prev) => [...prev, id]);
@@ -46,47 +98,127 @@ export function Step3Form() {
   return (
     <Section spacing="md">
       <Container className="max-w-xl space-y-6">
-        <Card className="p-6 sm:p-8 space-y-6">
+        <Card className="p-6 sm:p-8 space-y-6 shadow-2xs">
           <div className="space-y-2">
-            <span className="text-xs font-semibold tracking-widest text-primary uppercase block">
-              BƯỚC 3/4 · VẤN ĐỀ VÀ MỤC TIÊU
+            <span className="text-xs font-medium text-primary tracking-wide block">
+              Bước 3/4 · Vấn đề và mục tiêu
             </span>
             <Heading level={1} size="2xl" className="font-semibold text-2xl sm:text-3xl text-text">
-              Vấn đề và mục tiêu cải thiện
+              Mục tiêu bạn muốn cải thiện
             </Heading>
             <p className="font-body text-sm text-text-muted leading-relaxed">
-              Chọn tối đa 3 mục tiêu bạn muốn cải thiện trong đợt trải nghiệm này.
+              Chọn nhanh mục tiêu chính (tối đa 3 mục tiêu) để quán cân đối công thức rau củ phù hợp.
             </p>
           </div>
 
-          <div className="flex flex-col gap-2.5">
-            {AVAILABLE_GOALS.map((goal) => {
-              const isChecked = selected.includes(goal.id);
-              return (
-                <Chip
-                  key={goal.id}
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={() => toggleGoal(goal.id)}
-                  label={goal.label}
-                />
-              );
-            })}
+          {/* Lựa chọn nhanh mặc định (Fast-track) */}
+          <div className="space-y-3">
+            <button
+              type="button"
+              onClick={applyDefaultPreset}
+              className={`w-full p-4 rounded-2xl border text-left transition-all duration-fast flex items-start gap-3.5 select-none ${
+                isDefaultPreset
+                  ? "bg-accent-soft/70 border-primary shadow-2xs"
+                  : "bg-surface border-border hover:border-primary/40 hover:bg-bg"
+              }`}
+            >
+              <div
+                className={`mt-0.5 h-5 w-5 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
+                  isDefaultPreset
+                    ? "bg-primary border-primary text-bg"
+                    : "border-border bg-bg text-transparent"
+                }`}
+                aria-hidden="true"
+              >
+                <Check size={12} strokeWidth={3} />
+              </div>
+              <div className="space-y-1 flex-1">
+                <span className="font-body text-base font-semibold text-text flex items-center gap-1.5">
+                  <Sparkles size={14} className="text-primary" />
+                  <span>Để quán tự phối mục tiêu cân bằng</span>
+                </span>
+                <p className="font-body text-xs sm:text-sm text-text-muted leading-relaxed">
+                  Tập trung xoa dịu tiêu hóa và thanh nhiệt nhẹ nhàng — phù hợp cho đa số mọi người.
+                </p>
+              </div>
+            </button>
           </div>
 
-          {error ? <p className="font-body text-xs text-error">{error}</p> : null}
+          {/* Danh sách mục tiêu chi tiết */}
+          <div className="space-y-3 pt-1">
+            <label className="font-body text-xs font-medium text-text-muted select-none block">
+              Hoặc chọn tối đa 3 mục tiêu cụ thể dưới đây:
+            </label>
+            <div className="flex flex-col gap-2.5">
+              {AVAILABLE_GOALS.map((goal) => {
+                const isChecked = selected.includes(goal.id);
+                return (
+                  <button
+                    key={goal.id}
+                    type="button"
+                    onClick={() => toggleGoal(goal.id)}
+                    className={`w-full p-3.5 rounded-2xl border text-left transition-all duration-fast flex items-start gap-3 select-none ${
+                      isChecked
+                        ? "bg-accent-soft/70 border-primary shadow-2xs"
+                        : "bg-surface border-border hover:border-primary/40 hover:bg-bg"
+                    }`}
+                  >
+                    <div
+                      className={`mt-0.5 h-4.5 w-4.5 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
+                        isChecked
+                          ? "bg-primary border-primary text-bg"
+                          : "border-border bg-bg text-transparent"
+                      }`}
+                      aria-hidden="true"
+                    >
+                      <Check size={11} strokeWidth={3} />
+                    </div>
+                    <div className="space-y-0.5 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-body text-sm font-semibold text-text">
+                          {goal.label}
+                        </span>
+                        {goal.isPopular ? (
+                          <span className="text-[11px] font-medium text-primary bg-surface px-2 py-0.5 rounded-full border border-border/70">
+                            Phổ biến
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className="font-body text-xs text-text-muted leading-relaxed">
+                        {goal.desc}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
+          {error ? (
+            <p className="font-body text-xs text-error font-medium">{error}</p>
+          ) : null}
+
+          {/* Nút hành động */}
           <div className="pt-4 flex items-center justify-between gap-3">
             <Button
               variant="ghost"
+              rounded="full"
               type="button"
               onClick={() => router.push("/consultation/body")}
-              className="px-6 rounded-full"
+              className="px-6 min-h-12 text-base font-medium select-none"
             >
-              Quay lại
+              <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" />
+              <span>{FIXED_LABELS.ACTION_BACK}</span>
             </Button>
-            <Button variant="primary" onClick={handleContinue} className="px-8 rounded-full">
-              Tiếp tục
+            <Button
+              variant="primary"
+              rounded="full"
+              type="button"
+              onClick={handleContinue}
+              className="px-8 min-h-12 text-base font-medium select-none shadow-xs"
+            >
+              <span>{FIXED_LABELS.ACTION_CONTINUE}</span>
+              <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
             </Button>
           </div>
         </Card>

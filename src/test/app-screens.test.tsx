@@ -100,28 +100,30 @@ import PolicyPage from "@/app/(site)/policy/page";
 import HomePage from "@/app/(site)/page";
 
 describe("HomePage Screen", () => {
-  it("renders hero stage ticker, headline, notification widget, 3 stages, honest math, 2 drinks, 1 article, and notice", () => {
+  it("renders hero headline, action buttons, notification widget, 3 stages, honest math, 2 drinks, 1 article, and notice", () => {
     const html = renderToStaticMarkup(<HomePage />);
 
-    // Hero & Micro-trust bar & Stage Ticker (Hum-07 2-column layout)
-    expect(html).toContain("01 Khởi đầu");
-    expect(html).toContain("02 Cân bằng");
-    expect(html).toContain("03 Chuyên sâu");
+    // Hero (Hum-07 2-column layout without stage ticker or uppercase micro-trust bar)
+    expect(html).not.toContain("01 Khởi đầu");
+    expect(html).not.toContain("100% ÉP TƯƠI");
     expect(html).toContain("Nước ép tươi, chọn");
     expect(html).toContain("lộ trình phù hợp với thể trạng");
     expect(html).toContain(FIXED_LABELS.ACTION_VIEW_MY_PLAN);
     expect(html).toContain("Xem 3 giai đoạn");
-    expect(html).toContain("Chai nước ép tươi");
-    expect(html).toContain("100% ÉP TƯƠI");
+    expect(html).toContain("Chai nước ép tươi Ép Xanh");
 
     // Notification Widget (Hum-07 hallmark)
     expect(html).toContain("Ép Xanh");
     expect(html).toContain("Chai đầu tiên lúc 7h");
 
     // Hum-07 Stage Progression & 3 Plans
-    expect(html).toContain("1.0");
-    expect(html).toContain("2.0");
-    expect(html).toContain("3.0");
+    expect(html).not.toContain("1.0");
+    expect(html).not.toContain("2.0");
+    expect(html).not.toContain("3.0");
+    expect(html).toContain("01");
+    expect(html).toContain("02");
+    expect(html).toContain("03");
+    expect(html).toContain("Tiến trình thích ứng");
     expect(html).toContain("Liệu trình Khởi đầu 1 ngày");
     expect(html).toContain("Liệu trình Cân bằng 3 ngày");
     expect(html).toContain("Liệu trình Chuyên sâu 6 ngày");

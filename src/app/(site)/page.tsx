@@ -24,17 +24,22 @@ import { SITE_CONFIG } from "@/config/site";
 const PLAN_STAGE_DETAILS: Record<
   string,
   {
-    index: string;
+    step: string;
     kicker: string;
     subheading: string;
     description: React.ReactNode;
     durationPill: string;
     intensityPill: string;
+    progressPercent: number;
+    progressLabel: string;
+    bottleSize: "md" | "lg";
+    bottleLevel: number;
+    bottleColor: "soft" | "green" | "warm";
   }
 > = {
   "1-day": {
-    index: "1.0",
-    kicker: "1.0 · KHỞI ĐẦU · 1 NGÀY LÀM QUEN",
+    step: "01",
+    kicker: "Giai đoạn 1 · Khởi đầu làm quen",
     subheading: "Đánh thức hệ tiêu hóa",
     description: (
       <>
@@ -42,12 +47,17 @@ const PLAN_STAGE_DETAILS: Record<
         <b className="font-semibold text-text">Giúp đường ruột nghỉ ngơi</b>, dễ uống và không làm xáo trộn nhịp sinh hoạt thường nhật.
       </>
     ),
-    durationPill: "1 NGÀY · 5 CHAI",
-    intensityPill: "KHỞI ĐỘNG · 5 MIN/NGỤM",
+    durationPill: "1 ngày · 5 chai",
+    intensityPill: "Khởi động nhẹ",
+    progressPercent: 33,
+    progressLabel: "Thử thách bước đầu",
+    bottleSize: "md",
+    bottleLevel: 60,
+    bottleColor: "soft",
   },
   "3-day": {
-    index: "2.0",
-    kicker: "2.0 · CÂN BẰNG · 3 NGÀY THANH LỌC",
+    step: "02",
+    kicker: "Giai đoạn 2 · Cân bằng thanh lọc",
     subheading: "Cân bằng nhịp sinh học",
     description: (
       <>
@@ -55,12 +65,17 @@ const PLAN_STAGE_DETAILS: Record<
         <b className="font-semibold text-text">Cung cấp vitamin tự nhiên</b> và rèn luyện thói quen tiếp nhận nước ép thực vật nguyên chất.
       </>
     ),
-    durationPill: "3 NGÀY · 15 CHAI",
-    intensityPill: "CÂN BẰNG · PHỔ BIẾN",
+    durationPill: "3 ngày · 15 chai",
+    intensityPill: "Cân bằng · Phổ biến nhất",
+    progressPercent: 66,
+    progressLabel: "Nhịp sinh học chuẩn",
+    bottleSize: "md",
+    bottleLevel: 75,
+    bottleColor: "green",
   },
   "6-day": {
-    index: "3.0",
-    kicker: "3.0 · CHUYÊN SÂU · 6 NGÀY PHỤC HỒI",
+    step: "03",
+    kicker: "Giai đoạn 3 · Chuyên sâu phục hồi",
     subheading: "Chăm sóc thể trạng toàn diện",
     description: (
       <>
@@ -68,8 +83,13 @@ const PLAN_STAGE_DETAILS: Record<
         <b className="font-semibold text-text">Thiết lập chu kỳ phục hồi sâu</b> cho người đã quen uống nước ép rau củ kiên trì.
       </>
     ),
-    durationPill: "6 NGÀY · 30 CHAI (2 ĐỢT)",
-    intensityPill: "CHUYÊN SÂU · KIÊN TRÌ",
+    durationPill: "6 ngày · 30 chai (2 đợt)",
+    intensityPill: "Chuyên sâu · Kiên trì",
+    progressPercent: 100,
+    progressLabel: "Chu kỳ phục hồi sâu",
+    bottleSize: "md",
+    bottleLevel: 90,
+    bottleColor: "warm",
   },
 };
 
@@ -79,55 +99,38 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col w-full">
-      {/* 1. Hero Section (Hum-07 Bubble 2-column layout - Image 6.png) */}
+      {/* 1. Hero Section (Hum-07 Bubble 2-column layout) */}
       <Section spacing="lg" className="border-b border-border bg-surface/40 overflow-hidden">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
             {/* Left Column (col-span-7) */}
             <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
-              {/* Connected Stage Ticker */}
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-border text-xs text-text-muted font-body shadow-2xs">
-                <span className="flex items-center gap-1.5 text-primary font-medium">
-                  <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-                  01 Khởi đầu
-                </span>
-                <span aria-hidden="true" className="text-border">───</span>
-                <span className="flex items-center gap-1.5 text-text-muted font-medium">
-                  <span className="h-2 w-2 rounded-full bg-border" aria-hidden="true" />
-                  02 Cân bằng
-                </span>
-                <span aria-hidden="true" className="text-border">───</span>
-                <span className="flex items-center gap-1.5 text-text-muted font-medium">
-                  <span className="h-2 w-2 rounded-full bg-border" aria-hidden="true" />
-                  03 Chuyên sâu
-                </span>
-              </div>
-
               {/* Display Headline with Accent Underline & Subhead */}
               <div className="space-y-4 max-w-2xl">
                 <Heading
                   level={1}
                   size="3xl"
-                  className="font-medium text-2xl sm:text-3xl lg:text-4xl leading-snug tracking-tight text-text"
+                  className="font-semibold text-3xl sm:text-4xl lg:text-5xl leading-tight sm:leading-[1.18] tracking-tight text-text"
                 >
                   Nước ép tươi, chọn{" "}
-                  <span className="relative inline-block text-primary decoration-primary/40 underline decoration-2 underline-offset-4">
+                  <span className="relative inline-block text-primary decoration-primary/40 underline decoration-2 underline-offset-8">
                     lộ trình phù hợp với thể trạng
                   </span>{" "}
                   của bạn.
                 </Heading>
-                <p className="text-base sm:text-lg text-text-muted font-body leading-relaxed max-w-prose">
+                <p className="text-base sm:text-lg text-text-muted font-body leading-relaxed max-w-xl">
                   Ép Xanh Chữa Lành đồng hành cùng bạn lắng nghe cơ thể, tự khám phá lộ trình
                   1, 3 hoặc 6 ngày từ thực đơn nông sản tươi mỗi ngày của quán.
                 </p>
               </div>
 
-              {/* Action Buttons Row (Dual Pill Buttons) */}
-              <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto pt-2">
+              {/* Action Buttons Row (Soft Rounded-Full Pill Buttons) */}
+              <div className="flex flex-col sm:flex-row items-center gap-3.5 w-full sm:w-auto pt-2">
                 <LinkButton
                   href={ROUTES.CONSULTATION}
                   variant="primary"
-                  className="rounded-full w-full sm:w-auto min-h-12 text-base px-7 py-3 font-semibold select-none shadow-xs"
+                  rounded="full"
+                  className="w-full sm:w-auto min-h-12 text-base px-8 py-3.5 font-medium select-none shadow-xs"
                 >
                   <span>{FIXED_LABELS.ACTION_VIEW_MY_PLAN}</span>
                   <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
@@ -135,37 +138,29 @@ export default function HomePage() {
                 <LinkButton
                   href="#stages"
                   variant="secondary"
-                  className="rounded-full w-full sm:w-auto min-h-12 text-base px-6 py-3 font-medium select-none text-text hover:text-primary hover:border-primary/50"
+                  rounded="full"
+                  className="w-full sm:w-auto min-h-12 text-base px-7 py-3.5 font-medium select-none text-text hover:text-primary hover:border-primary/50"
                 >
                   <span>Xem 3 giai đoạn</span>
                   <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
                 </LinkButton>
               </div>
-
-              {/* Micro-trust Uppercase Bar */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 text-xs font-body text-text-muted pt-1 tracking-wider uppercase">
-                <span>100% ÉP TƯƠI</span>
-                <span aria-hidden="true" className="text-border">·</span>
-                <span>KHÔNG TẠO TÀI KHOẢN</span>
-                <span aria-hidden="true" className="text-border">·</span>
-                <span>TÍNH TOÁN TRÊN MÁY BẠN</span>
-              </div>
             </div>
 
-            {/* Right Column (col-span-5) - Visual Stack (hum-07 DNA: Detox Bottle + status card) */}
-            <div className="lg:col-span-5 flex flex-col items-center gap-6">
-              {/* Detox Bottle (Hum-07 Starter Jar illustration) */}
-              <div className="p-4 rounded-3xl bg-accent-soft/30 border border-border/60 flex items-center justify-center">
+            {/* Right Column (col-span-5) - Visual Stack (Khung ảnh to, sẵn sàng cho ảnh thật) */}
+            <div className="lg:col-span-5 flex flex-col items-center gap-5 w-full max-w-md mx-auto lg:max-w-none">
+              {/* Visual Frame Container */}
+              <div className="w-full aspect-4/5 sm:aspect-square lg:aspect-4/5 max-h-[440px] rounded-3xl bg-accent-soft/30 border border-border/80 flex items-center justify-center p-6 sm:p-8 relative overflow-hidden shadow-2xs">
                 <DetoxBottle
-                  size="lg"
+                  size="xl"
                   color="green"
                   level={65}
                   label="Chai nước ép tươi Ép Xanh"
                 />
               </div>
 
-              {/* Floating Status Card (hum-07 remind widget) */}
-              <div className="w-full max-w-xs rounded-xl border border-border bg-surface p-4 space-y-1.5" role="status">
+              {/* Floating Status Card */}
+              <div className="w-full rounded-2xl border border-border bg-surface p-4 space-y-1.5 shadow-2xs" role="status">
                 <div className="flex items-center gap-2 text-xs font-medium text-primary">
                   <Bell size={14} strokeWidth={1.75} aria-hidden="true" />
                   <span className="font-semibold">Ép Xanh</span>
@@ -187,8 +182,8 @@ export default function HomePage() {
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-              <span className="text-xs font-semibold text-primary tracking-widest uppercase">
-                GIAI ĐOẠN LỘ TRÌNH
+              <span className="text-xs font-medium text-primary tracking-wider">
+                Giai đoạn lộ trình
               </span>
             </div>
             <Heading level={2} size="2xl" className="font-semibold text-2xl sm:text-3xl lg:text-4xl text-text tracking-tight">
@@ -203,12 +198,17 @@ export default function HomePage() {
           <div className="space-y-6 sm:space-y-8">
             {PLANS_DATA.map((plan, idx) => {
               const details = PLAN_STAGE_DETAILS[plan.id] ?? {
-                index: `${plan.durationDays}.0`,
-                kicker: `${plan.durationDays}.0 · LỘ TRÌNH`,
+                step: `0${idx + 1}`,
+                kicker: `Giai đoạn ${idx + 1}`,
                 subheading: plan.title,
                 description: plan.description,
-                durationPill: `${plan.durationDays} NGÀY`,
-                intensityPill: "TIÊU CHUẨN",
+                durationPill: `${plan.durationDays} ngày`,
+                intensityPill: "Tiêu chuẩn",
+                progressPercent: Math.round(((idx + 1) / 3) * 100),
+                progressLabel: "Tiến trình thích ứng",
+                bottleSize: "md" as const,
+                bottleLevel: 65,
+                bottleColor: "green" as const,
               };
               const isLast = idx === PLANS_DATA.length - 1;
 
@@ -231,32 +231,29 @@ export default function HomePage() {
                   {/* Left Spine: Squircle Node & Vertical Connecting Line */}
                   <div className="flex flex-col items-center shrink-0">
                     <div
-                      className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-heading font-semibold text-base sm:text-lg select-none transition-colors ${nodeColor}`}
+                      className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-heading font-semibold text-base sm:text-lg select-none transition-all duration-normal shadow-2xs ring-4 ring-surface ${nodeColor}`}
                     >
-                      <span>
-                        {details.index.split(".")[0]}
-                        <span className="text-xs font-normal">.{details.index.split(".")[1]}</span>
-                      </span>
+                      <span>{details.step}</span>
                     </div>
                     {!isLast ? (
                       <div
-                        className="w-0.5 bg-border group-hover:bg-primary/40 flex-1 my-2 transition-colors"
+                        className="w-1 bg-border/80 group-hover:bg-primary/50 flex-1 my-3 rounded-full transition-colors duration-normal"
                         aria-hidden="true"
                       />
                     ) : null}
                   </div>
 
                   {/* Stage Card (Hum-07 stage__panel) */}
-                  <div className="flex-1 rounded-3xl border border-border bg-surface p-6 sm:p-8 hover:border-primary/50 transition-colors duration-fast shadow-2xs">
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+                  <div className="flex-1 rounded-3xl border border-border bg-surface p-6 sm:p-8 hover:border-primary/50 transition-all duration-fast shadow-2xs">
+                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8">
                       {/* Left Copy Column */}
                       <div className="flex-1 space-y-4">
                         {/* Kicker Header */}
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="text-xs font-semibold tracking-wider text-primary uppercase block">
+                        <div className="flex items-center justify-between gap-2 flex-wrap">
+                          <span className="text-xs font-semibold tracking-wide text-primary block">
                             {details.kicker}
                           </span>
-                          <span className="text-xs font-medium text-text-muted">
+                          <span className="text-xs font-medium text-text-muted px-2.5 py-0.5 rounded-full bg-bg border border-border/70">
                             {plan.title}
                           </span>
                         </div>
@@ -271,16 +268,34 @@ export default function HomePage() {
                           </p>
                         </div>
 
-                        {/* Metadata Chips (Hum-07 style with colored dots) */}
+                        {/* Metadata Chips */}
                         <div className="flex flex-wrap items-center gap-2 pt-1">
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-accent-soft/70 text-text font-medium text-xs border border-border/40">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft/70 text-text font-medium text-xs border border-border/40">
                             <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
                             {details.durationPill}
                           </span>
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-bg text-text-muted font-medium text-xs border border-border/70">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bg text-text-muted font-medium text-xs border border-border/70">
                             <span className="h-1.5 w-1.5 rounded-full bg-text-muted/60" aria-hidden="true" />
                             {details.intensityPill}
                           </span>
+                        </div>
+
+                        {/* Card Progress: Visual Progression Bar */}
+                        <div className="space-y-1.5 pt-2 max-w-sm">
+                          <div className="flex items-center justify-between text-xs font-medium">
+                            <span className="text-text-muted flex items-center gap-1.5">
+                              <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+                              Tiến trình thích ứng:{" "}
+                              <span className="text-text font-semibold">{details.progressLabel}</span>
+                            </span>
+                            <span className="text-primary font-semibold">{details.progressPercent}%</span>
+                          </div>
+                          <div className="h-2 w-full rounded-full bg-bg border border-border/70 overflow-hidden p-0.5">
+                            <div
+                              className="h-full rounded-full bg-primary transition-all duration-normal"
+                              style={{ width: `${details.progressPercent}%` }}
+                            />
+                          </div>
                         </div>
 
                         {/* Action Link */}
@@ -295,14 +310,14 @@ export default function HomePage() {
                         </div>
                       </div>
 
-                      {/* Right Column: Stage Art Container with DetoxBottle */}
+                      {/* Right Column: Stage Art Container with LARGER DetoxBottle */}
                       <div
-                        className={`shrink-0 w-28 h-32 sm:w-36 sm:h-40 rounded-2xl border border-border/60 flex items-center justify-center p-3 self-center md:self-start ${artBg}`}
+                        className={`shrink-0 w-36 h-44 sm:w-48 sm:h-56 rounded-3xl border border-border/60 flex items-center justify-center p-4 sm:p-6 self-center lg:self-center shadow-2xs ${artBg}`}
                       >
                         <DetoxBottle
-                          size="sm"
-                          color={idx === 0 ? "soft" : idx === 1 ? "green" : "warm"}
-                          level={idx === 0 ? 55 : idx === 1 ? 75 : 90}
+                          size="md"
+                          color={details.bottleColor}
+                          level={details.bottleLevel}
                           label={plan.title}
                         />
                       </div>
@@ -320,7 +335,7 @@ export default function HomePage() {
         <Container className="space-y-8">
           <div className="space-y-1 max-w-xl">
             <span className="text-xs font-medium text-primary tracking-wide block">
-              CON SỐ MINH BẠCH
+              Con số minh bạch
             </span>
             <Heading level={2} size="2xl" className="font-medium text-xl sm:text-2xl text-text">
               Thực tế & Nguyên bản.
@@ -370,7 +385,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div className="space-y-1">
               <span className="text-xs font-medium text-primary tracking-wide block">
-                THỰC ĐƠN TƯƠI
+                Thực đơn tươi
               </span>
               <Heading level={2} size="2xl" className="font-medium text-xl sm:text-2xl text-text">
                 Thức uống từ nông sản tươi
@@ -443,7 +458,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div className="space-y-1">
               <span className="text-xs font-medium text-primary tracking-wide block">
-                GÓC KIẾN THỨC
+                Góc kiến thức
               </span>
               <Heading level={2} size="2xl" className="font-medium text-xl sm:text-2xl text-text">
                 Hiểu đúng để chăm sóc cơ thể

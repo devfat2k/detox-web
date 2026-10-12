@@ -2,12 +2,13 @@ import React from "react";
 import Link, { type LinkProps } from "next/link";
 import { ExternalLink } from "lucide-react";
 import { FIXED_LABELS } from "@/config/copy";
-import { buttonVariants, type ButtonVariant } from "./button";
+import { buttonVariants, type ButtonVariant, type ButtonRounded } from "./button";
 
 export interface LinkButtonProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> {
   href: LinkProps<string>["href"];
   variant?: ButtonVariant;
+  rounded?: ButtonRounded;
   isExternal?: boolean;
   showExternalIcon?: boolean;
   ref?: React.Ref<HTMLAnchorElement>;
@@ -20,6 +21,7 @@ export interface LinkButtonProps
 export function LinkButton({
   href,
   variant = "primary",
+  rounded,
   className,
   children,
   isExternal,
@@ -60,7 +62,7 @@ export function LinkButton({
         href={hrefStr}
         target="_blank"
         rel="noopener noreferrer"
-        className={buttonVariants({ variant, className })}
+        className={buttonVariants({ variant, rounded, className })}
         {...props}
       >
         {content}
@@ -72,7 +74,7 @@ export function LinkButton({
     <Link
       ref={ref}
       href={href}
-      className={buttonVariants({ variant, className })}
+      className={buttonVariants({ variant, rounded, className })}
       {...props}
     >
       {content}
