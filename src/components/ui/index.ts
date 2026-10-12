@@ -9,3 +9,4 @@ export * from "./notice";
 export * from "./skeleton";
 export * from "./kicker";
 export * from "./reveal";
+export * from "./detox-bottle";

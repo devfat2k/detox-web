@@ -17,12 +17,13 @@ import { ROUTES } from "@/config/routes";
 
 describe("Layout Components (Stage E)", () => {
   describe("Header", () => {
-    it("renders brand name, 4 navigation links, and prominent CTA button", () => {
+    it("renders brand name, logo image, 4 navigation links, and prominent CTA button", () => {
       const html = renderToStaticMarkup(<Header />);
 
-      // Brand link to home
+      // Brand link to home with logo
       expect(html).toContain(SITE_CONFIG.name);
       expect(html).toContain('href="/"');
+      expect(html).toContain("logo.png");
 
       // 4 Navigation items
       expect(html).toContain(FIXED_LABELS.NAV_CONSULTATION);
@@ -37,11 +38,12 @@ describe("Layout Components (Stage E)", () => {
   });
 
   describe("Footer", () => {
-    it("renders shop name, external Threads link, policy link, and medical disclaimer", () => {
+    it("renders shop name, logo image, external Threads link, policy link, and medical disclaimer", () => {
       const html = renderToStaticMarkup(<Footer />);
 
       expect(html).toContain(SITE_CONFIG.name);
       expect(html).toContain(SITE_CONFIG.description);
+      expect(html).toContain("logo.png");
 
       // Threads link
       expect(html).toContain(FIXED_LABELS.ACTION_MESSAGE_THREADS);

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import { SITE_CONFIG } from "@/config/site";
 import { FIXED_LABELS } from "@/config/copy";
@@ -14,17 +15,28 @@ export function Footer() {
   return (
     <footer className="w-full border-t border-border bg-surface py-8 sm:py-12 mt-auto">
       <Container className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border pb-6">
-          <div className="space-y-1">
-            <span className="font-heading text-lg font-semibold tracking-tight text-text">
-              {SITE_CONFIG.name}
-            </span>
-            <p className="text-text-muted font-body text-sm max-w-prose">
-              {SITE_CONFIG.description}
-            </p>
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 border-b border-border pb-6">
+          <div className="flex items-start gap-3.5">
+            <div className="relative h-10 w-10 sm:h-12 sm:w-12 overflow-hidden rounded-full border border-border/80 bg-surface shrink-0 mt-0.5">
+              <Image
+                src="/images/logo.png"
+                alt={SITE_CONFIG.name}
+                fill
+                sizes="(max-width: 640px) 40px, 48px"
+                className="object-cover"
+              />
+            </div>
+            <div className="space-y-1">
+              <span className="font-heading text-lg font-semibold tracking-tight text-text block">
+                {SITE_CONFIG.name}
+              </span>
+              <p className="text-text-muted font-body text-sm max-w-prose">
+                {SITE_CONFIG.description}
+              </p>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 font-body text-sm">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 font-body text-sm pt-1">
             <a
               href={SITE_CONFIG.threadsUrl}
               target="_blank"

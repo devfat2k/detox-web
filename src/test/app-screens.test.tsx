@@ -86,6 +86,49 @@ import DrinkDetailPage from "@/app/(site)/drinks/[slug]/page";
 import ArticlesPage from "@/app/(site)/articles/page";
 import ArticleDetailPage from "@/app/(site)/articles/[slug]/page";
 import PolicyPage from "@/app/(site)/policy/page";
+import HomePage from "@/app/(site)/page";
+
+describe("HomePage Screen", () => {
+  it("renders hero stage ticker, headline, notification widget, 3 stages, honest math, 2 drinks, 1 article, and notice", () => {
+    const html = renderToStaticMarkup(<HomePage />);
+
+    // Hero & Micro-trust bar & Stage Ticker (Hum-07 2-column layout)
+    expect(html).toContain("01 Khởi đầu");
+    expect(html).toContain("02 Cân bằng");
+    expect(html).toContain("03 Chuyên sâu");
+    expect(html).toContain("Nước ép tươi, chọn");
+    expect(html).toContain("lộ trình phù hợp với thể trạng");
+    expect(html).toContain(FIXED_LABELS.ACTION_VIEW_MY_PLAN);
+    expect(html).toContain("Xem 3 giai đoạn");
+    expect(html).toContain("Chai nước ép tươi");
+    expect(html).toContain("100% ÉP TƯƠI");
+
+    // Notification Widget (Hum-07 hallmark)
+    expect(html).toContain("Ép Xanh");
+    expect(html).toContain("Chai đầu tiên lúc 7h");
+
+    // Hum-07 Stage Progression & 3 Plans
+    expect(html).toContain("1.0");
+    expect(html).toContain("2.0");
+    expect(html).toContain("3.0");
+    expect(html).toContain("Liệu trình Khởi đầu 1 ngày");
+    expect(html).toContain("Liệu trình Cân bằng 3 ngày");
+    expect(html).toContain("Liệu trình Chuyên sâu 6 ngày");
+
+    // Hum-07 Honest Math
+    expect(html).toContain("Thực tế &amp; Nguyên bản.");
+    expect(html).toContain("100%");
+    expect(html).toContain("0");
+
+    // 2 Featured drinks
+    expect(html).toContain("Xanh Tươi Cần Tây Táo");
+    expect(html).toContain("Cam Cà Rốt Ấm Nồng");
+
+    // 1 Article & Notice
+    expect(html).toContain("Hiểu đúng về cơ chế tự thải độc của gan và thận");
+    expect(html).toContain(FIXED_LABELS.ACTION_MESSAGE_THREADS);
+  });
+});
 
 describe("Scaffolded Route Screens Smoke Test", () => {
   it("renders consultation step 1 page", () => {
