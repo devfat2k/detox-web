@@ -12,7 +12,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
   const isKnowledge = article.category === "knowledge";
 
   return (
-    <Card className="flex flex-col justify-between p-5 sm:p-6 bg-surface hover:border-primary/50 transition-all duration-200 group">
+    <Card className="flex flex-col justify-between p-5 sm:p-6 bg-surface hover:border-primary/50 hover:-translate-y-1 hover:shadow-2xs transition-all duration-300 ease-soft group">
       <div className="space-y-4">
         {/* Khung trực quan chủ đề Hum-07 tỷ lệ aspect-16/10 thanh lịch */}
         <div className="w-full aspect-16/10 rounded-xl bg-accent-soft/30 border border-border/40 flex items-center justify-center p-4">

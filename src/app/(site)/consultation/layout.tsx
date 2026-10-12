@@ -26,7 +26,9 @@ export default function ConsultationLayout({
     <ConsultationProvider>
       <div className="flex min-h-[calc(100vh-160px)] flex-col">
         {isStepperPage && <StepperHeader currentStep={getStep(pathname)} />}
-        <div className="flex-1">{children}</div>
+        <div key={pathname} className="flex-1 animate-fade-in">
+          {children}
+        </div>
       </div>
     </ConsultationProvider>
   );

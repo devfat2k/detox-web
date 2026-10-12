@@ -4,15 +4,22 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Clock, Bell } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Clock,
+  Bell,
+  Sparkles,
+  Check,
+} from "lucide-react";
 import {
   Container,
   Section,
   Heading,
   Card,
   LinkButton,
-  Notice,
   DetoxBottle,
+  DisclaimerNote,
 } from "@/components/ui";
 import { PLANS_DATA } from "@/data/plans";
 import { DRINKS_DATA } from "@/data/drinks";
@@ -20,6 +27,7 @@ import { ARTICLES_DATA } from "@/data/articles";
 import { FIXED_LABELS } from "@/config/copy";
 import { ROUTES } from "@/config/routes";
 import { SITE_CONFIG } from "@/config/site";
+import { DetoxMechanismSection } from "@/features/home/components/DetoxMechanismSection";
 
 const PLAN_STAGE_DETAILS: Record<
   string,
@@ -43,8 +51,10 @@ const PLAN_STAGE_DETAILS: Record<
     subheading: "Đánh thức hệ tiêu hóa",
     description: (
       <>
-        Năm chai nước ép xanh thanh nhẹ cho ngày nghỉ cuối tuần hoặc lần đầu làm quen với detox.{" "}
-        <b className="font-semibold text-text">Giúp đường ruột nghỉ ngơi</b>, dễ uống và không làm xáo trộn nhịp sinh hoạt thường nhật.
+        Năm chai nước ép xanh thanh nhẹ cho ngày nghỉ cuối tuần hoặc lần đầu làm
+        quen với detox.{" "}
+        <b className="font-semibold text-text">Giúp đường ruột nghỉ ngơi</b>, dễ
+        uống và không làm xáo trộn nhịp sinh hoạt thường nhật.
       </>
     ),
     durationPill: "1 ngày · 5 chai",
@@ -61,8 +71,10 @@ const PLAN_STAGE_DETAILS: Record<
     subheading: "Cân bằng nhịp sinh học",
     description: (
       <>
-        Mười lăm chai trải đều ba ngày, luân phiên cần tây, táo xanh, cà rốt và củ dền cùng gừng ấm.{" "}
-        <b className="font-semibold text-text">Cung cấp vitamin tự nhiên</b> và rèn luyện thói quen tiếp nhận nước ép thực vật nguyên chất.
+        Mười lăm chai trải đều ba ngày, luân phiên cần tây, táo xanh, cà rốt và
+        củ dền cùng gừng ấm.{" "}
+        <b className="font-semibold text-text">Cung cấp vitamin tự nhiên</b> và
+        rèn luyện thói quen tiếp nhận nước ép thực vật nguyên chất.
       </>
     ),
     durationPill: "3 ngày · 15 chai",
@@ -79,8 +91,10 @@ const PLAN_STAGE_DETAILS: Record<
     subheading: "Chăm sóc thể trạng toàn diện",
     description: (
       <>
-        Ba mươi chai chia thành hai đợt giao tươi để đảm bảo chất lượng dinh dưỡng tối đa.{" "}
-        <b className="font-semibold text-text">Thiết lập chu kỳ phục hồi sâu</b> cho người đã quen uống nước ép rau củ kiên trì.
+        Ba mươi chai chia thành hai đợt giao tươi để đảm bảo chất lượng dinh
+        dưỡng tối đa.{" "}
+        <b className="font-semibold text-text">Thiết lập chu kỳ phục hồi sâu</b>{" "}
+        cho người đã quen uống nước ép rau củ kiên trì.
       </>
     ),
     durationPill: "6 ngày · 30 chai (2 đợt)",
@@ -99,16 +113,129 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col w-full">
-      {/* 1. Hero Section (Hum-07 Bubble 2-column layout) */}
-      <Section spacing="lg" className="border-b border-border bg-surface/40 overflow-hidden">
+      {/* 1. Phần Tư Vấn Lộ Trình: Section đầu tiên, nổi bật nhất, đập ngay vào mắt người dùng */}
+      <Section
+        spacing="md"
+        className="border-b border-border bg-accent-soft/35 relative overflow-hidden"
+      >
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-            {/* Left Column (col-span-7) */}
-            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
-              {/* Display Headline with Accent Underline & Subhead */}
-              <div className="space-y-4 max-w-2xl">
+          <div className="max-w-4xl mx-auto rounded-3xl bg-surface border-2 border-primary/40 p-6 sm:p-10 shadow-sm space-y-6 sm:space-y-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/80 pb-5">
+              <div className="space-y-1.5">
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-accent-soft text-primary font-heading font-semibold text-xs border border-primary/20">
+                  <Sparkles size={13} className="text-primary" />
+                  <span>Tư vấn lộ trình thể trạng</span>
+                </div>
                 <Heading
                   level={1}
+                  size="2xl"
+                  className="font-semibold text-2xl sm:text-3xl lg:text-4xl text-text leading-tight tracking-tight"
+                >
+                  Nhận lộ trình nước ép phù hợp với thể trạng của bạn
+                </Heading>
+              </div>
+
+              <LinkButton
+                href={ROUTES.CONSULTATION}
+                variant="primary"
+                rounded="full"
+                className="min-h-12 px-7 text-base font-semibold shadow-xs shrink-0 self-start sm:self-auto transition-transform duration-200 hover:-translate-y-0.5 active:scale-95"
+              >
+                <span>{FIXED_LABELS.ACTION_VIEW_MY_PLAN}</span>
+                <ArrowRight size={18} strokeWidth={2} />
+              </LinkButton>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-sm sm:text-base text-text-muted font-body leading-relaxed">
+                Các bạn, các chị hoặc các mom cho shop xin một ít thông tin nhỏ
+                về thể trạng hiện tại để nhận ngay gợi ý phân bổ 5 chai rau củ
+                tươi trong ngày:
+              </p>
+
+              {/* 3 Thẻ nhu cầu thể trạng đập ngay vào mắt */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                <Link
+                  href={ROUTES.CONSULTATION}
+                  className="p-4 rounded-2xl bg-bg border border-border/80 flex flex-col justify-between gap-2.5 transition-all duration-200 hover:border-primary hover:bg-accent-soft/40 hover:-translate-y-0.5 group"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="h-6 w-6 rounded-full bg-accent-soft text-primary flex items-center justify-center shrink-0">
+                      <Check size={13} strokeWidth={2.5} />
+                    </div>
+                    <span className="font-heading font-semibold text-sm text-text group-hover:text-primary transition-colors">
+                      Đầy bụng, khó tiêu
+                    </span>
+                  </div>
+                  <p className="text-xs text-text-muted leading-relaxed font-body">
+                    Hệ tiêu hóa cần khoảng nghỉ nhẹ nhàng với cần tây, dưa leo
+                    và táo xanh.
+                  </p>
+                </Link>
+
+                <Link
+                  href={ROUTES.CONSULTATION}
+                  className="p-4 rounded-2xl bg-bg border border-border/80 flex flex-col justify-between gap-2.5 transition-all duration-200 hover:border-primary hover:bg-accent-soft/40 hover:-translate-y-0.5 group"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="h-6 w-6 rounded-full bg-accent-soft text-primary flex items-center justify-center shrink-0">
+                      <Check size={13} strokeWidth={2.5} />
+                    </div>
+                    <span className="font-heading font-semibold text-sm text-text group-hover:text-primary transition-colors">
+                      Nóng trong, háo nước
+                    </span>
+                  </div>
+                  <p className="text-xs text-text-muted leading-relaxed font-body">
+                    Thanh nhiệt tự nhiên với nhiều khoáng chất và vitamin từ củ
+                    quả tươi.
+                  </p>
+                </Link>
+
+                <Link
+                  href={ROUTES.CONSULTATION}
+                  className="p-4 rounded-2xl bg-bg border border-border/80 flex flex-col justify-between gap-2.5 transition-all duration-200 hover:border-primary hover:bg-accent-soft/40 hover:-translate-y-0.5 group"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="h-6 w-6 rounded-full bg-accent-soft text-primary flex items-center justify-center shrink-0">
+                      <Check size={13} strokeWidth={2.5} />
+                    </div>
+                    <span className="font-heading font-semibold text-sm text-text group-hover:text-primary transition-colors">
+                      Làm quen nhẹ 1 ngày
+                    </span>
+                  </div>
+                  <p className="text-xs text-text-muted leading-relaxed font-body">
+                    Bắt đầu với các vị thanh ngọt, êm dịu không làm xáo trộn
+                    nhịp sinh hoạt.
+                  </p>
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-1 border-t border-border/60">
+              <DisclaimerNote className="text-left" />
+              <Link
+                href={ROUTES.CONSULTATION}
+                className="inline-flex items-center gap-1.5 text-base font-semibold text-primary hover:underline self-start sm:self-auto shrink-0"
+              >
+                <span>Bắt đầu khảo sát chi tiết</span>
+                <ArrowRight size={16} strokeWidth={2} />
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* 2. Hero Section như ban đầu: chuyển xuống vị trí thứ 2 */}
+      <Section
+        spacing="lg"
+        className="border-b border-border bg-surface/40 overflow-hidden"
+      >
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
+              <div className="space-y-4 max-w-2xl">
+                <Heading
+                  level={2}
                   size="3xl"
                   className="font-semibold text-3xl sm:text-4xl lg:text-5xl leading-tight sm:leading-[1.18] tracking-tight text-text"
                 >
@@ -119,18 +246,18 @@ export default function HomePage() {
                   của bạn.
                 </Heading>
                 <p className="text-base sm:text-lg text-text-muted font-body leading-relaxed max-w-xl">
-                  Ép Xanh Chữa Lành đồng hành cùng bạn lắng nghe cơ thể, tự khám phá lộ trình
-                  1, 3 hoặc 6 ngày từ thực đơn nông sản tươi mỗi ngày của quán.
+                  Các bạn, các chị hoặc các mom cho shop xin một ít thông tin
+                  nhỏ để giúp mình có cái nhìn rõ hơn về cơ thể và lộ trình phù
+                  hợp nhé.
                 </p>
               </div>
 
-              {/* Action Buttons Row (Soft Rounded-Full Pill Buttons) */}
               <div className="flex flex-col sm:flex-row items-center gap-3.5 w-full sm:w-auto pt-2">
                 <LinkButton
                   href={ROUTES.CONSULTATION}
                   variant="primary"
                   rounded="full"
-                  className="w-full sm:w-auto min-h-12 text-base px-8 py-3.5 font-medium select-none shadow-xs"
+                  className="w-full sm:w-auto min-h-12 text-base px-8 py-3.5 font-medium select-none shadow-xs transition-transform duration-200 hover:-translate-y-0.5 active:scale-95"
                 >
                   <span>{FIXED_LABELS.ACTION_VIEW_MY_PLAN}</span>
                   <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
@@ -145,12 +272,12 @@ export default function HomePage() {
                   <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
                 </LinkButton>
               </div>
+
+              <DisclaimerNote className="text-left sm:text-left pt-1" />
             </div>
 
-            {/* Right Column (col-span-5) - Visual Stack (Khung ảnh to, sẵn sàng cho ảnh thật) */}
             <div className="lg:col-span-5 flex flex-col items-center gap-5 w-full max-w-md mx-auto lg:max-w-none">
-              {/* Visual Frame Container */}
-              <div className="w-full aspect-4/5 sm:aspect-square lg:aspect-4/5 max-h-[440px] rounded-3xl bg-accent-soft/30 border border-border/80 flex items-center justify-center p-6 sm:p-8 relative overflow-hidden shadow-2xs">
+              <div className="w-full aspect-4/5 sm:aspect-square lg:aspect-4/5 max-h-110 rounded-3xl bg-accent-soft/30 border border-border/80 flex items-center justify-center p-6 sm:p-8 relative overflow-hidden shadow-2xs">
                 <DetoxBottle
                   size="xl"
                   color="green"
@@ -159,15 +286,18 @@ export default function HomePage() {
                 />
               </div>
 
-              {/* Floating Status Card */}
-              <div className="w-full rounded-2xl border border-border bg-surface p-4 space-y-1.5 shadow-2xs" role="status">
+              <div
+                className="w-full rounded-2xl border border-border bg-surface p-4 space-y-1.5 shadow-2xs"
+                role="status"
+              >
                 <div className="flex items-center gap-2 text-xs font-medium text-primary">
                   <Bell size={14} strokeWidth={1.75} aria-hidden="true" />
                   <span className="font-semibold">Ép Xanh</span>
                   <span className="text-text-muted">· mỗi sáng</span>
                 </div>
                 <p className="text-sm text-text font-body leading-relaxed">
-                  Chai đầu tiên lúc 7h — rau củ tươi ép chậm, uống từ từ để cơ thể hấp thu.
+                  Chai đầu tiên lúc 7h — rau củ tươi ép chậm, uống từ từ để cơ
+                  thể hấp thu.
                 </p>
               </div>
             </div>
@@ -175,23 +305,32 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* 2. Stages Section (Hum-07 vertical timeline layout - "Four stages, start to slice.") */}
+      {/* 3. Section Giải thích cơ chế Detox & Mô phỏng lộ trình 3 ngày (Redux-style flow) */}
+      <DetoxMechanismSection />
+
       <Section id="stages" spacing="md" className="border-b border-border">
         <Container className="space-y-8 sm:space-y-12">
-          {/* Section Header with Dot Eyebrow */}
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
+              <span
+                className="h-2 w-2 rounded-full bg-primary"
+                aria-hidden="true"
+              />
               <span className="text-xs font-medium text-primary tracking-wider">
                 Giai đoạn lộ trình
               </span>
             </div>
-            <Heading level={2} size="2xl" className="font-semibold text-2xl sm:text-3xl lg:text-4xl text-text tracking-tight">
+            <Heading
+              level={2}
+              size="2xl"
+              className="font-semibold text-2xl sm:text-3xl lg:text-4xl text-text tracking-tight"
+            >
               Ba giai đoạn, từ làm quen đến chuyên sâu.
             </Heading>
             <p className="text-base text-text-muted font-body leading-relaxed max-w-xl">
-              Mỗi liệu trình phục vụ một nhu cầu thể trạng riêng biệt. Bạn chỉ cần chọn
-              gói phù hợp — quán chuẩn bị theo thực đơn nông sản tươi mỗi ngày.
+              Mỗi liệu trình phục vụ một nhu cầu thể trạng riêng biệt. Bạn chỉ
+              cần chọn gói phù hợp — quán chuẩn bị theo thực đơn nông sản tươi
+              mỗi ngày.
             </p>
           </div>
 
@@ -216,18 +355,21 @@ export default function HomePage() {
                 idx === 0
                   ? "bg-accent-soft text-primary border border-primary/25"
                   : idx === 1
-                  ? "bg-primary text-bg border border-primary shadow-xs"
-                  : "bg-accent-subtle text-text border border-border";
+                    ? "bg-primary text-bg border border-primary shadow-xs"
+                    : "bg-accent-subtle text-text border border-border";
 
               const artBg =
                 idx === 0
                   ? "bg-accent-soft/30"
                   : idx === 1
-                  ? "bg-accent-soft/60"
-                  : "bg-accent-subtle/30";
+                    ? "bg-accent-soft/60"
+                    : "bg-accent-subtle/30";
 
               return (
-                <div key={plan.id} className="flex items-stretch gap-4 sm:gap-6 group">
+                <div
+                  key={plan.id}
+                  className="flex items-stretch gap-4 sm:gap-6 group"
+                >
                   {/* Left Spine: Squircle Node & Vertical Connecting Line */}
                   <div className="flex flex-col items-center shrink-0">
                     <div
@@ -244,7 +386,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Stage Card (Hum-07 stage__panel) */}
-                  <div className="flex-1 rounded-3xl border border-border bg-surface p-6 sm:p-8 hover:border-primary/50 transition-all duration-fast shadow-2xs">
+                  <div className="flex-1 rounded-3xl border border-border bg-surface p-6 sm:p-8 hover:border-primary/50 transition-all duration-300 ease-soft hover:-translate-y-1 hover:shadow-2xs">
                     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8">
                       {/* Left Copy Column */}
                       <div className="flex-1 space-y-4">
@@ -260,7 +402,11 @@ export default function HomePage() {
 
                         {/* Title & Description */}
                         <div className="space-y-2">
-                          <Heading level={3} size="xl" className="font-semibold text-xl sm:text-2xl text-text tracking-tight">
+                          <Heading
+                            level={3}
+                            size="xl"
+                            className="font-semibold text-xl sm:text-2xl text-text tracking-tight"
+                          >
                             {details.subheading}
                           </Heading>
                           <p className="text-sm sm:text-base text-text-muted font-body leading-relaxed">
@@ -271,11 +417,17 @@ export default function HomePage() {
                         {/* Metadata Chips */}
                         <div className="flex flex-wrap items-center gap-2 pt-1">
                           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft/70 text-text font-medium text-xs border border-border/40">
-                            <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+                            <span
+                              className="h-1.5 w-1.5 rounded-full bg-primary"
+                              aria-hidden="true"
+                            />
                             {details.durationPill}
                           </span>
                           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bg text-text-muted font-medium text-xs border border-border/70">
-                            <span className="h-1.5 w-1.5 rounded-full bg-text-muted/60" aria-hidden="true" />
+                            <span
+                              className="h-1.5 w-1.5 rounded-full bg-text-muted/60"
+                              aria-hidden="true"
+                            />
                             {details.intensityPill}
                           </span>
                         </div>
@@ -284,11 +436,18 @@ export default function HomePage() {
                         <div className="space-y-1.5 pt-2 max-w-sm">
                           <div className="flex items-center justify-between text-xs font-medium">
                             <span className="text-text-muted flex items-center gap-1.5">
-                              <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+                              <span
+                                className="h-1.5 w-1.5 rounded-full bg-primary"
+                                aria-hidden="true"
+                              />
                               Tiến trình thích ứng:{" "}
-                              <span className="text-text font-semibold">{details.progressLabel}</span>
+                              <span className="text-text font-semibold">
+                                {details.progressLabel}
+                              </span>
                             </span>
-                            <span className="text-primary font-semibold">{details.progressPercent}%</span>
+                            <span className="text-primary font-semibold">
+                              {details.progressPercent}%
+                            </span>
                           </div>
                           <div className="h-2 w-full rounded-full bg-bg border border-border/70 overflow-hidden p-0.5">
                             <div
@@ -302,10 +461,15 @@ export default function HomePage() {
                         <div className="pt-2">
                           <Link
                             href={`/plans/${plan.id}`}
-                            className="inline-flex items-center gap-1.5 min-h-10 text-sm font-semibold text-primary hover:underline transition-colors select-none"
+                            className="inline-flex items-center gap-1.5 min-h-10 text-sm font-semibold text-primary hover:underline transition-colors select-none group/link"
                           >
                             <span>Xem chi tiết liệu trình</span>
-                            <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+                            <ArrowRight
+                              size={15}
+                              strokeWidth={1.75}
+                              aria-hidden="true"
+                              className="transition-transform duration-200 group-hover/link:translate-x-1"
+                            />
                           </Link>
                         </div>
                       </div>
@@ -319,6 +483,7 @@ export default function HomePage() {
                           color={details.bottleColor}
                           level={details.bottleLevel}
                           label={plan.title}
+                          className="transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
                     </div>
@@ -326,6 +491,47 @@ export default function HomePage() {
                 </div>
               );
             })}
+          </div>
+
+          {/* Spotlight Banner: Đón đầu người dùng còn phân vân, tối đa hóa chuyển đổi vào Tư Vấn */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-accent-soft/40 border border-primary/30 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-2xs">
+            <div className="space-y-2 text-center lg:text-left max-w-xl">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface text-primary font-heading font-medium text-xs border border-border">
+                <Sparkles size={12} className="text-primary" />
+                <span>Bạn còn phân vân?</span>
+              </div>
+              <h3 className="font-heading font-semibold text-xl sm:text-2xl text-text">
+                Chưa biết thể trạng mình phù hợp với gói nào?
+              </h3>
+              <p className="font-body text-sm text-text-muted leading-relaxed">
+                Đừng lo lắng, hãy làm bài trắc nghiệm 1 phút để Ép Xanh phân
+                tích BMI và gợi ý thực đơn 5 chai/ngày phù hợp với cơ thể bạn
+                nhất.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto shrink-0">
+              <LinkButton
+                href={ROUTES.CONSULTATION}
+                variant="primary"
+                rounded="full"
+                className="w-full sm:w-auto min-h-12 px-7 text-sm font-semibold shadow-xs justify-center transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+              >
+                <span>Tư vấn lộ trình ngay</span>
+                <ArrowRight size={16} strokeWidth={2} />
+              </LinkButton>
+              <LinkButton
+                href={SITE_CONFIG.threadsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="secondary"
+                rounded="full"
+                className="w-full sm:w-auto min-h-12 px-6 text-sm font-medium justify-center"
+              >
+                <span>Nhắn shop trên Threads</span>
+                <ArrowUpRight size={15} strokeWidth={1.75} />
+              </LinkButton>
+            </div>
           </div>
         </Container>
       </Section>
@@ -337,7 +543,11 @@ export default function HomePage() {
             <span className="text-xs font-medium text-primary tracking-wide block">
               Con số minh bạch
             </span>
-            <Heading level={2} size="2xl" className="font-medium text-xl sm:text-2xl text-text">
+            <Heading
+              level={2}
+              size="2xl"
+              className="font-medium text-xl sm:text-2xl text-text"
+            >
               Thực tế & Nguyên bản.
             </Heading>
             <p className="text-sm text-text-muted font-body">
@@ -350,9 +560,12 @@ export default function HomePage() {
               <span className="font-heading font-semibold text-3xl sm:text-4xl text-primary tracking-tight block">
                 100%
               </span>
-              <span className="text-sm font-medium text-text block">Nông sản tươi ép</span>
+              <span className="text-sm font-medium text-text block">
+                Nông sản tươi ép
+              </span>
               <p className="text-xs text-text-muted font-body leading-relaxed">
-                Rau củ quả tươi từ các nông trại Việt Nam, ép chậm nguyên chất mỗi sáng.
+                Rau củ quả tươi từ các nông trại Việt Nam, ép chậm nguyên chất
+                mỗi sáng.
               </p>
             </div>
 
@@ -360,9 +573,12 @@ export default function HomePage() {
               <span className="font-heading font-semibold text-3xl sm:text-4xl text-primary tracking-tight block">
                 0
               </span>
-              <span className="text-sm font-medium text-text block">Đường cát & Phụ gia</span>
+              <span className="text-sm font-medium text-text block">
+                Đường cát & Phụ gia
+              </span>
               <p className="text-xs text-text-muted font-body leading-relaxed">
-                Vị ngọt hoàn toàn tự nhiên từ táo, dứa, cà rốt và củ dền tươi nguyên.
+                Vị ngọt hoàn toàn tự nhiên từ táo, dứa, cà rốt và củ dền tươi
+                nguyên.
               </p>
             </div>
 
@@ -370,9 +586,12 @@ export default function HomePage() {
               <span className="font-heading font-semibold text-3xl sm:text-4xl text-primary tracking-tight block">
                 3
               </span>
-              <span className="text-sm font-medium text-text block">Lộ trình thực tế</span>
+              <span className="text-sm font-medium text-text block">
+                Lộ trình thực tế
+              </span>
               <p className="text-xs text-text-muted font-body leading-relaxed">
-                Một, ba hoặc sáu ngày dựa trên năng lực phục vụ thực tế của quán.
+                Một, ba hoặc sáu ngày dựa trên năng lực phục vụ thực tế của
+                quán.
               </p>
             </div>
           </div>
@@ -387,11 +606,16 @@ export default function HomePage() {
               <span className="text-xs font-medium text-primary tracking-wide block">
                 Thực đơn tươi
               </span>
-              <Heading level={2} size="2xl" className="font-medium text-xl sm:text-2xl text-text">
+              <Heading
+                level={2}
+                size="2xl"
+                className="font-medium text-xl sm:text-2xl text-text"
+              >
                 Thức uống từ nông sản tươi
               </Heading>
               <p className="text-sm text-text-muted font-body">
-                Nước ép nguyên chất không thêm đường cát hay phụ gia công nghiệp.
+                Nước ép nguyên chất không thêm đường cát hay phụ gia công
+                nghiệp.
               </p>
             </div>
 
@@ -408,7 +632,7 @@ export default function HomePage() {
             {featuredDrinks.map((drink) => (
               <Card
                 key={drink.slug}
-                className="flex flex-col justify-between space-y-4 hover:border-primary/50 transition-colors duration-fast"
+                className="flex flex-col justify-between space-y-4 hover:border-primary/50 hover:-translate-y-1 hover:shadow-2xs transition-all duration-300 ease-soft group"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
@@ -417,7 +641,11 @@ export default function HomePage() {
                     </span>
                   </div>
 
-                  <Heading level={3} size="xl" className="font-medium text-lg sm:text-xl text-text">
+                  <Heading
+                    level={3}
+                    size="xl"
+                    className="font-medium text-lg sm:text-xl text-text"
+                  >
                     {drink.name}
                   </Heading>
 
@@ -443,7 +671,11 @@ export default function HomePage() {
                     className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline transition-colors select-none"
                   >
                     <span>Xem thức uống</span>
-                    <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" />
+                    <ArrowRight
+                      size={14}
+                      strokeWidth={1.75}
+                      aria-hidden="true"
+                    />
                   </Link>
                 </div>
               </Card>
@@ -460,7 +692,11 @@ export default function HomePage() {
               <span className="text-xs font-medium text-primary tracking-wide block">
                 Góc kiến thức
               </span>
-              <Heading level={2} size="2xl" className="font-medium text-xl sm:text-2xl text-text">
+              <Heading
+                level={2}
+                size="2xl"
+                className="font-medium text-xl sm:text-2xl text-text"
+              >
                 Hiểu đúng để chăm sóc cơ thể
               </Heading>
               <p className="text-sm text-text-muted font-body">
@@ -477,7 +713,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <Card className="hover:border-primary/50 transition-colors duration-fast">
+          <Card className="hover:border-primary/50 hover:-translate-y-1 hover:shadow-2xs transition-all duration-300 ease-soft group">
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
               <div className="space-y-2.5 max-w-2xl">
                 <div className="flex items-center gap-3 text-xs text-text-muted">
@@ -490,7 +726,11 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <Heading level={3} size="xl" className="font-medium text-lg sm:text-xl text-text">
+                <Heading
+                  level={3}
+                  size="xl"
+                  className="font-medium text-lg sm:text-xl text-text"
+                >
                   <Link
                     href={`/articles/${featuredArticle.slug}`}
                     className="hover:text-primary transition-colors"
@@ -513,28 +753,6 @@ export default function HomePage() {
               </Link>
             </div>
           </Card>
-        </Container>
-      </Section>
-
-      {/* 6. Khối Lưu ý & Cam kết Y tế */}
-      <Section spacing="md">
-        <Container>
-          <Notice variant="info" title="Lưu ý từ Ép Xanh Chữa Lành">
-            <p className="text-sm text-text font-body leading-relaxed">
-              Nước ép tươi là nguồn bổ sung vitamin và dưỡng chất thực vật lành mạnh,
-              không phải liệu pháp chữa bệnh và không thay thế bữa ăn cân bằng dài hạn.
-              Nếu bạn đang mang thai, có bệnh lý nền hoặc cần tư vấn sâu hơn, bạn có thể{" "}
-              <a
-                href={SITE_CONFIG.threadsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-primary underline underline-offset-2 hover:opacity-80"
-              >
-                {FIXED_LABELS.ACTION_MESSAGE_THREADS}
-              </a>
-              .
-            </p>
-          </Notice>
         </Container>
       </Section>
     </div>

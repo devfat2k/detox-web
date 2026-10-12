@@ -35,7 +35,10 @@ export function PlanList({ plans }: PlanListProps) {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {plans.map((plan) => (
-            <Card key={plan.id} className="flex flex-col justify-between space-y-6 p-6 sm:p-7">
+            <Card
+              key={plan.id}
+              className="flex flex-col justify-between space-y-6 p-6 sm:p-7 hover:border-primary/50 hover:-translate-y-1 hover:shadow-2xs transition-all duration-300 ease-soft group"
+            >
               <div className="space-y-4">
                 <div className="text-xs font-normal tracking-wide text-text-muted">
                   {plan.durationDays} ngày · {plan.totalBottles} chai · {plan.kcalRange}
@@ -55,11 +58,11 @@ export function PlanList({ plans }: PlanListProps) {
                 <LinkButton
                   href={routes.plan(plan.id)}
                   variant="secondary"
-                  className="w-full justify-center group"
+                  className="w-full justify-center group-hover:bg-accent-soft/40 group-hover:border-primary/40 transition-colors"
                 >
                   <span>Xem chi tiết lộ trình</span>
                   <ArrowRight
-                    className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                    className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
                     strokeWidth={1.75}
                   />
                 </LinkButton>

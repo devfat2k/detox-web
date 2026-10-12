@@ -30,17 +30,17 @@ export function StepperHeader({ currentStep }: StepperHeaderProps) {
                     aria-current={isCurrent ? "step" : undefined}
                   >
                     <span
-                      className={`h-2 w-2 rounded-full transition-colors ${
+                      className={`h-2 w-2 rounded-full transition-all duration-300 ${
                         isCurrent
-                          ? "bg-primary"
+                          ? "bg-primary scale-125"
                           : isCompleted
-                          ? "bg-primary/50"
-                          : "bg-border"
+                          ? "bg-primary/60 scale-100"
+                          : "bg-border scale-90"
                       }`}
                       aria-hidden="true"
                     />
                     <span
-                      className={`font-medium tracking-wide ${
+                      className={`font-medium tracking-wide transition-colors duration-300 ${
                         isCurrent
                           ? "text-primary font-semibold"
                           : isCompleted
@@ -52,7 +52,7 @@ export function StepperHeader({ currentStep }: StepperHeaderProps) {
                     </span>
                   </li>
                   {!isLast ? (
-                    <span aria-hidden="true" className="text-border px-0.5 text-xs">
+                    <span aria-hidden="true" className="text-border px-0.5 text-xs transition-colors duration-300">
                       ───
                     </span>
                   ) : null}

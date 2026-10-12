@@ -54,7 +54,7 @@ export function ArticleList({ articles }: ArticleListProps) {
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-lg text-sm transition-all whitespace-nowrap cursor-pointer ${
+                className={`px-4 py-2 rounded-lg text-sm transition-all duration-200 ease-soft whitespace-nowrap cursor-pointer hover:-translate-y-0.5 active:scale-95 ${
                   isActive
                     ? "bg-accent-soft text-primary font-medium border border-primary/50 shadow-2xs"
                     : "bg-surface text-text-muted hover:text-text border border-border/70 hover:border-border"
@@ -68,13 +68,16 @@ export function ArticleList({ articles }: ArticleListProps) {
 
         {/* Lưới hiển thị bài viết */}
         {filteredArticles.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            key={activeCategory}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in"
+          >
             {filteredArticles.map((article) => (
               <ArticleCard key={article.slug} article={article} />
             ))}
           </div>
         ) : (
-          <div className="py-16 text-center space-y-2 bg-surface/50 border border-border rounded-xl">
+          <div className="py-16 text-center space-y-2 bg-surface/50 border border-border rounded-xl animate-fade-in">
             <p className="text-sm text-text-muted">
               Chưa có bài viết nào trong danh mục này.
             </p>

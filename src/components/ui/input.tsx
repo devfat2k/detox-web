@@ -35,7 +35,7 @@ export function Input({
           disabled={disabled}
           className={cn(
             "w-full min-h-12 px-4 py-2.5 rounded-lg bg-bg border border-border text-text font-body text-base",
-            "transition-colors duration-fast placeholder:text-text-muted/50",
+            "transition-all duration-200 ease-soft placeholder:text-text-muted/50",
             "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
             "disabled:opacity-50 disabled:cursor-not-allowed",
             unit && "pr-12",
@@ -52,7 +52,7 @@ export function Input({
       </div>
 
       {error ? (
-        <p className="font-body text-xs text-error">{error}</p>
+        <p className="font-body text-xs text-error animate-fade-in">{error}</p>
       ) : null}
     </div>
   );

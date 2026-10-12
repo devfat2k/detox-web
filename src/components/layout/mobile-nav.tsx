@@ -67,7 +67,7 @@ export function MobileNav() {
       {isOpen ? (
         <div
           id="mobile-nav-menu"
-          className="absolute left-0 right-0 top-full border-b border-border bg-surface p-4 shadow-none transition-all duration-fast ease-default motion-reduce:transition-none"
+          className="absolute left-0 right-0 top-full border-b border-border bg-surface p-4 shadow-none animate-fade-in transition-all duration-fast ease-default motion-reduce:transition-none"
         >
           <nav
             aria-label={FIXED_LABELS.NAV_MAIN_LABEL}

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ArrowLeft, Check, Sparkles } from "lucide-react";
-import { Container, Section, Heading, Card, Button } from "@/components/ui";
+import { Container, Section, Heading, Card, Button, DisclaimerNote } from "@/components/ui";
 import { useConsultation } from "../context";
 import type { ExperienceLevel, DurationChoice } from "@/domain/recommend";
 import { FIXED_LABELS } from "@/config/copy";
@@ -12,7 +12,6 @@ interface ExpOption {
   id: ExperienceLevel;
   label: string;
   desc: string;
-  isDefault?: boolean;
 }
 
 const EXP_OPTIONS: ExpOption[] = [
@@ -20,7 +19,6 @@ const EXP_OPTIONS: ExpOption[] = [
     id: "never",
     label: "Chưa từng uống detox bao giờ",
     desc: "Đây là lần đầu tiên bạn tìm hiểu — quán sẽ ưu tiên vị thanh mát dễ uống nhất",
-    isDefault: true,
   },
   {
     id: "experienced_good",
@@ -38,15 +36,15 @@ interface DurationOption {
   id: DurationChoice;
   title: string;
   desc: string;
-  isRecommended?: boolean;
+  isWide?: boolean;
 }
 
 const DURATION_OPTIONS: DurationOption[] = [
   {
     id: "auto",
-    title: "Để quán gợi ý phù hợp nhất",
+    title: "Để quán gợi ý theo thể trạng",
     desc: "Tự động tính theo kinh nghiệm và BMI của bạn",
-    isRecommended: true,
+    isWide: true,
   },
   {
     id: 1,
@@ -106,17 +104,17 @@ export function Step4Form() {
                     key={opt.id}
                     type="button"
                     onClick={() => setLevel(opt.id)}
-                    className={`w-full p-3.5 rounded-2xl border text-left transition-all duration-fast flex items-start gap-3 select-none ${
+                    className={`w-full p-3.5 rounded-2xl border text-left transition-all duration-200 ease-soft flex items-start gap-3 select-none hover:-translate-y-0.5 active:scale-[0.99] ${
                       isSelected
                         ? "bg-accent-soft/70 border-primary shadow-2xs"
                         : "bg-surface border-border hover:border-primary/40 hover:bg-bg"
                     }`}
                   >
                     <div
-                      className={`mt-0.5 h-4.5 w-4.5 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
+                      className={`mt-0.5 h-4.5 w-4.5 rounded-full flex items-center justify-center shrink-0 border transition-all duration-200 ${
                         isSelected
-                          ? "bg-primary border-primary text-bg"
-                          : "border-border bg-bg text-transparent"
+                          ? "bg-primary border-primary text-bg scale-105"
+                          : "border-border bg-bg text-transparent scale-95"
                       }`}
                       aria-hidden="true"
                     >
@@ -124,14 +122,9 @@ export function Step4Form() {
                     </div>
                     <div className="space-y-0.5 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-body text-sm font-semibold text-text">
+                        <span className="font-body text-sm font-semibold text-text block">
                           {opt.label}
                         </span>
-                        {opt.isDefault ? (
-                          <span className="text-[11px] font-medium text-primary bg-surface px-2 py-0.5 rounded-full border border-border/70">
-                            Phổ biến
-                          </span>
-                        ) : null}
                       </div>
                       <p className="font-body text-xs text-text-muted leading-relaxed">
                         {opt.desc}
@@ -156,34 +149,27 @@ export function Step4Form() {
                     key={String(dOpt.id)}
                     type="button"
                     onClick={() => setDuration(dOpt.id)}
-                    className={`p-3.5 rounded-2xl border text-left transition-all duration-fast flex items-start gap-3 select-none ${
+                    className={`p-3.5 rounded-2xl border text-left transition-all duration-200 ease-soft flex items-start gap-3 select-none hover:-translate-y-0.5 active:scale-[0.99] ${
                       isSelected
                         ? "bg-accent-soft/70 border-primary shadow-2xs"
                         : "bg-surface border-border hover:border-primary/40 hover:bg-bg"
-                    } ${dOpt.isRecommended ? "sm:col-span-2" : ""}`}
+                    } ${dOpt.isWide ? "sm:col-span-2" : ""}`}
                   >
                     <div
-                      className={`mt-0.5 h-4.5 w-4.5 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
+                      className={`mt-0.5 h-4.5 w-4.5 rounded-full flex items-center justify-center shrink-0 border transition-all duration-200 ${
                         isSelected
-                          ? "bg-primary border-primary text-bg"
-                          : "border-border bg-bg text-transparent"
+                          ? "bg-primary border-primary text-bg scale-105"
+                          : "border-border bg-bg text-transparent scale-95"
                       }`}
                       aria-hidden="true"
                     >
                       <Check size={11} strokeWidth={3} />
                     </div>
                     <div className="space-y-0.5 flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-body text-sm font-semibold text-text flex items-center gap-1.5">
-                          {dOpt.isRecommended ? <Sparkles size={13} className="text-primary" /> : null}
-                          <span>{dOpt.title}</span>
-                        </span>
-                        {dOpt.isRecommended ? (
-                          <span className="text-[11px] font-medium text-primary bg-surface px-2 py-0.5 rounded-full border border-border/70">
-                            Khuyên dùng
-                          </span>
-                        ) : null}
-                      </div>
+                      <span className="font-body text-sm font-semibold text-text flex items-center gap-1.5">
+                        {dOpt.isWide ? <Sparkles size={13} className="text-primary" /> : null}
+                        <span>{dOpt.title}</span>
+                      </span>
                       <p className="font-body text-xs text-text-muted leading-relaxed">
                         {dOpt.desc}
                       </p>
@@ -201,9 +187,9 @@ export function Step4Form() {
               rounded="full"
               type="button"
               onClick={() => router.push("/consultation/goals")}
-              className="px-6 min-h-12 text-base font-medium select-none"
+              className="px-6 min-h-12 text-base font-medium select-none transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
             >
-              <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" />
+              <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:-translate-x-1" />
               <span>{FIXED_LABELS.ACTION_BACK}</span>
             </Button>
             <Button
@@ -211,12 +197,14 @@ export function Step4Form() {
               rounded="full"
               type="button"
               onClick={handleFinish}
-              className="px-8 min-h-12 text-base font-medium select-none shadow-xs"
+              className="px-8 min-h-12 text-base font-medium select-none shadow-xs transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
             >
               <span>{FIXED_LABELS.ACTION_VIEW_MY_PLAN}</span>
-              <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
+              <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
             </Button>
           </div>
+
+          <DisclaimerNote className="pt-2" />
         </Card>
       </Container>
     </Section>

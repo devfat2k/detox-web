@@ -41,40 +41,39 @@ export function Header() {
       className={`sticky top-0 z-40 w-full transition-all duration-fast select-none pt-[env(safe-area-inset-top)]`}
     >
       <div
-        className={`mx-auto transition-all duration-300 border ${
+        className={`mx-auto transition-all duration-300 ${
           scrolled
-            ? "max-w-5xl rounded-full bg-surface px-4 sm:px-8 h-14 sm:h-16 flex items-center justify-between mt-4 border-border/70 shadow-2xs"
-            : "max-w-5xl px-4 py-4 sm:px-6 sm:py-6 sm:h-20 flex items-center justify-between border-transparent"
+            ? "max-w-5xl rounded-full bg-surface px-6 sm:px-8 h-20 sm:h-20 flex items-center justify-between mt-4 border border-border/70 shadow-2xs"
+            : "max-w-5xl px-6 py-6 sm:px-6 sm:py-6 sm:h-22 flex items-center justify-between border-none"
         }`}
       >
-        {/* Logo / Brand Name (Dùng màu xanh lá tươi dịu text-primary) */}
         <Link
           href={ROUTES.HOME}
-          className="flex items-center gap-2.5 sm:gap-3 text-primary hover:text-primary/80 transition-colors duration-fast shrink-0"
+          className="flex items-center gap-2 sm:gap-2 text-primary hover:text-primary/80 transition-colors duration-fast shrink-0"
         >
           <div
             className={`relative overflow-hidden rounded-full border border-border/80 bg-surface shrink-0 transition-all duration-fast ${
-              scrolled ? "h-8 w-8 sm:h-9 sm:w-9" : "h-9 w-9 sm:h-10 sm:w-10"
+              scrolled
+                ? "h-14 w-14 sm:h-14 sm:w-14"
+                : "h-18 w-18 sm:h-18 sm:w-18"
             }`}
           >
             <Image
               src="/images/logo.png"
               alt={SITE_CONFIG.name}
               fill
-              sizes="(max-width: 640px) 36px, 40px"
+              sizes="(max-width: 640px) 56px, 64px"
               className="object-cover"
               priority
             />
           </div>
-          <span className="font-heading text-lg sm:text-xl font-semibold tracking-tight text-primary">
+          <span className="text-xl sm:text-2xl font-bold tracking-tight text-primary">
             <span className="sm:hidden">Ép Xanh</span>
             <span className="hidden sm:inline">{SITE_CONFIG.name}</span>
           </span>
         </Link>
 
-        {/* Right Group: Nav Links + Pill CTA Button */}
         <div className="flex items-center gap-6 lg:gap-8">
-          {/* Desktop Navigation */}
           <nav
             aria-label={FIXED_LABELS.NAV_MAIN_LABEL}
             className="hidden md:flex items-center gap-6 lg:gap-8"
@@ -91,7 +90,6 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Actions & Mobile Nav */}
           <div className="flex items-center gap-3">
             <LinkButton
               href={ROUTES.CONSULTATION}

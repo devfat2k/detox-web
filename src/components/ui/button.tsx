@@ -35,7 +35,7 @@ export function buttonVariants({
   }
 
   const baseClasses =
-    "inline-flex items-center justify-center font-body font-medium text-base transition-colors duration-fast min-h-12 px-6 py-3 gap-2 select-none focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none";
+    "inline-flex items-center justify-center font-body font-medium text-base transition-all duration-200 ease-soft active:scale-[0.98] min-h-12 px-6 py-3 gap-2 select-none focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none";
 
   const variantClasses: Record<ButtonVariant, string> = {
     primary: "bg-primary text-bg hover:opacity-90 active:opacity-100",

@@ -17,9 +17,9 @@ export function PlanDetail({ plan }: PlanDetailProps) {
         <div>
           <Link
             href={routes.plans()}
-            className="inline-flex items-center text-sm font-normal text-text-muted hover:text-text transition-colors"
+            className="inline-flex items-center text-sm font-normal text-text-muted hover:text-text transition-colors group"
           >
-            <ArrowLeft className="mr-1.5 h-4 w-4" strokeWidth={1.75} />
+            <ArrowLeft className="mr-1.5 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" strokeWidth={1.75} />
             Quay lại danh sách liệu trình
           </Link>
         </div>
@@ -70,7 +70,7 @@ export function PlanDetail({ plan }: PlanDetailProps) {
                   {day.bottles.map((bottle, idx) => (
                     <Card
                       key={`${day.dayNumber}-${bottle.time}-${idx}`}
-                      className="flex flex-col items-center text-center p-4 space-y-3 bg-surface hover:border-primary/40 transition-colors"
+                      className="flex flex-col items-center text-center p-4 space-y-3 bg-surface hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-2xs transition-all duration-200 ease-soft group"
                     >
                       <span className="text-xs font-medium text-text-muted tracking-wider">
                         {bottle.time}
@@ -81,7 +81,7 @@ export function PlanDetail({ plan }: PlanDetailProps) {
                           color={bottle.color}
                           size="sm"
                           level={bottle.level}
-                          className="mx-auto"
+                          className="mx-auto transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
 

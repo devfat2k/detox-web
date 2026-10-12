@@ -10,7 +10,7 @@ export interface DrinkCardProps {
 
 export function DrinkCard({ drink }: DrinkCardProps) {
   return (
-    <Card className="flex flex-col justify-between p-5 sm:p-6 bg-surface hover:border-primary/50 transition-all duration-200 group">
+    <Card className="flex flex-col justify-between p-5 sm:p-6 bg-surface hover:border-primary/50 hover:-translate-y-1 hover:shadow-2xs transition-all duration-300 ease-soft group">
       <div className="space-y-4">
         {/* Khối minh họa chai nước ép thoáng đãng, cân đối */}
         <div className="w-full aspect-4/3 rounded-xl bg-background/70 border border-border/40 flex items-center justify-center p-4">

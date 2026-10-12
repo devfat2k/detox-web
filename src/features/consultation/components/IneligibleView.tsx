@@ -44,14 +44,14 @@ export function IneligibleView() {
               href={ROUTES.CONSULTATION}
               variant="ghost"
               onClick={reset}
-              className="px-6 rounded-full"
+              className="px-6 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
             >
               {FIXED_LABELS.ACTION_RETRY}
             </LinkButton>
             <LinkButton
               href={ROUTES.HOME}
               variant="secondary"
-              className="px-6 rounded-full"
+              className="px-6 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
             >
               {FIXED_LABELS.ACTION_BACK_TO_HOME}
             </LinkButton>

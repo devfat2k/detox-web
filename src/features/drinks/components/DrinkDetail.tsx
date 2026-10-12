@@ -17,22 +17,22 @@ export function DrinkDetail({ drink }: DrinkDetailProps) {
         <div>
           <Link
             href={routes.drinks()}
-            className="inline-flex items-center text-sm font-normal text-text-muted hover:text-text transition-colors"
+            className="inline-flex items-center text-sm font-normal text-text-muted hover:text-text transition-colors group"
           >
-            <ArrowLeft className="mr-1.5 h-4 w-4" strokeWidth={1.75} />
+            <ArrowLeft className="mr-1.5 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" strokeWidth={1.75} />
             Quay lại danh mục thức uống
           </Link>
         </div>
 
         {/* Header chi tiết món */}
         <header className="space-y-6">
-          <div className="flex flex-col sm:flex-row items-center gap-6 p-6 sm:p-8 bg-surface border border-border rounded-xl">
+          <div className="flex flex-col sm:flex-row items-center gap-6 p-6 sm:p-8 bg-surface border border-border rounded-xl group transition-all duration-300 ease-soft hover:shadow-2xs">
             <div className="p-4 bg-background/60 rounded-lg">
               <DetoxBottle
                 color={drink.color}
                 size="lg"
                 level={drink.level}
-                className="mx-auto"
+                className="mx-auto transition-transform duration-300 group-hover:scale-105"
               />
             </div>
 

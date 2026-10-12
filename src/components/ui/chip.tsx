@@ -50,7 +50,7 @@ export function Chip({
         className={cn(
           "bg-bg border border-border text-text min-h-12 px-4 py-2.5",
           radiusClass,
-          "inline-flex items-center gap-2 font-body text-base transition-colors duration-fast w-full",
+          "inline-flex items-center gap-2 font-body text-base transition-all duration-200 ease-soft hover:-translate-y-0.5 active:scale-[0.99] w-full",
           "peer-checked:bg-accent-soft peer-checked:border-primary peer-checked:font-medium",
           "peer-focus-visible:outline-2 peer-focus-visible:outline-primary peer-focus-visible:outline-offset-2",
           "peer-disabled:opacity-50 peer-disabled:cursor-not-allowed"

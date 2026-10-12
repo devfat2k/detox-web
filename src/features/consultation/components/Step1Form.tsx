@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Check } from "lucide-react";
-import { Container, Section, Heading, Card, Button, Chip } from "@/components/ui";
+import { Container, Section, Heading, Card, Button, Chip, DisclaimerNote } from "@/components/ui";
 import { useConsultation } from "../context";
 import { evaluateSafety, type SafetyAnswers } from "@/domain/screening";
 import { FIXED_LABELS } from "@/config/copy";
@@ -77,26 +77,26 @@ export function Step1Form() {
               Lưu ý an toàn sức khỏe
             </Heading>
             <p className="font-body text-sm text-text-muted leading-relaxed">
-              Khảo sát nhanh để đảm bảo trải nghiệm nước ép rau củ hoàn toàn nhẹ nhàng và phù hợp thể trạng của bạn.
+              Các bạn hoặc các chị cho shop xin một ít thông tin nhỏ để giúp mình có cái nhìn rõ hơn về cơ thể và lộ trình phù hợp nhé.
             </p>
           </div>
 
-          {/* Lựa chọn mặc định nhanh (Fast-track) */}
+          {/* Lựa chọn nhanh */}
           <div className="space-y-3">
             <button
               type="button"
               onClick={selectHealthy}
-              className={`w-full p-4 rounded-2xl border text-left transition-all duration-fast flex items-start gap-3.5 select-none ${
+              className={`w-full p-4 rounded-2xl border text-left transition-all duration-200 ease-soft flex items-start gap-3.5 select-none hover:-translate-y-0.5 active:scale-[0.99] ${
                 isHealthyPreset
                   ? "bg-accent-soft/70 border-primary shadow-2xs"
                   : "bg-surface border-border hover:border-primary/40 hover:bg-bg"
               }`}
             >
               <div
-                className={`mt-0.5 h-5 w-5 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
+                className={`mt-0.5 h-5 w-5 rounded-full flex items-center justify-center shrink-0 border transition-all duration-200 ${
                   isHealthyPreset
-                    ? "bg-primary border-primary text-bg"
-                    : "border-border bg-bg text-transparent"
+                    ? "bg-primary border-primary text-bg scale-105"
+                    : "border-border bg-bg text-transparent scale-95"
                 }`}
                 aria-hidden="true"
               >
@@ -104,7 +104,7 @@ export function Step1Form() {
               </div>
               <div className="space-y-1 flex-1">
                 <span className="font-body text-base font-semibold text-text block">
-                  Sức khỏe mình hoàn toàn bình thường
+                  Hiện tại sức khỏe mình cảm thấy ổn định
                 </span>
                 <p className="font-body text-xs sm:text-sm text-text-muted leading-relaxed">
                   Không mang thai/cho con bú, không bệnh nền mãn tính và không dùng thuốc điều trị dài ngày.
@@ -132,17 +132,17 @@ export function Step1Form() {
                     key={item.key}
                     type="button"
                     onClick={() => toggle(item.key)}
-                    className={`w-full p-3.5 rounded-2xl border text-left transition-all duration-fast flex items-center gap-3 select-none ${
+                    className={`w-full p-3.5 rounded-2xl border text-left transition-all duration-200 ease-soft flex items-center gap-3 select-none hover:-translate-y-0.5 active:scale-[0.99] ${
                       isChecked
                         ? "bg-accent-soft/70 border-primary shadow-2xs font-medium"
                         : "bg-surface border-border hover:border-primary/40 hover:bg-bg"
                     }`}
                   >
                     <div
-                      className={`h-4.5 w-4.5 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
+                      className={`h-4.5 w-4.5 rounded-full flex items-center justify-center shrink-0 border transition-all duration-200 ${
                         isChecked
-                          ? "bg-primary border-primary text-bg"
-                          : "border-border bg-bg text-transparent"
+                          ? "bg-primary border-primary text-bg scale-105"
+                          : "border-border bg-bg text-transparent scale-95"
                       }`}
                       aria-hidden="true"
                     >
@@ -162,12 +162,14 @@ export function Step1Form() {
               variant="primary"
               rounded="full"
               onClick={handleContinue}
-              className="w-full sm:w-auto px-8 min-h-12 text-base font-medium select-none shadow-xs"
+              className="w-full sm:w-auto px-8 min-h-12 text-base font-medium select-none shadow-xs transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
             >
               <span>{FIXED_LABELS.ACTION_CONTINUE}</span>
-              <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
+              <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
             </Button>
           </div>
+
+          <DisclaimerNote className="pt-2" />
         </Card>
       </Container>
     </Section>

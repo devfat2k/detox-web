@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ArrowLeft, Sparkles, Check } from "lucide-react";
-import { Container, Section, Heading, Card, Button, Input } from "@/components/ui";
+import { Container, Section, Heading, Card, Button, Input, DisclaimerNote } from "@/components/ui";
 import { useConsultation, type FullBodyData } from "../context";
 import { evaluateBody, calculateBmi } from "@/domain/screening";
 import { FIXED_LABELS } from "@/config/copy";
@@ -115,7 +115,7 @@ export function Step2Form() {
               Chỉ số thể trạng cá nhân
             </Heading>
             <p className="font-body text-sm text-text-muted leading-relaxed">
-              Các chỉ số này dùng để tính BMI và đề xuất mức năng lượng phù hợp nhất cho cơ thể bạn.
+              Các chỉ số này giúp tính BMI và gợi ý mức năng lượng phù hợp cho thể trạng của bạn.
             </p>
           </div>
 
@@ -147,25 +147,25 @@ export function Step2Form() {
                 <button
                   type="button"
                   onClick={() => applyPreset("female")}
-                  className={`p-3.5 rounded-full border text-center font-body text-base transition-all duration-fast select-none flex items-center justify-center gap-2 ${
+                  className={`p-3.5 rounded-full border text-center font-body text-base transition-all duration-200 ease-soft select-none flex items-center justify-center gap-2 hover:-translate-y-0.5 active:scale-95 ${
                     gender === "female"
                       ? "bg-accent-soft/70 border-primary font-semibold text-text shadow-2xs"
                       : "bg-surface border-border text-text-muted hover:border-primary/40 hover:bg-bg"
                   }`}
                 >
-                  {gender === "female" ? <Check size={16} className="text-primary" /> : null}
+                  {gender === "female" ? <Check size={16} className="text-primary animate-fade-in-scale" /> : null}
                   <span>Nữ</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => applyPreset("male")}
-                  className={`p-3.5 rounded-full border text-center font-body text-base transition-all duration-fast select-none flex items-center justify-center gap-2 ${
+                  className={`p-3.5 rounded-full border text-center font-body text-base transition-all duration-200 ease-soft select-none flex items-center justify-center gap-2 hover:-translate-y-0.5 active:scale-95 ${
                     gender === "male"
                       ? "bg-accent-soft/70 border-primary font-semibold text-text shadow-2xs"
                       : "bg-surface border-border text-text-muted hover:border-primary/40 hover:bg-bg"
                   }`}
                 >
-                  {gender === "male" ? <Check size={16} className="text-primary" /> : null}
+                  {gender === "male" ? <Check size={16} className="text-primary animate-fade-in-scale" /> : null}
                   <span>Nam</span>
                 </button>
               </div>
@@ -269,7 +269,7 @@ export function Step2Form() {
 
             {/* Live BMI indicator */}
             {currentBmi > 0 ? (
-              <div className="p-3.5 rounded-2xl bg-accent-soft/40 border border-border flex items-center justify-between text-xs">
+              <div className="p-3.5 rounded-2xl bg-accent-soft/40 border border-border flex items-center justify-between text-xs animate-fade-in transition-all duration-300">
                 <span className="text-text-muted">Ước tính thể trạng:</span>
                 <span className="font-medium text-text">
                   BMI ~<span className="font-semibold text-primary">{currentBmi}</span>{" "}
@@ -295,7 +295,7 @@ export function Step2Form() {
                       key={act.id}
                       type="button"
                       onClick={() => setActivityLevel(act.id as "low" | "moderate" | "high")}
-                      className={`p-3.5 rounded-2xl border text-left transition-all duration-fast select-none flex flex-col justify-between ${
+                      className={`p-3.5 rounded-2xl border text-left transition-all duration-200 ease-soft select-none flex flex-col justify-between hover:-translate-y-0.5 active:scale-[0.99] ${
                         isChecked
                           ? "bg-accent-soft/70 border-primary shadow-2xs font-medium"
                           : "bg-surface border-border hover:border-primary/40 hover:bg-bg"
@@ -320,22 +320,24 @@ export function Step2Form() {
                 rounded="full"
                 type="button"
                 onClick={() => router.push("/consultation")}
-                className="px-6 min-h-12 text-base font-medium select-none"
+                className="px-6 min-h-12 text-base font-medium select-none transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
               >
-                <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" />
+                <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:-translate-x-1" />
                 <span>{FIXED_LABELS.ACTION_BACK}</span>
               </Button>
               <Button
                 variant="primary"
                 rounded="full"
                 type="submit"
-                className="px-8 min-h-12 text-base font-medium select-none shadow-xs"
+                className="px-8 min-h-12 text-base font-medium select-none shadow-xs transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
               >
                 <span>{FIXED_LABELS.ACTION_CONTINUE}</span>
-                <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
+                <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
               </Button>
             </div>
           </form>
+
+          <DisclaimerNote className="pt-2" />
         </Card>
       </Container>
     </Section>
