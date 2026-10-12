@@ -6,10 +6,10 @@ export interface StepperHeaderProps {
 }
 
 const STEPS = [
-  { step: 1, label: "01 Lưu ý" },
-  { step: 2, label: "02 Cơ thể" },
-  { step: 3, label: "03 Mục tiêu" },
-  { step: 4, label: "04 Kinh nghiệm" },
+  { step: 1, label: "01 Cơ thể" },
+  { step: 2, label: "02 Mục tiêu" },
+  { step: 3, label: "03 Kinh nghiệm" },
+  { step: 4, label: "04 Lưu ý" },
 ] as const;
 
 export function StepperHeader({ currentStep }: StepperHeaderProps) {

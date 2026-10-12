@@ -7,6 +7,7 @@ import { Container, Section, Heading, Card, Button, DisclaimerNote } from "@/com
 import { useConsultation } from "../context";
 import type { ExperienceLevel, DurationChoice } from "@/domain/recommend";
 import { FIXED_LABELS } from "@/config/copy";
+import { ROUTES } from "@/config/routes";
 
 interface ExpOption {
   id: ExperienceLevel;
@@ -70,9 +71,9 @@ export function Step4Form() {
   const [level, setLevel] = useState<ExperienceLevel>(experience?.level ?? "never");
   const [duration, setDuration] = useState<DurationChoice>(experience?.duration ?? "auto");
 
-  const handleFinish = () => {
+  const handleContinue = () => {
     updateExperience({ level, duration });
-    router.push("/consultation/result");
+    router.push(ROUTES.CONSULTATION_SAFETY);
   };
 
   return (
@@ -81,13 +82,13 @@ export function Step4Form() {
         <Card className="p-6 sm:p-8 space-y-6 shadow-2xs">
           <div className="space-y-2">
             <span className="text-xs font-medium text-primary tracking-wide block">
-              Bước 4/4 · Kinh nghiệm và số ngày
+              Bước 3/4 · Kinh nghiệm và số ngày
             </span>
             <Heading level={1} size="2xl" className="font-semibold text-2xl sm:text-3xl text-text">
               Kinh nghiệm và thời gian mong muốn
             </Heading>
             <p className="font-body text-sm text-text-muted leading-relaxed">
-              Bước cuối cùng giúp chọn đúng số lượng chai và nhịp độ uống phù hợp cho bạn.
+              Chọn đúng số lượng chai và nhịp độ uống phù hợp cho bạn trước khi qua bước kiểm tra an toàn.
             </p>
           </div>
 
@@ -186,7 +187,7 @@ export function Step4Form() {
               variant="ghost"
               rounded="full"
               type="button"
-              onClick={() => router.push("/consultation/goals")}
+              onClick={() => router.push(ROUTES.CONSULTATION_GOALS)}
               className="px-6 min-h-12 text-base font-medium select-none transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
             >
               <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:-translate-x-1" />
@@ -196,10 +197,10 @@ export function Step4Form() {
               variant="primary"
               rounded="full"
               type="button"
-              onClick={handleFinish}
+              onClick={handleContinue}
               className="px-8 min-h-12 text-base font-medium select-none shadow-xs transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
             >
-              <span>{FIXED_LABELS.ACTION_VIEW_MY_PLAN}</span>
+              <span>{FIXED_LABELS.ACTION_CONTINUE}</span>
               <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
             </Button>
           </div>

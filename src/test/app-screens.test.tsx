@@ -88,6 +88,7 @@ import ConsultationStep1Page from "@/app/(site)/consultation/page";
 import ConsultationBodyPage from "@/app/(site)/consultation/body/page";
 import ConsultationGoalsPage from "@/app/(site)/consultation/goals/page";
 import ConsultationExperiencePage from "@/app/(site)/consultation/experience/page";
+import ConsultationSafetyPage from "@/app/(site)/consultation/safety/page";
 import ConsultationResultPage from "@/app/(site)/consultation/result/page";
 import ConsultationIneligiblePage from "@/app/(site)/consultation/ineligible/page";
 import PlansPage from "@/app/(site)/plans/page";
@@ -107,14 +108,10 @@ describe("HomePage Screen", () => {
     expect(html).not.toContain("01 Khởi đầu");
     expect(html).not.toContain("100% ÉP TƯƠI");
     expect(html).toContain("Nước ép tươi, chọn");
-    expect(html).toContain("lộ trình phù hợp với thể trạng");
+    expect(html).toContain("lộ trình phù hợp");
     expect(html).toContain(FIXED_LABELS.ACTION_VIEW_MY_PLAN);
     expect(html).toContain("Xem 3 giai đoạn");
-    expect(html).toContain("Chai nước ép tươi Ép Xanh");
-
-    // Notification Widget (Hum-07 hallmark)
-    expect(html).toContain("Ép Xanh");
-    expect(html).toContain("Chai đầu tiên lúc 7h");
+    expect(html).toContain("Thực đơn tham khảo mẫu");
 
     // Hum-07 Stage Progression & 3 Plans
     expect(html).not.toContain("1.0");
@@ -151,16 +148,21 @@ describe("Scaffolded Route Screens Smoke Test", () => {
 
   it("renders consultation body page", () => {
     const html = renderToStaticMarkup(<ConsultationBodyPage />);
-    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_STEP2_TITLE);
+    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_STEP1_TITLE);
   });
 
   it("renders consultation goals page", () => {
     const html = renderToStaticMarkup(<ConsultationGoalsPage />);
-    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_STEP3_TITLE);
+    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_STEP2_TITLE);
   });
 
   it("renders consultation experience page", () => {
     const html = renderToStaticMarkup(<ConsultationExperiencePage />);
+    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_STEP3_TITLE);
+  });
+
+  it("renders consultation safety page", () => {
+    const html = renderToStaticMarkup(<ConsultationSafetyPage />);
     expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_STEP4_TITLE);
   });
 

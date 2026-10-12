@@ -6,6 +6,7 @@ import { ArrowRight, ArrowLeft, Check, Sparkles } from "lucide-react";
 import { Container, Section, Heading, Card, Button, DisclaimerNote } from "@/components/ui";
 import { useConsultation } from "../context";
 import { FIXED_LABELS } from "@/config/copy";
+import { ROUTES } from "@/config/routes";
 
 interface GoalItem {
   id: string;
@@ -89,7 +90,7 @@ export function Step3Form() {
       return;
     }
     updateGoals(selected);
-    router.push("/consultation/experience");
+    router.push(ROUTES.CONSULTATION_EXPERIENCE);
   };
 
   return (
@@ -98,7 +99,7 @@ export function Step3Form() {
         <Card className="p-6 sm:p-8 space-y-6 shadow-2xs">
           <div className="space-y-2">
             <span className="text-xs font-medium text-primary tracking-wide block">
-              Bước 3/4 · Vấn đề và mục tiêu
+              Bước 2/4 · Vấn đề và mục tiêu
             </span>
             <Heading level={1} size="2xl" className="font-semibold text-2xl sm:text-3xl text-text">
               Mục tiêu bạn muốn cải thiện
@@ -194,7 +195,7 @@ export function Step3Form() {
               variant="ghost"
               rounded="full"
               type="button"
-              onClick={() => router.push("/consultation/body")}
+              onClick={() => router.push(ROUTES.CONSULTATION)}
               className="px-6 min-h-12 text-base font-medium select-none transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
             >
               <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:-translate-x-1" />

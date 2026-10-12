@@ -13,9 +13,9 @@ export default function ConsultationLayout({
   const pathname = usePathname();
 
   const getStep = (path: string): number => {
-    if (path.includes("/body")) return 2;
-    if (path.includes("/goals")) return 3;
-    if (path.includes("/experience")) return 4;
+    if (path.includes("/safety")) return 4;
+    if (path.includes("/experience")) return 3;
+    if (path.includes("/goals")) return 2;
     return 1;
   };
 

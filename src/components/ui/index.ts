@@ -11,4 +11,5 @@ export * from "./kicker";
 export * from "./reveal";
 export * from "./detox-bottle";
 export * from "./input";
+export * from "./select";
 export * from "./disclaimer-note";

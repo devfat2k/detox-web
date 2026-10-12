@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     routes.consultationBody(),
     routes.consultationGoals(),
     routes.consultationExperience(),
+    routes.consultationSafety(),
     routes.plans(),
     routes.drinks(),
     routes.articles(),

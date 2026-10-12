@@ -2,11 +2,12 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check } from "lucide-react";
 import { Container, Section, Heading, Card, Button, Chip, DisclaimerNote } from "@/components/ui";
 import { useConsultation } from "../context";
 import { evaluateSafety, type SafetyAnswers } from "@/domain/screening";
 import { FIXED_LABELS } from "@/config/copy";
+import { ROUTES } from "@/config/routes";
 
 export function Step1Form() {
   const router = useRouter();
@@ -59,9 +60,9 @@ export function Step1Form() {
     const result = evaluateSafety(answers);
     if (!result.isEligible && result.reason) {
       setIneligible(result.reason);
-      router.push("/consultation/ineligible");
+      router.push(ROUTES.CONSULTATION_INELIGIBLE);
     } else {
-      router.push("/consultation/body");
+      router.push(ROUTES.CONSULTATION_RESULT);
     }
   };
 
@@ -71,13 +72,13 @@ export function Step1Form() {
         <Card className="p-6 sm:p-8 space-y-6 shadow-2xs">
           <div className="space-y-2">
             <span className="text-xs font-medium text-primary tracking-wide block">
-              Bước 1/4 · Lưu ý an toàn
+              Bước 4/4 · Lưu ý an toàn
             </span>
             <Heading level={1} size="2xl" className="font-semibold text-2xl sm:text-3xl text-text">
               Lưu ý an toàn sức khỏe
             </Heading>
             <p className="font-body text-sm text-text-muted leading-relaxed">
-              Các bạn hoặc các chị cho shop xin một ít thông tin nhỏ để giúp mình có cái nhìn rõ hơn về cơ thể và lộ trình phù hợp nhé.
+              Bước cuối cùng kiểm tra an toàn sức khỏe để đảm bảo lộ trình nước ép phù hợp nhất với thể trạng của bạn.
             </p>
           </div>
 
@@ -157,14 +158,25 @@ export function Step1Form() {
             </div>
           </div>
 
-          <div className="pt-3 flex justify-end">
+          <div className="pt-4 flex items-center justify-between gap-3">
+            <Button
+              variant="ghost"
+              rounded="full"
+              type="button"
+              onClick={() => router.push(ROUTES.CONSULTATION_EXPERIENCE)}
+              className="px-6 min-h-12 text-base font-medium select-none transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
+            >
+              <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:-translate-x-1" />
+              <span>{FIXED_LABELS.ACTION_BACK}</span>
+            </Button>
             <Button
               variant="primary"
               rounded="full"
+              type="button"
               onClick={handleContinue}
-              className="w-full sm:w-auto px-8 min-h-12 text-base font-medium select-none shadow-xs transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
+              className="px-8 min-h-12 text-base font-medium select-none shadow-xs transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
             >
-              <span>{FIXED_LABELS.ACTION_CONTINUE}</span>
+              <span>{FIXED_LABELS.ACTION_VIEW_MY_PLAN}</span>
               <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
             </Button>
           </div>

@@ -33,17 +33,17 @@ export function useStepGuard(target: GuardTargetStep) {
     }
 
     if (target === 3 && completedStep < 2) {
-      router.replace(routes.consultationBody());
-      return;
-    }
-
-    if (target === 4 && completedStep < 3) {
       router.replace(routes.consultationGoals());
       return;
     }
 
+    if (target === 4 && completedStep < 3) {
+      router.replace(routes.consultationExperience());
+      return;
+    }
+
     if (target === "result" && completedStep < 4) {
-      router.replace(routes.consultation());
+      router.replace(routes.consultationSafety());
       return;
     }
   }, [target, completedStep, isEligible, router]);

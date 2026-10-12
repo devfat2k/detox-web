@@ -8,9 +8,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Clock,
-  Bell,
   Sparkles,
-  Check,
 } from "lucide-react";
 import {
   Container,
@@ -113,199 +111,150 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col w-full">
-      {/* 1. Phần Tư Vấn Lộ Trình: Section đầu tiên, nổi bật nhất, đập ngay vào mắt người dùng */}
-      <Section
-        spacing="md"
-        className="border-b border-border bg-accent-soft/35 relative overflow-hidden"
-      >
-        <Container>
-          <div className="max-w-4xl mx-auto rounded-3xl bg-surface border-2 border-primary/40 p-6 sm:p-10 shadow-sm space-y-6 sm:space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/80 pb-5">
-              <div className="space-y-1.5">
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-accent-soft text-primary font-heading font-semibold text-xs border border-primary/20">
-                  <Sparkles size={13} className="text-primary" />
-                  <span>Tư vấn lộ trình thể trạng</span>
-                </div>
-                <Heading
-                  level={1}
-                  size="2xl"
-                  className="font-semibold text-2xl sm:text-3xl lg:text-4xl text-text leading-tight tracking-tight"
-                >
-                  Nhận lộ trình nước ép phù hợp với thể trạng của bạn
-                </Heading>
-              </div>
-
-              <LinkButton
-                href={ROUTES.CONSULTATION}
-                variant="primary"
-                rounded="full"
-                className="min-h-12 px-7 text-base font-semibold shadow-xs shrink-0 self-start sm:self-auto transition-transform duration-200 hover:-translate-y-0.5 active:scale-95"
-              >
-                <span>{FIXED_LABELS.ACTION_VIEW_MY_PLAN}</span>
-                <ArrowRight size={18} strokeWidth={2} />
-              </LinkButton>
-            </div>
-
-            <div className="space-y-3">
-              <p className="text-sm sm:text-base text-text-muted font-body leading-relaxed">
-                Các bạn, các chị hoặc các mom cho shop xin một ít thông tin nhỏ
-                về thể trạng hiện tại để nhận ngay gợi ý phân bổ 5 chai rau củ
-                tươi trong ngày:
-              </p>
-
-              {/* 3 Thẻ nhu cầu thể trạng đập ngay vào mắt */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-                <Link
-                  href={ROUTES.CONSULTATION}
-                  className="p-4 rounded-2xl bg-bg border border-border/80 flex flex-col justify-between gap-2.5 transition-all duration-200 hover:border-primary hover:bg-accent-soft/40 hover:-translate-y-0.5 group"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="h-6 w-6 rounded-full bg-accent-soft text-primary flex items-center justify-center shrink-0">
-                      <Check size={13} strokeWidth={2.5} />
-                    </div>
-                    <span className="font-heading font-semibold text-sm text-text group-hover:text-primary transition-colors">
-                      Đầy bụng, khó tiêu
-                    </span>
-                  </div>
-                  <p className="text-xs text-text-muted leading-relaxed font-body">
-                    Hệ tiêu hóa cần khoảng nghỉ nhẹ nhàng với cần tây, dưa leo
-                    và táo xanh.
-                  </p>
-                </Link>
-
-                <Link
-                  href={ROUTES.CONSULTATION}
-                  className="p-4 rounded-2xl bg-bg border border-border/80 flex flex-col justify-between gap-2.5 transition-all duration-200 hover:border-primary hover:bg-accent-soft/40 hover:-translate-y-0.5 group"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="h-6 w-6 rounded-full bg-accent-soft text-primary flex items-center justify-center shrink-0">
-                      <Check size={13} strokeWidth={2.5} />
-                    </div>
-                    <span className="font-heading font-semibold text-sm text-text group-hover:text-primary transition-colors">
-                      Nóng trong, háo nước
-                    </span>
-                  </div>
-                  <p className="text-xs text-text-muted leading-relaxed font-body">
-                    Thanh nhiệt tự nhiên với nhiều khoáng chất và vitamin từ củ
-                    quả tươi.
-                  </p>
-                </Link>
-
-                <Link
-                  href={ROUTES.CONSULTATION}
-                  className="p-4 rounded-2xl bg-bg border border-border/80 flex flex-col justify-between gap-2.5 transition-all duration-200 hover:border-primary hover:bg-accent-soft/40 hover:-translate-y-0.5 group"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="h-6 w-6 rounded-full bg-accent-soft text-primary flex items-center justify-center shrink-0">
-                      <Check size={13} strokeWidth={2.5} />
-                    </div>
-                    <span className="font-heading font-semibold text-sm text-text group-hover:text-primary transition-colors">
-                      Làm quen nhẹ 1 ngày
-                    </span>
-                  </div>
-                  <p className="text-xs text-text-muted leading-relaxed font-body">
-                    Bắt đầu với các vị thanh ngọt, êm dịu không làm xáo trộn
-                    nhịp sinh hoạt.
-                  </p>
-                </Link>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-1 border-t border-border/60">
-              <DisclaimerNote className="text-left" />
-              <Link
-                href={ROUTES.CONSULTATION}
-                className="inline-flex items-center gap-1.5 text-base font-semibold text-primary hover:underline self-start sm:self-auto shrink-0"
-              >
-                <span>Bắt đầu khảo sát chi tiết</span>
-                <ArrowRight size={16} strokeWidth={2} />
-              </Link>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* 2. Hero Section như ban đầu: chuyển xuống vị trí thứ 2 */}
+      {/* 1. Hero Section: Dẫn dắt tư vấn lộ trình thể trạng */}
       <Section
         spacing="lg"
-        className="border-b border-border bg-surface/40 overflow-hidden"
+        className="border-b border-border bg-surface/30 overflow-hidden"
       >
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
-              <div className="space-y-4 max-w-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Cột trái: Thông điệp cốt lõi & Kêu gọi tư vấn */}
+            <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
+              <div className="space-y-3.5 max-w-xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-soft text-primary font-heading font-medium text-xs border border-primary/20">
+                  <Sparkles
+                    size={14}
+                    strokeWidth={1.75}
+                    className="text-primary shrink-0"
+                    aria-hidden="true"
+                  />
+                  <span>Tư vấn thể trạng · 2 phút</span>
+                </div>
+
                 <Heading
-                  level={2}
+                  level={1}
                   size="3xl"
-                  className="font-semibold text-3xl sm:text-4xl lg:text-5xl leading-tight sm:leading-[1.18] tracking-tight text-text"
+                  className="font-semibold text-2xl sm:text-3xl lg:text-4xl leading-tight sm:leading-tight tracking-tight text-text"
                 >
                   Nước ép tươi, chọn{" "}
-                  <span className="relative inline-block text-primary decoration-primary/40 underline decoration-2 underline-offset-8">
-                    lộ trình phù hợp với thể trạng
-                  </span>{" "}
-                  của bạn.
+                  <span className="text-primary">lộ trình phù hợp</span> với thể
+                  trạng của bạn
                 </Heading>
+
                 <p className="text-base sm:text-lg text-text-muted font-body leading-relaxed max-w-xl">
-                  Các bạn, các chị hoặc các mom cho shop xin một ít thông tin
-                  nhỏ để giúp mình có cái nhìn rõ hơn về cơ thể và lộ trình phù
-                  hợp nhé.
+                  Khảo sát nhanh để nhận gợi ý phân bổ 5 chai rau củ tươi trong
+                  ngày, vừa vặn với thể trạng và nhịp sinh hoạt của bạn.
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-3.5 w-full sm:w-auto pt-2">
+              {/* Nút bấm nổi bật */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto pt-1">
                 <LinkButton
                   href={ROUTES.CONSULTATION}
                   variant="primary"
                   rounded="full"
-                  className="w-full sm:w-auto min-h-12 text-base px-8 py-3.5 font-medium select-none shadow-xs transition-transform duration-200 hover:-translate-y-0.5 active:scale-95"
+                  className="w-full sm:w-auto min-h-12 text-base px-8 py-3.5 font-medium shadow-xs transition-transform duration-200 hover:-translate-y-0.5 active:scale-95 text-center justify-center"
                 >
                   <span>{FIXED_LABELS.ACTION_VIEW_MY_PLAN}</span>
                   <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
                 </LinkButton>
+
                 <LinkButton
                   href="#stages"
                   variant="secondary"
                   rounded="full"
-                  className="w-full sm:w-auto min-h-12 text-base px-7 py-3.5 font-medium select-none text-text hover:text-primary hover:border-primary/50"
+                  className="w-full sm:w-auto min-h-12 text-base px-7 py-3.5 font-medium text-text hover:text-primary hover:border-primary/50 text-center justify-center"
                 >
                   <span>Xem 3 giai đoạn</span>
                   <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
                 </LinkButton>
               </div>
 
-              <DisclaimerNote className="text-left sm:text-left pt-1" />
+              <DisclaimerNote className="text-left pt-1" />
             </div>
 
-            <div className="lg:col-span-5 flex flex-col items-center gap-5 w-full max-w-md mx-auto lg:max-w-none">
-              <div className="w-full aspect-4/5 sm:aspect-square lg:aspect-4/5 max-h-110 rounded-3xl bg-accent-soft/30 border border-border/80 flex items-center justify-center p-6 sm:p-8 relative overflow-hidden shadow-2xs">
-                <DetoxBottle
-                  size="xl"
-                  color="green"
-                  level={65}
-                  label="Chai nước ép tươi Ép Xanh"
-                />
-              </div>
-
-              <div
-                className="w-full rounded-2xl border border-border bg-surface p-4 space-y-1.5 shadow-2xs"
-                role="status"
-              >
-                <div className="flex items-center gap-2 text-xs font-medium text-primary">
-                  <Bell size={14} strokeWidth={1.75} aria-hidden="true" />
-                  <span className="font-semibold">Ép Xanh</span>
-                  <span className="text-text-muted">· mỗi sáng</span>
+            {/* Cột phải: Thẻ trực quan minh họa kết quả mẫu (Preview Canvas) */}
+            <div className="lg:col-span-5 w-full max-w-md mx-auto lg:max-w-none">
+              <div className="rounded-xl border border-border bg-surface p-5 sm:p-6 space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-border">
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-text-muted font-heading font-medium">
+                      Thực đơn tham khảo mẫu
+                    </p>
+                    <p className="text-sm font-semibold text-text font-heading">
+                      Phân bổ 5 chai tươi trong ngày
+                    </p>
+                  </div>
+                  <span className="text-xs text-primary font-medium px-2.5 py-0.5 rounded-full bg-accent-soft border border-primary/20">
+                    1 ngày
+                  </span>
                 </div>
-                <p className="text-sm text-text font-body leading-relaxed">
-                  Chai đầu tiên lúc 7h — rau củ tươi ép chậm, uống từ từ để cơ
-                  thể hấp thu.
-                </p>
+
+                {/* 5 mốc giờ sinh học */}
+                <div className="space-y-2.5 font-body text-xs sm:text-sm">
+                  {[
+                    {
+                      time: "07:00",
+                      name: "Cần tây táo xanh",
+                      role: "Đánh thức tiêu hóa",
+                    },
+                    {
+                      time: "10:00",
+                      name: "Cà rốt cam gừng",
+                      role: "Năng lượng nhẹ",
+                    },
+                    {
+                      time: "13:00",
+                      name: "Củ dền táo đỏ",
+                      role: "Cân bằng sinh học",
+                    },
+                    {
+                      time: "16:00",
+                      name: "Dưa leo bạc hà",
+                      role: "Thanh mát cơ thể",
+                    },
+                    {
+                      time: "19:00",
+                      name: "Bí đao hạt sen",
+                      role: "Êm dịu đường ruột",
+                    },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between py-1.5 border-b border-border/50 last:border-b-0"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-xs text-primary font-medium w-11">
+                          {item.time}
+                        </span>
+                        <span className="text-text font-medium">
+                          {item.name}
+                        </span>
+                      </div>
+                      <span className="text-xs text-text-muted">
+                        {item.role}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-text-muted">
+                  <span>Cá nhân hóa theo thể trạng</span>
+                  <Link
+                    href={ROUTES.CONSULTATION}
+                    className="text-primary font-medium hover:underline inline-flex items-center gap-1"
+                  >
+                    <span>Khảo sát</span>
+                    <ArrowRight size={13} strokeWidth={1.75} aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* 3. Section Giải thích cơ chế Detox & Mô phỏng lộ trình 3 ngày (Redux-style flow) */}
+      {/* 2. Section Giải thích cơ chế Detox & Mô phỏng lộ trình 3 ngày (Redux-style flow) */}
       <DetoxMechanismSection />
 
       <Section id="stages" spacing="md" className="border-b border-border">

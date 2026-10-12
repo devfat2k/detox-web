@@ -2,11 +2,16 @@
 
 import React, { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, ArrowLeft, Sparkles, Check } from "lucide-react";
-import { Container, Section, Heading, Card, Button, Input, DisclaimerNote } from "@/components/ui";
+import { ArrowRight, Sparkles, Check } from "lucide-react";
+import { Container, Section, Heading, Card, Button, Input, Select, DisclaimerNote } from "@/components/ui";
 import { useConsultation, type FullBodyData } from "../context";
 import { evaluateBody, calculateBmi } from "@/domain/screening";
 import { FIXED_LABELS } from "@/config/copy";
+import { ROUTES } from "@/config/routes";
+
+const AGE_OPTIONS = Array.from({ length: 60 }, (_, i) => 16 + i); // 16 - 75
+const HEIGHT_OPTIONS = Array.from({ length: 71 }, (_, i) => 135 + i); // 135 - 205 cm
+const WEIGHT_OPTIONS = Array.from({ length: 86 }, (_, i) => 35 + i); // 35 - 120 kg
 
 export function Step2Form() {
   const router = useRouter();
@@ -86,7 +91,7 @@ export function Step2Form() {
 
     if (!evaluation.isEligible && evaluation.reason) {
       setIneligible(evaluation.reason);
-      router.push("/consultation/ineligible");
+      router.push(ROUTES.CONSULTATION_INELIGIBLE);
       return;
     }
 
@@ -100,7 +105,7 @@ export function Step2Form() {
     };
 
     updateBody(fullData, evaluation.warningMessage);
-    router.push("/consultation/goals");
+    router.push(ROUTES.CONSULTATION_GOALS);
   };
 
   return (
@@ -109,7 +114,7 @@ export function Step2Form() {
         <Card className="p-6 sm:p-8 space-y-6 shadow-2xs">
           <div className="space-y-2">
             <span className="text-xs font-medium text-primary tracking-wide block">
-              Bước 2/4 · Thông tin cơ thể
+              Bước 1/4 · Thông tin cơ thể
             </span>
             <Heading level={1} size="2xl" className="font-semibold text-2xl sm:text-3xl text-text">
               Chỉ số thể trạng cá nhân
@@ -171,27 +176,34 @@ export function Step2Form() {
               </div>
             </div>
 
-            {/* 3 ô chỉ số với Quick-select chips bên dưới */}
+            {/* 3 ô chỉ số dạng Select Box kết hợp Quick-select chips bên dưới */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
               {/* Tuổi */}
               <div className="space-y-2">
-                <Input
+                <Select
                   label="Tuổi"
-                  type="number"
-                  unit="tuổi"
                   value={age}
                   error={errors.age}
                   onChange={(e) => {
                     setAge(e.target.value);
                     setErrors((prev) => ({ ...prev, age: undefined }));
                   }}
-                />
+                >
+                  {AGE_OPTIONS.map((val) => (
+                    <option key={val} value={val}>
+                      {val} tuổi
+                    </option>
+                  ))}
+                </Select>
                 <div className="flex flex-wrap gap-1">
                   {["20", "25", "30", "35"].map((val) => (
                     <button
                       key={val}
                       type="button"
-                      onClick={() => setAge(val)}
+                      onClick={() => {
+                        setAge(val);
+                        setErrors((prev) => ({ ...prev, age: undefined }));
+                      }}
                       className={`text-xs px-2.5 py-0.5 rounded-full border transition-colors ${
                         age === val
                           ? "bg-primary text-bg border-primary font-medium"
@@ -206,23 +218,30 @@ export function Step2Form() {
 
               {/* Chiều cao */}
               <div className="space-y-2">
-                <Input
+                <Select
                   label="Chiều cao"
-                  type="number"
-                  unit="cm"
                   value={heightCm}
                   error={errors.height}
                   onChange={(e) => {
                     setHeightCm(e.target.value);
                     setErrors((prev) => ({ ...prev, height: undefined }));
                   }}
-                />
+                >
+                  {HEIGHT_OPTIONS.map((val) => (
+                    <option key={val} value={val}>
+                      {val} cm
+                    </option>
+                  ))}
+                </Select>
                 <div className="flex flex-wrap gap-1">
                   {["155", "160", "165", "170"].map((val) => (
                     <button
                       key={val}
                       type="button"
-                      onClick={() => setHeightCm(val)}
+                      onClick={() => {
+                        setHeightCm(val);
+                        setErrors((prev) => ({ ...prev, height: undefined }));
+                      }}
                       className={`text-xs px-2.5 py-0.5 rounded-full border transition-colors ${
                         heightCm === val
                           ? "bg-primary text-bg border-primary font-medium"
@@ -237,23 +256,30 @@ export function Step2Form() {
 
               {/* Cân nặng */}
               <div className="space-y-2">
-                <Input
+                <Select
                   label="Cân nặng"
-                  type="number"
-                  unit="kg"
                   value={weightKg}
                   error={errors.weight}
                   onChange={(e) => {
                     setWeightKg(e.target.value);
                     setErrors((prev) => ({ ...prev, weight: undefined }));
                   }}
-                />
+                >
+                  {WEIGHT_OPTIONS.map((val) => (
+                    <option key={val} value={val}>
+                      {val} kg
+                    </option>
+                  ))}
+                </Select>
                 <div className="flex flex-wrap gap-1">
                   {["48", "52", "58", "65"].map((val) => (
                     <button
                       key={val}
                       type="button"
-                      onClick={() => setWeightKg(val)}
+                      onClick={() => {
+                        setWeightKg(val);
+                        setErrors((prev) => ({ ...prev, weight: undefined }));
+                      }}
                       className={`text-xs px-2.5 py-0.5 rounded-full border transition-colors ${
                         weightKg === val
                           ? "bg-primary text-bg border-primary font-medium"
@@ -314,22 +340,12 @@ export function Step2Form() {
             </div>
 
             {/* Action Buttons */}
-            <div className="pt-4 flex items-center justify-between gap-3">
-              <Button
-                variant="ghost"
-                rounded="full"
-                type="button"
-                onClick={() => router.push("/consultation")}
-                className="px-6 min-h-12 text-base font-medium select-none transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
-              >
-                <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:-translate-x-1" />
-                <span>{FIXED_LABELS.ACTION_BACK}</span>
-              </Button>
+            <div className="pt-4 flex justify-end">
               <Button
                 variant="primary"
                 rounded="full"
                 type="submit"
-                className="px-8 min-h-12 text-base font-medium select-none shadow-xs transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
+                className="w-full sm:w-auto px-8 min-h-12 text-base font-medium select-none shadow-xs transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group"
               >
                 <span>{FIXED_LABELS.ACTION_CONTINUE}</span>
                 <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
