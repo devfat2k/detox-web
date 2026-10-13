@@ -41,12 +41,12 @@ Cập nhật ngày 09/10/2026. Thay thế v1.1. Nếu có mâu thuẫn, bản n�
 | Route                                     | Trang                                                                                                  |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `/`                                       | Trang chủ: khối "Tư vấn lộ trình" nổi bật ở đầu, tóm tắt 3 liệu trình, thức uống nổi bật, bài viết mới |
-| `/consultation`                           | Bước 1 khảo sát: Lưu ý an toàn                                                                         |
-| `/consultation/body`                      | Bước 2: thông tin cơ thể                                                                               |
-| `/consultation/goals`                     | Bước 3: vấn đề và mục tiêu                                                                             |
-| `/consultation/experience`                | Bước 4: kinh nghiệm và số ngày                                                                         |
-| `/consultation/result`                    | Kết quả cá nhân hóa                                                                                    |
-| `/consultation/ineligible`                | Không phù hợp                                                                                          |
+| `/consultation`                           | Bước 1/4: Thông tin cơ thể & thể trạng cá nhân (tuổi, chiều cao, cân nặng, BMI)                       |
+| `/consultation/goals`                     | Bước 2/4: Vấn đề và mục tiêu quan tâm (tiêu hóa, giảm mỡ, nóng trong...)                               |
+| `/consultation/experience`                | Bước 3/4: Kinh nghiệm detox và số ngày mong muốn trải nghiệm                                           |
+| `/consultation/safety`                    | Bước 4/4: Lưu ý an toàn & kiểm tra sức khỏe ổn định / bệnh nền                                         |
+| `/consultation/result`                    | Màn hình phân tích đệm & Kết quả cá nhân hóa (gợi ý liệu trình, lịch 5 chai/ngày)                      |
+| `/consultation/ineligible`                | Màn hình thông báo không phù hợp (dưới 18 tuổi, BMI thiếu cân, bệnh nền...)                           |
 | `/plans`                                  | Danh sách liệu trình 1, 3, 6 ngày (xem được không cần khảo sát)                                        |
 | `/plans/[1-day \| 3-day \| 6-day]`        | Chi tiết liệu trình: từng ngày, từng chai                                                              |
 | `/drinks`                                 | Danh mục thức uống theo loại                                                                           |
@@ -61,17 +61,17 @@ Menu điều hướng: Tư vấn, Liệu trình, Thức uống, Bài viết. Nú
 
 Vì phần tính toán chạy hoàn toàn trên máy người dùng (mục 8), không cần màn xin đồng ý riêng. Thay bằng **một dòng thông báo** ở Bước 1: "Thông tin chỉ được tính ngay trên máy của bạn, không gửi đi và không lưu lại."
 
-1. **Bước 1/4: Lưu ý an toàn.** Danh sách "đánh dấu nếu đúng với bạn" (mặc định không chọn), một màn duy nhất:
+1. **Bước 1/4: Cơ thể (`/consultation`).** Tên gọi (không bắt buộc), giới tính, tuổi, chiều cao, cân nặng, mức vận động. Có preset nhanh 1 chạm. Dưới 18 tuổi hoặc BMI < 18.5 → màn "Không phù hợp".
+2. **Bước 2/4: Mục tiêu (`/consultation/goals`).** Chọn tối đa 3: Nặng bụng/đầy hơi, Giảm mỡ & nhẹ nhõm, Nóng trong, Mụn/sạm da, Khó ngủ/uể oải, Khác.
+3. **Bước 3/4: Kinh nghiệm (`/consultation/experience`).** Đã từng detox chưa (chưa từng, từng uống và cơ thể tốt, từng mệt mỏi); muốn thử mấy ngày (1/3/6 ngày hoặc để gợi ý).
+4. **Bước 4/4: Lưu ý an toàn (`/consultation/safety`).** Mặc định có lựa chọn nhanh "Sức khỏe ổn định", hoặc đánh dấu các trường hợp cần lưu ý:
    - Đang mang thai hoặc cho con bú
    - Có bệnh nền (tiểu đường, bệnh thận hoặc sỏi thận, gan, tim mạch, huyết áp thấp, dạ dày nặng)
    - Đang dùng thuốc điều trị thường xuyên
    - Từng hoặc đang có rối loạn ăn uống
    - Dị ứng với hạt, sữa hoặc một số nguyên liệu _(chỉ cảnh báo, không chặn)_
      Chọn bất kỳ mục nào ngoài mục dị ứng → màn "Không phù hợp".
-2. **Bước 2/4: Cơ thể.** Tên gọi (không bắt buộc), giới tính, tuổi, chiều cao, cân nặng, mức vận động. Dưới 18 tuổi → "Không phù hợp".
-3. **Bước 3/4: Mục tiêu.** Chọn tối đa 3: Giảm cân, Khó tiêu, Nóng trong, Mụn ẩn, Mất ngủ, Rụng tóc, Khác.
-4. **Bước 4/4: Kinh nghiệm.** Đã từng detox chưa; nếu rồi thì lần gần nhất thế nào; muốn thử mấy ngày (1/3/6 hoặc "để shop gợi ý").
-5. **Kết quả.**
+5. **Màn hình phân tích đệm & Kết quả (`/consultation/result`).** Hiệu ứng kiểm tra thể trạng (~2.2s), tiếp theo là bảng kết quả cá nhân hóa với quy chuẩn 5 chai/ngày (3 Sinh tố : 1 Nước ép : 1 Sữa hạt/Trà).
 
 Nút và câu chữ cố định: "Xem lộ trình của tôi", "Tiếp tục", "Quay lại", "Nhắn shop trên Threads", "Sao chép tóm tắt để gửi shop", "Thử lại".
 

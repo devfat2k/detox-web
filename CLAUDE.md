@@ -31,7 +31,7 @@ Next.js 16 (App Router) + React 19 + TypeScript strict + Tailwind CSS v4 (CSS-fi
 
 ## Routes & Fixed Labels
 
-- Routes (English slugs): `/` · `/consultation` (+ `/body`, `/goals`, `/experience`, `/result`, `/ineligible`) · `/plans` and `/plans/[1-day|3-day|6-day]` · `/drinks` and `/drinks/[slug]` · `/articles` and `/articles/[slug]` · `/policy`
+- Routes (English slugs): `/` · `/consultation` (+ `/goals`, `/experience`, `/safety`, `/result`, `/ineligible`) · `/plans` and `/plans/[1-day|3-day|6-day]` · `/drinks` and `/drinks/[slug]` · `/articles` and `/articles/[slug]` · `/policy`
 - Nhãn menu điều hướng: "Tư vấn", "Liệu trình", "Thức uống", "Bài viết". Nút hành động nổi bật: "Tư vấn lộ trình".
 - Nút cố định luồng: "Xem lộ trình của tôi", "Tiếp tục", "Quay lại", "Nhắn shop trên Threads", "Sao chép tóm tắt để gửi shop", "Thử lại", "Về trang chủ".
 - Lời chào đầu trang: hiện ngắn gọn, không chặn nội dung Trang chủ, không dùng storage hay cookie để nhớ trạng thái.
