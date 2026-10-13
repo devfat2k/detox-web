@@ -49,10 +49,10 @@ const PLAN_STAGE_DETAILS: Record<
     subheading: "Đánh thức hệ tiêu hóa",
     description: (
       <>
-        Năm chai nước ép xanh thanh nhẹ cho ngày nghỉ cuối tuần hoặc lần đầu làm
+        Năm chai nước ép và sinh tố thanh nhẹ cho ngày nghỉ hoặc lần đầu làm
         quen với detox.{" "}
-        <b className="font-semibold text-text">Giúp đường ruột nghỉ ngơi</b>, dễ
-        uống và không làm xáo trộn nhịp sinh hoạt thường nhật.
+        <b className="font-semibold text-text">Bổ sung chất xơ thô no lâu</b>, giúp
+        đường ruột nghỉ ngơi êm dịu mà không gây đói lả.
       </>
     ),
     durationPill: "1 ngày · 5 chai",
@@ -69,10 +69,9 @@ const PLAN_STAGE_DETAILS: Record<
     subheading: "Cân bằng nhịp sinh học",
     description: (
       <>
-        Mười lăm chai trải đều ba ngày, luân phiên cần tây, táo xanh, cà rốt và
-        củ dền cùng gừng ấm.{" "}
-        <b className="font-semibold text-text">Cung cấp vitamin tự nhiên</b> và
-        rèn luyện thói quen tiếp nhận nước ép thực vật nguyên chất.
+        Mười lăm chai trải đều ba ngày theo tỷ lệ 3:1:1 chuẩn quán.{" "}
+        <b className="font-semibold text-text">Thực đơn xoay vòng phong phú</b> giữa
+        sinh tố cải kale, nước ép tươi và sữa hạt cữ tối giúp cơ thể nhẹ nhõm rõ rệt.
       </>
     ),
     durationPill: "3 ngày · 15 chai",
@@ -89,14 +88,13 @@ const PLAN_STAGE_DETAILS: Record<
     subheading: "Chăm sóc thể trạng toàn diện",
     description: (
       <>
-        Ba mươi chai chia thành hai đợt giao tươi để đảm bảo chất lượng dinh
-        dưỡng tối đa.{" "}
-        <b className="font-semibold text-text">Thiết lập chu kỳ phục hồi sâu</b>{" "}
-        cho người đã quen uống nước ép rau củ kiên trì.
+        Ba mươi chai chia thành hai đợt giao tươi để đảm bảo dưỡng chất tối đa.{" "}
+        <b className="font-semibold text-text">Chu kỳ thanh lọc sâu và hỗ trợ vóc dáng</b>{" "}
+        được quán khuyến khích duy trì liên tục cho kết quả tốt nhất.
       </>
     ),
     durationPill: "6 ngày · 30 chai (2 đợt)",
-    intensityPill: "Chuyên sâu · Kiên trì",
+    intensityPill: "Khuyên dùng liên tục",
     progressPercent: 100,
     progressLabel: "Chu kỳ phục hồi sâu",
     bottleSize: "md",

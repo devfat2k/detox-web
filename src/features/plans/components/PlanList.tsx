@@ -20,7 +20,7 @@ export function PlanList({ plans }: PlanListProps) {
             Ba lựa chọn theo nhu cầu cơ thể
           </Heading>
           <p className="font-body text-base text-text-muted leading-relaxed">
-            Các gói nước ép tươi 1, 3 và 6 ngày từ thực đơn thật của quán. Được chuẩn bị mỗi sáng từ rau củ quả tươi sạch để hỗ trợ hệ tiêu hóa nghỉ ngơi tự nhiên.
+            Các gói nước ép tươi 1, 3 và 6 ngày từ thực đơn thật của quán. Chuẩn hóa theo quy cách 5 chai mỗi ngày (3 Sinh tố xanh + 1 Nước ép + 1 Sữa hạt/Trà thảo mộc).
           </p>
           <p className="font-body text-sm text-text-muted pt-1">
             Chưa rõ gói nào phù hợp với thể trạng?{" "}
@@ -33,6 +33,14 @@ export function PlanList({ plans }: PlanListProps) {
           </p>
         </header>
 
+        {/* Thông điệp gợi ý từ quán */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-accent-soft/40 border border-primary/20 flex items-start gap-3">
+          <span className="h-2 w-2 rounded-full bg-primary mt-1.5 shrink-0" aria-hidden="true" />
+          <p className="font-body text-xs sm:text-sm text-text leading-relaxed">
+            <b>Gợi ý từ Ép Xanh:</b> Để đường ruột thích nghi trọn vẹn và đạt cảm giác nhẹ nhõm rõ rệt nhất, quán khuyến khích bạn trải nghiệm liên tục từ <b>3 đến 6 ngày</b> kết hợp chế độ ăn uống thanh nhẹ.
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {plans.map((plan) => (
             <Card
@@ -40,8 +48,9 @@ export function PlanList({ plans }: PlanListProps) {
               className="flex flex-col justify-between space-y-6 p-6 sm:p-7 hover:border-primary/50 hover:-translate-y-1 hover:shadow-2xs transition-all duration-300 ease-soft group"
             >
               <div className="space-y-4">
-                <div className="text-xs font-normal tracking-wide text-text-muted">
-                  {plan.durationDays} ngày · {plan.totalBottles} chai · {plan.kcalRange}
+                <div className="flex items-center justify-between text-xs font-normal tracking-wide text-text-muted">
+                  <span>{plan.durationDays} ngày · {plan.totalBottles} chai</span>
+                  <span className="text-primary font-medium">5 chai/ngày</span>
                 </div>
 
                 <div className="space-y-2">

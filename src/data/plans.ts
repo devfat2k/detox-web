@@ -7,6 +7,8 @@ export interface PlanBottle {
   readonly drinkSlug: string;
   readonly color: "green" | "warm" | "soft";
   readonly level: number;
+  readonly bottleType?: "smoothie" | "juice" | "nut_milk" | "herbal_tea";
+  readonly slotName?: string;
 }
 
 export interface PlanDaySchedule {
@@ -30,63 +32,185 @@ export interface Plan {
   readonly days: readonly PlanDaySchedule[];
 }
 
-const SAMPLE_BOTTLES: readonly PlanBottle[] = [
+const DAY_1_BOTTLES: readonly PlanBottle[] = [
   {
     time: "07:00",
-    name: "Xanh Tươi Cần Tây Táo",
-    desc: "Vị thanh mát, đánh thức tiêu hóa nhẹ nhàng đầu ngày",
-    drinkSlug: "ep-can-tay-tao",
+    name: "Sinh Tố Xanh Healthy",
+    desc: "Chất xơ thô từ cải kale, bó xôi và hạt chia giúp êm bụng, no lâu đầu ngày",
+    drinkSlug: "sinh-to-xanh-healthy",
     color: "green",
-    level: 60,
+    level: 85,
+    bottleType: "smoothie",
+    slotName: "Bữa sáng",
   },
   {
     time: "10:00",
-    name: "Cam Cà Rốt Ấm Nồng",
-    desc: "Bổ sung vitamin tự nhiên, điểm chút gừng ấm bụng giữa buổi",
-    drinkSlug: "ep-ca-rot-cam-gung",
-    color: "warm",
-    level: 75,
+    name: "Nước Ép Táo + Cần Tây",
+    desc: "Bổ sung khoáng kali và vitamin tự nhiên, thanh lọc êm dịu giữa buổi sáng",
+    drinkSlug: "ep-can-tay-tao",
+    color: "green",
+    level: 65,
+    bottleType: "juice",
+    slotName: "Bữa phụ sáng",
   },
   {
     time: "13:00",
-    name: "Xanh Đậm Kale Dưa Leo",
-    desc: "Dồi dào diệp lục và khoáng chất thực vật thanh khiết",
-    drinkSlug: "ep-cai-kale-dua-leo",
+    name: "Sinh Tố Xanh Nhiệt Đới",
+    desc: "Dứa chín và cải bó xôi tươi cung cấp enzyme bromelain hỗ trợ tiêu hóa",
+    drinkSlug: "sinh-to-xanh-nhiet-doi",
     color: "green",
-    level: 70,
+    level: 80,
+    bottleType: "smoothie",
+    slotName: "Bữa trưa",
   },
   {
     time: "16:00",
-    name: "Đỏ Rực Củ Dền Thơm",
-    desc: "Vị ngọt dịu từ dứa thơm và củ dền giúp giải nhiệt buổi chiều",
-    drinkSlug: "ep-cu-den-dua-thom",
-    color: "warm",
-    level: 80,
+    name: "Sinh Tố Xanh Healthy",
+    desc: "Giữ đường huyết ổn định, giải nhiệt xế chiều và bổ sung năng lượng thực vật",
+    drinkSlug: "sinh-to-xanh-healthy",
+    color: "green",
+    level: 85,
+    bottleType: "smoothie",
+    slotName: "Xế chiều",
   },
   {
     time: "19:00",
-    name: "Sữa Hạt Dịu Nhẹ",
-    desc: "Chất béo lành tính từ hạt, giúp êm bụng và thư giãn giấc ngủ",
-    drinkSlug: "ep-can-tay-tao",
+    name: "Sữa Hạt Điều & Hạnh Nhân",
+    desc: "Chất béo lành tính từ hạt tự nhiên giúp êm bụng buổi tối và dưỡng giấc ngủ ngon",
+    drinkSlug: "sua-hat-dieu-hanh-nhan",
     color: "soft",
-    level: 85,
+    level: 75,
+    bottleType: "nut_milk",
+    slotName: "Bữa tối",
   },
 ] as const;
 
+const DAY_2_BOTTLES: readonly PlanBottle[] = [
+  {
+    time: "07:00",
+    name: "Sinh Tố Xanh Nhiệt Đới",
+    desc: "Khởi động ngày mới với enzyme trái cây nhiệt đới và diệp lục thực vật tươi",
+    drinkSlug: "sinh-to-xanh-nhiet-doi",
+    color: "green",
+    level: 80,
+    bottleType: "smoothie",
+    slotName: "Bữa sáng",
+  },
+  {
+    time: "10:00",
+    name: "Nước Ép Cam + Dứa",
+    desc: "Dồi dào vitamin C tự nhiên, bừng tỉnh năng lượng và bù nước thanh khiết",
+    drinkSlug: "ep-cam-dua",
+    color: "warm",
+    level: 70,
+    bottleType: "juice",
+    slotName: "Bữa phụ sáng",
+  },
+  {
+    time: "13:00",
+    name: "Sinh Tố Xanh Healthy",
+    desc: "Bổ sung chất xơ hòa tan từ hạt lanh và cải xoăn kale giúp duy trì cảm giác no",
+    drinkSlug: "sinh-to-xanh-healthy",
+    color: "green",
+    level: 85,
+    bottleType: "smoothie",
+    slotName: "Bữa trưa",
+  },
+  {
+    time: "16:00",
+    name: "Sinh Tố Xanh Nhiệt Đới",
+    desc: "Tiếp tục nhịp đào thải nhẹ nhàng, xua tan cảm giác mệt mỏi buổi chiều",
+    drinkSlug: "sinh-to-xanh-nhiet-doi",
+    color: "green",
+    level: 80,
+    bottleType: "smoothie",
+    slotName: "Xế chiều",
+  },
+  {
+    time: "19:00",
+    name: "Trà Thảo Mộc Thanh Nhiệt",
+    desc: "Hương hoa cúc và kỷ tử dịu mát làm dịu gan, thanh nhiệt và hỗ trợ giấc ngủ",
+    drinkSlug: "tra-thao-moc-thanh-nhiet",
+    color: "warm",
+    level: 50,
+    bottleType: "herbal_tea",
+    slotName: "Bữa tối",
+  },
+] as const;
+
+const DAY_3_BOTTLES: readonly PlanBottle[] = [
+  {
+    time: "07:00",
+    name: "Sinh Tố Xanh Healthy",
+    desc: "Diệp lục đậm đặc và hạt chia giữ năng lượng bền bỉ cho ngày thanh lọc sâu",
+    drinkSlug: "sinh-to-xanh-healthy",
+    color: "green",
+    level: 85,
+    bottleType: "smoothie",
+    slotName: "Bữa sáng",
+  },
+  {
+    time: "10:00",
+    name: "Nước Ép Cam Cà Rốt Gừng",
+    desc: "Gừng sẻ ấm bụng kết hợp vitamin A từ cà rốt tươi tăng cường sức đề kháng",
+    drinkSlug: "ep-ca-rot-cam-gung",
+    color: "warm",
+    level: 75,
+    bottleType: "juice",
+    slotName: "Bữa phụ sáng",
+  },
+  {
+    time: "13:00",
+    name: "Sinh Tố Xanh Nhiệt Đới",
+    desc: "Tiếp tục nuôi dưỡng hệ vi sinh đường ruột với chất xơ và enzyme thực vật",
+    drinkSlug: "sinh-to-xanh-nhiet-doi",
+    color: "green",
+    level: 80,
+    bottleType: "smoothie",
+    slotName: "Bữa trưa",
+  },
+  {
+    time: "16:00",
+    name: "Sinh Tố Xanh Healthy",
+    desc: "Duy trì trạng thái nhẹ nhõm vóc dáng, giảm tích nước và cảm giác ậm ạch",
+    drinkSlug: "sinh-to-xanh-healthy",
+    color: "green",
+    level: 85,
+    bottleType: "smoothie",
+    slotName: "Xế chiều",
+  },
+  {
+    time: "19:00",
+    name: "Sữa Hạt Điều & Hạnh Nhân",
+    desc: "Chất béo lành mạnh giúp phục hồi cơ thể sau chuỗi ngày detox trọn vẹn",
+    drinkSlug: "sua-hat-dieu-hanh-nhan",
+    color: "soft",
+    level: 75,
+    bottleType: "nut_milk",
+    slotName: "Bữa tối",
+  },
+] as const;
+
+const ROTATING_SCHEDULES: readonly (readonly PlanBottle[])[] = [
+  DAY_1_BOTTLES,
+  DAY_2_BOTTLES,
+  DAY_3_BOTTLES,
+];
+
 function createDays(count: number): readonly PlanDaySchedule[] {
   const themes = [
-    "Khởi động nhẹ nhàng",
-    "Thích nghi và thanh lọc",
-    "Cân bằng năng lượng",
-    "Tăng cường khoáng chất",
+    "Khởi động & Đánh thức đường ruột",
+    "Thích nghi & Tăng cường đào thải",
+    "Cân bằng & Làm sạch sâu",
+    "Bổ sung vi chất tự nhiên",
     "Duy trì thể trạng tươi mới",
-    "Phục hồi và hoàn thiện",
+    "Phục hồi & Hoàn thiện nhịp sinh học",
   ];
 
   return Array.from({ length: count }, (_, i) => ({
     dayNumber: i + 1,
     theme: themes[i] ?? `Ngày trải nghiệm ${i + 1}`,
-    bottles: SAMPLE_BOTTLES,
+    bottles: ROTATING_SCHEDULES[i % ROTATING_SCHEDULES.length],
   }));
 }
 
@@ -115,7 +239,7 @@ export const PLANS_DATA: readonly Plan[] = [
     durationDays: 1,
     totalBottles: 5,
     kcalRange: "850 – 950 kcal/ngày",
-    description: "Thanh lọc nhẹ nhàng trong 1 ngày, thích hợp cho người mới bắt đầu làm quen với nước ép tươi.",
+    description: "Thanh lọc nhẹ nhàng trong 1 ngày với quy chuẩn 5 chai (3 Sinh tố xanh + 1 Nước ép + 1 Sữa hạt) giúp êm bụng, không đói lả.",
     tagline: "Khởi đầu nhẹ nhàng, cảm nhận cơ thể tươi mới trong 24 giờ.",
     suitableFor: COMMON_SUITABLE,
     notSuitableFor: COMMON_NOT_SUITABLE,
@@ -129,8 +253,8 @@ export const PLANS_DATA: readonly Plan[] = [
     durationDays: 3,
     totalBottles: 15,
     kcalRange: "850 – 950 kcal/ngày",
-    description: "Lộ trình cân bằng 3 ngày giúp hệ tiêu hóa được nghỉ ngơi và hỗ trợ giảm cảm giác nặng bụng.",
-    tagline: "3 ngày làm mới năng lượng và hỗ trợ thanh lọc cơ thể.",
+    description: "Lộ trình cân bằng 3 ngày thanh lọc chuyên sâu, hỗ trợ giảm mỡ và cải thiện tiêu hóa với thực đơn xoay vòng phong phú.",
+    tagline: "3 ngày làm mới năng lượng, thanh lọc sâu và cải thiện tiêu hóa.",
     suitableFor: COMMON_SUITABLE,
     notSuitableFor: COMMON_NOT_SUITABLE,
     preparationGuide: COMMON_PREP,
@@ -143,8 +267,8 @@ export const PLANS_DATA: readonly Plan[] = [
     durationDays: 6,
     totalBottles: 30,
     kcalRange: "850 – 950 kcal/ngày",
-    description: "Liệu trình trải nghiệm toàn diện 6 ngày dành cho người đã có kinh nghiệm dùng nước ép xanh.",
-    tagline: "Trải nghiệm chuyên sâu, duy trì thói quen dinh dưỡng thực vật lành mạnh.",
+    description: "Liệu trình chuyên sâu 6 ngày: thanh lọc sâu, giảm cảm giác tích tụ nặng nề, cơ thể nhẹ nhõm và hỗ trợ vóc dáng rõ rệt khi duy trì liên tục.",
+    tagline: "Thanh lọc sâu toàn diện, cơ thể nhẹ nhàng và làn da rạng rỡ.",
     suitableFor: COMMON_SUITABLE,
     notSuitableFor: COMMON_NOT_SUITABLE,
     preparationGuide: COMMON_PREP,

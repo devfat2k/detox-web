@@ -23,12 +23,12 @@ import { Check, Sparkles } from "lucide-react";
 import { PlanDayScheduleView } from "@/features/plans";
 
 const GOAL_LABELS: Record<string, string> = {
-  digestion: "khó tiêu, đầy bụng, ậm ạch",
-  heat: "nóng trong, háo nước",
-  weight: "hỗ trợ cảm giác nhẹ nhõm vóc dáng",
-  acne: "mụn ẩn, da kém tươi sáng",
-  sleep: "uể oải, ngủ chập chờn",
-  other: "duy trì thói quen ăn uống thanh nhẹ",
+  digestion: "nặng bụng, đầy hơi, khó tiêu",
+  weight: "hỗ trợ giảm mỡ & nhẹ nhõm vòng eo",
+  heat: "nóng trong, tích tụ dầu mỡ",
+  acne: "da sạm, mệt mỏi, thiếu năng lượng",
+  sleep: "uể oải, khó ngủ sâu giấc",
+  other: "thanh lọc định kỳ & duy trì lối sống xanh",
 };
 
 export function ResultView() {
@@ -77,12 +77,12 @@ export function ResultView() {
   }, []);
 
   const handleCopySummary = async () => {
-    const summaryText = `[Ép Xanh Chữa Lành] Lộ trình tư vấn cho ${capitalHonorific}:
-- Lộ trình: ${matchedPlan.title} (${matchedPlan.durationDays} ngày)
-- Thể trạng: Cân nặng ${body?.weightKg ?? 52}kg, chiều cao ${body?.heightCm ?? 160}cm (BMI ~${bmi})
-- Vấn đề quan tâm: ${goalsSummary}
-- Nhịp độ: 5 chai nước ép tươi/ngày
-*Mọi thông tin chỉ mang tính chất tương đối và tham khảo có thể không chính xác
+    const summaryText = `[Ép Xanh Chữa Lành] Thông tin tư vấn cho ${capitalHonorific}:
+- Lộ trình đề xuất: ${matchedPlan.title} (${matchedPlan.durationDays} ngày · ${matchedPlan.totalBottles} chai)
+- Thể trạng: Chiều cao ${body?.heightCm ?? 160}cm, Cân nặng ${body?.weightKg ?? 52}kg (BMI ~${bmi})
+- Mục tiêu quan tâm: ${goalsSummary}
+- Cơ cấu mỗi ngày: 5 chai (3 Sinh tố xanh + 1 Nước ép tươi + 1 Sữa hạt/Trà thảo mộc)
+*Em gửi shop xem qua thực đơn và hỗ trợ tư vấn chi tiết giúp em nhé!
 Ép Xanh Chữa Lành · Nông sản tươi ép chậm mỗi sáng`;
 
     try {
@@ -145,7 +145,7 @@ export function ResultView() {
                 <div className="h-4 w-4 rounded-full bg-primary text-bg flex items-center justify-center shrink-0">
                   <Check size={10} strokeWidth={3} />
                 </div>
-                <span>Cân đối cữ uống 5 chai và nhịp sinh học tự nhiên</span>
+                <span>Cân đối cơ cấu 5 chai/ngày (3 Sinh tố + 1 Nước ép + 1 Sữa hạt)</span>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-xl bg-bg border border-border/80 text-xs font-body text-text">
                 <div className="h-4 w-4 rounded-full bg-primary text-bg flex items-center justify-center shrink-0">
@@ -276,37 +276,37 @@ export function ResultView() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
             <div className="p-4 rounded-xl bg-bg border border-border space-y-1.5">
               <span className="font-heading font-semibold text-sm text-text block">
-                Cần tây &amp; Dưa leo
+                Sinh tố xanh (Cải kale, bó xôi &amp; hạt dinh dưỡng)
               </span>
               <p className="font-body text-xs text-text-muted leading-relaxed">
-                Chứa hàm lượng nước và kali tự nhiên cao, giúp kích thích đào thải lượng muối thừa và hỗ trợ giảm nhanh cảm giác tích nước, nặng bụng.
+                Chiếm 3 cữ/ngày, cung cấp lượng chất xơ thô và diệp lục đậm đặc giúp no lâu tự nhiên, bảo vệ niêm mạc dạ dày và xoa dịu đường ruột.
               </p>
             </div>
 
             <div className="p-4 rounded-xl bg-bg border border-border space-y-1.5">
               <span className="font-heading font-semibold text-sm text-text block">
-                Táo xanh &amp; Thơm (Dứa)
+                Nước ép táo &amp; cần tây Đà Lạt
               </span>
               <p className="font-body text-xs text-text-muted leading-relaxed">
-                Cung cấp enzym thực vật tự nhiên và chất xơ hòa tan, giúp hỗ trợ men tiêu hóa phân giải thức ăn êm dịu, đồng thời mang vị ngọt thanh dễ uống.
+                Giàu kali và nước thực vật thanh khiết, hỗ trợ đào thải nhanh lượng muối thừa, giảm cảm giác tích nước và nặng nề vùng bụng.
               </p>
             </div>
 
             <div className="p-4 rounded-xl bg-bg border border-border space-y-1.5">
               <span className="font-heading font-semibold text-sm text-text block">
-                Cà rốt &amp; Gừng ấm
+                Nước ép cam, cà rốt &amp; gừng ấm
               </span>
               <p className="font-body text-xs text-text-muted leading-relaxed">
-                Beta-carotene và chất chống oxy hóa tự nhiên giúp nuôi dưỡng đường ruột; vị gừng ấm giữ nhiệt lượng cho bao tử, hạn chế cảm giác lạnh bụng.
+                Bổ sung vitamin C và beta-carotene tự nhiên; tinh dầu gừng sẻ giữ ấm dạ dày, hạn chế tính hàn khi dùng đồ uống tươi sống.
               </p>
             </div>
 
             <div className="p-4 rounded-xl bg-bg border border-border space-y-1.5">
               <span className="font-heading font-semibold text-sm text-text block">
-                Sữa hạt hạnh nhân &amp; hạt sen
+                Sữa hạt điều &amp; hạnh nhân cữ tối
               </span>
               <p className="font-body text-xs text-text-muted leading-relaxed">
-                Cung cấp chất béo lành tính và khoáng chất tự nhiên vào cữ tối 19h, giúp cơ thể không bị hụt năng lượng và hỗ trợ giấc ngủ sâu hơn.
+                Cung cấp chất béo lành tính và khoáng chất tự nhiên vào cữ tối 19h, giúp cơ thể không bị hụt năng lượng và dưỡng giấc ngủ sâu.
               </p>
             </div>
           </div>

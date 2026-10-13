@@ -17,42 +17,42 @@ interface GoalItem {
 const AVAILABLE_GOALS: GoalItem[] = [
   {
     id: "digestion",
-    label: "Khó tiêu, đầy bụng, ậm ạch",
-    desc: "Cần xoa dịu đường ruột và nhẹ bụng sau những ngày ăn uống quá tải",
-  },
-  {
-    id: "heat",
-    label: "Nóng trong, háo nước, khô người",
-    desc: "Bổ sung lượng nước tự nhiên và khoáng chất thực vật tươi mát",
+    label: "Nặng bụng, đầy hơi, khó tiêu",
+    desc: "Cảm giác bụng ậm ạch, cần xoa dịu đường ruột với chất xơ hòa tan và enzyme tự nhiên",
   },
   {
     id: "weight",
-    label: "Hỗ trợ cảm giác nhẹ nhõm vóc dáng",
-    desc: "Giảm tích nước và hỗ trợ thói quen ăn uống thanh đạm",
+    label: "Hỗ trợ giảm mỡ & nhẹ nhõm vòng eo",
+    desc: "Giảm cảm giác tích nước nặng nề, hỗ trợ cơ thể thanh thoát và nhẹ bụng rõ rệt",
+  },
+  {
+    id: "heat",
+    label: "Nóng trong, ăn nhiều dầu mỡ đồ cay",
+    desc: "Bổ sung nước ép giàu kali và khoáng chất thực vật thanh mát giúp hạ nhiệt cơ thể",
   },
   {
     id: "acne",
-    label: "Mụn ẩn, da kém tươi sáng",
-    desc: "Bổ sung vitamin tự nhiên từ rau củ tươi giúp da sáng khỏe",
+    label: "Da sạm, mệt mỏi, thiếu năng lượng",
+    desc: "Bổ sung diệp lục tươi và vitamin A, C tự nhiên giúp tinh thần tươi tỉnh và sáng da",
   },
   {
     id: "sleep",
-    label: "Uể oải, ngủ chập chờn",
-    desc: "Tạo nhịp nghỉ cho hệ tiêu hóa vào buổi tối giúp ngủ sâu giấc hơn",
+    label: "Uể oải, khó ngủ sâu giấc",
+    desc: "Tạo khoảng nghỉ êm dịu cho dạ dày vào buổi tối với sữa hạt và trà thảo mộc",
   },
   {
     id: "other",
-    label: "Mục tiêu khác hoặc duy trì lối sống xanh",
-    desc: "Thưởng thức rau củ tự nhiên hàng ngày như một thói quen tích cực",
+    label: "Thanh lọc định kỳ & duy trì lối sống xanh",
+    desc: "Thưởng thức rau củ tự nhiên hàng ngày như một thói quen tích cực, lành mạnh",
   },
 ];
 
-const DEFAULT_PRESET_GOALS = ["digestion", "heat"];
+const DEFAULT_PRESET_GOALS = ["digestion", "weight"];
 
 export function Step3Form() {
   const router = useRouter();
   const { goals: savedGoals, updateGoals } = useConsultation();
-  // If user has saved goals use them, otherwise default to digestion & heat for fast-track
+  // If user has saved goals use them, otherwise default to digestion & weight for fast-track
   const [selected, setSelected] = useState<string[]>(
     savedGoals.length > 0 ? savedGoals : DEFAULT_PRESET_GOALS
   );
@@ -133,10 +133,10 @@ export function Step3Form() {
               <div className="space-y-1 flex-1">
                 <span className="font-body text-base font-semibold text-text flex items-center gap-1.5">
                   <Sparkles size={14} className="text-primary" />
-                  <span>Để quán phối hợp rau củ thanh mát (tiêu hóa & giải nhiệt)</span>
+                  <span>Gói phổ biến: Nhẹ bụng &amp; hỗ trợ vóc dáng</span>
                 </span>
                 <p className="font-body text-xs sm:text-sm text-text-muted leading-relaxed">
-                  Tập trung xoa dịu đường ruột và thanh nhiệt nhẹ nhàng từ rau củ tươi.
+                  Tập trung bổ sung chất xơ thô no lâu từ sinh tố xanh, giảm tích nước và xoa dịu đường ruột.
                 </p>
               </div>
             </button>
