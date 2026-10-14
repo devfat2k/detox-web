@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ArrowLeft, Check } from "lucide-react";
-import { Container, Section, Heading, Card, Button, Chip, DisclaimerNote } from "@/components/ui";
+import { Container, Section, Heading, Card, Button, DisclaimerNote } from "@/components/ui";
 import { useConsultation } from "../context";
 import { evaluateSafety, type SafetyAnswers } from "@/domain/screening";
 import { FIXED_LABELS } from "@/config/copy";

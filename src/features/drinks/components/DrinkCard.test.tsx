@@ -1,5 +1,5 @@
 import React from "react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { DrinkCard } from "./DrinkCard";
 import { INITIAL_DRINKS } from "@/data/drinks";
