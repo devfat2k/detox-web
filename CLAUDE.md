@@ -27,7 +27,7 @@ Always run scripts with `bun run <script>`. NEVER run bare `bun test`: it launch
 
 ## Stack
 
-Next.js 16 (App Router) + React 19 + TypeScript strict + Tailwind CSS v4 (CSS-first tokens in `src/app/globals.css`). Zod for validation. Content as files. Tests: Vitest, Playwright. Package manager: bun (commit the lockfile); Next.js itself runs on Node (24 LTS). No form library, no state library, no analytics, no UI kit.
+Next.js 16 (App Router) + React 19 + TypeScript strict + Tailwind CSS v4 (CSS-first tokens in `src/app/globals.css`). Axios + TanStack Query (`@tanstack/react-query`) cho tích hợp API, caching và retry. Zod for validation. Content as files. Tests: Vitest, Playwright. Package manager: bun (commit the lockfile); Next.js itself runs on Node (24 LTS). No UI kit, no analytics.
 
 ## Routes & Fixed Labels
 
@@ -66,10 +66,10 @@ Next.js 16 (App Router) + React 19 + TypeScript strict + Tailwind CSS v4 (CSS-fi
 
 ## Hard Rules (Chi tiết xem trong .claude/rules/)
 
-- **Privacy & Zero-Backend:** Khảo sát chạy 100% trên client qua React Context trong `src/app/consultation/layout.tsx`. Không lưu trữ, không gửi ra ngoài (xem `docs/product-spec.md` §9 & `.claude/rules/privacy.md`).
+- **Privacy & Không thu thập dữ liệu nhạy cảm:** Tuyệt đối KHÔNG thu thập thông tin định danh cá nhân nhạy cảm (Căn cước công dân/ID, số điện thoại, email, địa chỉ, tài khoản). Hệ thống chỉ thu thập thông tin sinh hoạt và thể trạng cơ bản (tuổi, chiều cao, cân nặng, vận động, mục tiêu dinh dưỡng, khẩu vị, tiền sử dị ứng) hoàn toàn ẩn danh theo phiên (session-scoped) để phục vụ gợi ý lộ trình nước ép (xem `docs/product-spec.md` §9 & `.claude/rules/privacy.md`).
 - **Content & Medical:** Tiếng Việt "mình"/"bạn", phi thương mại 100%. Trích dẫn nguồn theo `sourceIds` (xem `docs/product-spec.md` §7 & `.claude/rules/content.md`).
 - **UI & Design:** Chỉ dùng token từ `globals.css`, duy nhất font Be Vietnam Pro thanh mảnh, mobile-first 390px, tuyệt đối không emoji hay text làm icon (xem `DESIGN.md` & `.claude/rules/ui.md`).
-- **Domain:** TypeScript thuần 100%, hàm thuần, unit test cạnh file (xem `docs/product-spec.md` §8 & `.claude/rules/domain.md`).
+- **Domain & Services:** TypeScript thuần 100%, hàm thuần, unit test cạnh file; API services kết nối qua Axios + TanStack Query kèm cơ chế fallback tự động về dữ liệu cục bộ (xem `docs/product-spec.md` §8 & `.claude/rules/domain.md`).
 - **Testing:** Chạy qua `bun run test` / `bun run test:e2e`, kiểm thử bắt buộc với `src/domain/` and `src/content/schema.ts` (xem `.claude/rules/testing.md`).
 
 ## Workflow
