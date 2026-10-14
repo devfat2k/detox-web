@@ -79,12 +79,50 @@ export interface Plan {
   description?: string;
 }
 
+export interface Assessment {
+  readonly bmi?: number;
+  readonly category?: string;
+  readonly recommendationNote?: string;
+}
+
+export interface ConsultationScheduleMeal {
+  readonly slot?: number;
+  readonly time?: string;
+  readonly name?: string;
+  readonly role?: string;
+  readonly category?: string;
+  readonly suggestedItems?: readonly string[];
+}
+
+export interface ConsultationScheduleDay {
+  readonly day?: number;
+  readonly title?: string;
+  readonly meals?: readonly ConsultationScheduleMeal[];
+}
+
+export interface RecommendedPlanSummary {
+  readonly id?: string;
+  readonly name?: string;
+  readonly slug?: string;
+  readonly duration_days?: number;
+  readonly total_bottles?: number;
+  readonly reason?: string;
+  readonly description?: string;
+}
+
 export interface ConsultationResult {
-  bmi: number;
-  bmiCategory: string;
-  dailyWaterMl: number;
-  safetyAlerts: string[];
-  recommendedPlan?: Plan;
-  scheduleRatio: string;
-  drinks: Drink[];
+  readonly bmi?: number;
+  readonly bmiCategory?: string;
+  readonly dailyWaterMl?: number;
+  readonly safetyAlerts?: readonly string[];
+  readonly recommendedPlan?: RecommendedPlanSummary;
+  readonly scheduleRatio?: string;
+  readonly drinks?: readonly Drink[];
+  readonly nickname?: string;
+  readonly durationDays?: number;
+  readonly assessment?: Assessment;
+  readonly dailySchedule?: readonly ConsultationScheduleDay[];
+  readonly warnings?: readonly string[];
+  readonly guidance?: readonly string[];
+  readonly disclaimer?: string;
 }

@@ -13,6 +13,7 @@ import {
   DisclaimerNote,
 } from "@/components/ui";
 import { useConsultation } from "../context";
+import { useConsultationMutation } from "../hooks/use-consultation-mutation";
 import { recommendPlan } from "@/domain/recommend";
 import { calculateBmi } from "@/domain/screening";
 import { FIXED_LABELS } from "@/config/copy";
@@ -32,19 +33,33 @@ const GOAL_LABELS: Record<string, string> = {
 };
 
 export function ResultView() {
-  const { body, experience, goals, warningMessage, reset } = useConsultation();
+  const { body, safety, experience, goals, warningMessage, reset } = useConsultation();
   const [copied, setCopied] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(true);
 
-  const bmi = body ? calculateBmi(body.heightCm, body.weightKg) : 21.5;
+  const { mutate, data: apiResult, isPending } = useConsultationMutation();
+
+  useEffect(() => {
+    mutate({ body, safety, goals, experience });
+  }, [mutate, body, safety, goals, experience]);
+
+  const clientBmi = body ? calculateBmi(body.heightCm, body.weightKg) : 21.5;
+  const bmi = apiResult?.bmi ?? apiResult?.assessment?.bmi ?? clientBmi;
+
   const recommendation = recommendPlan({
     experienceLevel: experience?.level ?? "never",
     durationChoice: experience?.duration ?? "auto",
-    bmi,
+    bmi: Number(bmi),
   });
 
+  const resolvedPlanId = apiResult?.recommendedPlan?.id ?? recommendation.planId;
   const matchedPlan =
-    PLANS_DATA.find((p) => p.id === recommendation.planId) ?? PLANS_DATA[0];
+    PLANS_DATA.find((p) => p.id === resolvedPlanId) ?? PLANS_DATA[0];
+
+  const recommendationReason =
+    apiResult?.recommendedPlan?.reason ??
+    apiResult?.assessment?.recommendationNote ??
+    recommendation.reason;
 
   const rawName = body?.name?.trim();
   const isFemale = body?.gender === "female";
@@ -94,8 +109,13 @@ export function ResultView() {
     }
   };
 
+  const allWarnings = [
+    ...(warningMessage ? [warningMessage] : []),
+    ...(apiResult?.warnings ?? apiResult?.safetyAlerts ?? []),
+  ];
+
   // Trạng thái màn hình Loading / Phân tích trung gian nhẹ nhàng
-  if (isAnalyzing) {
+  if (isAnalyzing || isPending) {
     return (
       <Section spacing="md">
         <Container className="max-w-xl space-y-6">
@@ -183,7 +203,7 @@ export function ResultView() {
             Lộ trình gợi ý dành cho {capitalHonorific}
           </Heading>
           <p className="font-body text-base text-text-muted leading-relaxed max-w-2xl">
-            {recommendation.reason}
+            {recommendationReason}
           </p>
         </div>
 
@@ -211,8 +231,14 @@ export function ResultView() {
           </div>
         </Card>
 
-        {warningMessage ? (
-          <Notice variant="warning">{warningMessage}</Notice>
+        {allWarnings.length > 0 ? (
+          <div className="space-y-3">
+            {allWarnings.map((warn, i) => (
+              <Notice key={i} variant="warning">
+                {warn}
+              </Notice>
+            ))}
+          </div>
         ) : null}
 
         {/* Thẻ số liệu lộ trình trực quan */}

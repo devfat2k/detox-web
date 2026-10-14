@@ -6,3 +6,4 @@ export * from "./components/Step4Form";
 export * from "./components/ResultView";
 export * from "./components/IneligibleView";
 export * from "./context";
+export * from "./hooks/use-consultation-mutation";
