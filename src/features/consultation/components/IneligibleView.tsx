@@ -22,7 +22,7 @@ export function IneligibleView() {
               Lưu ý an toàn sức khỏe
             </span>
             <Heading level={1} size="2xl" className="font-semibold text-2xl sm:text-3xl text-text">
-              Chưa thích hợp áp dụng lộ trình
+              {FIXED_LABELS.PAGE_CONSULTATION_INELIGIBLE_TITLE}
             </Heading>
           </div>
 

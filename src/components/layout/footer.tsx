@@ -1,7 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { SITE_CONFIG } from "@/config/site";
 import { FIXED_LABELS } from "@/config/copy";
+import { ROUTES } from "@/config/routes";
 import { Container } from "@/components/ui";
 
 /**
@@ -31,27 +33,38 @@ export function Footer() {
                 {SITE_CONFIG.description}
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 font-body text-sm pt-1">
-              <a
-                href={SITE_CONFIG.threadsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-text hover:text-primary transition-colors duration-fast"
-              >
-                <span>{FIXED_LABELS.ACTION_MESSAGE_THREADS}</span>
-                <span className="sr-only">
-                  {" "}
-                  ({FIXED_LABELS.OPEN_IN_NEW_TAB})
-                </span>
-                <ExternalLink
-                  size={14}
-                  strokeWidth={1.75}
-                  aria-hidden="true"
-                  className="shrink-0"
-                />
-              </a>
-            </div>
           </div>
+
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 font-body text-sm pt-1">
+            <Link
+              href={ROUTES.POLICY}
+              className="text-text-muted hover:text-primary transition-colors duration-fast"
+            >
+              {FIXED_LABELS.NAV_POLICY}
+            </Link>
+            <a
+              href={SITE_CONFIG.threadsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-text hover:text-primary transition-colors duration-fast"
+            >
+              <span>{FIXED_LABELS.ACTION_MESSAGE_THREADS}</span>
+              <span className="sr-only">
+                {" "}
+                ({FIXED_LABELS.OPEN_IN_NEW_TAB})
+              </span>
+              <ExternalLink
+                size={14}
+                strokeWidth={1.75}
+                aria-hidden="true"
+                className="shrink-0"
+              />
+            </a>
+          </div>
+        </div>
+
+        <div className="pt-2 text-xs text-text-muted leading-relaxed font-body">
+          {FIXED_LABELS.MEDICAL_DISCLAIMER}
         </div>
       </Container>
     </footer>

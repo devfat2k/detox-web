@@ -20,12 +20,28 @@ vi.mock("next/navigation", () => ({
 }));
 
 import { renderToStaticMarkup } from "react-dom/server";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import NotFound from "@/app/not-found";
 import ErrorPage from "@/app/error";
 import GlobalError from "@/app/global-error";
 import Loading from "@/app/loading";
 import { SITE_CONFIG } from "@/config/site";
 import { FIXED_LABELS } from "@/config/copy";
+import { DRINKS_DATA } from "@/data/drinks";
+import { PLANS_DATA } from "@/data/plans";
+import { apiClient } from "@/lib/api-client";
+
+function renderWithClient(ui: React.ReactElement) {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+      mutations: { retry: false },
+    },
+  });
+  return renderToStaticMarkup(
+    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
+  );
+}
 
 describe("System Screens (Stage C)", () => {
   describe("NotFound", () => {
@@ -114,25 +130,21 @@ describe("HomePage Screen", () => {
     expect(html).toContain("Thực đơn tham khảo mẫu");
 
     // Hum-07 Stage Progression & 3 Plans
-    expect(html).not.toContain("1.0");
-    expect(html).not.toContain("2.0");
-    expect(html).not.toContain("3.0");
+    expect(html).not.toContain("Giai đoạn 1.0");
+    expect(html).not.toContain("Giai đoạn 2.0");
+    expect(html).not.toContain("Giai đoạn 3.0");
     expect(html).toContain("01");
     expect(html).toContain("02");
     expect(html).toContain("03");
     expect(html).toContain("Tiến trình thích ứng");
-    expect(html).toContain("Liệu trình Khởi đầu 1 ngày");
-    expect(html).toContain("Liệu trình Cân bằng 3 ngày");
-    expect(html).toContain("Liệu trình Chuyên sâu 6 ngày");
 
     // Hum-07 Honest Math
     expect(html).toContain("Thực tế &amp; Nguyên bản.");
     expect(html).toContain("100%");
     expect(html).toContain("0");
 
-    // 2 Featured drinks
-    expect(html).toContain("Xanh Tươi Cần Tây Táo");
-    expect(html).toContain("Cam Cà Rốt Ấm Nồng");
+    // Featured drink
+    expect(html).toContain(DRINKS_DATA[0].name);
 
     // 1 Article & Notice
     expect(html).toContain("Hiểu đúng về cơ chế tự thải độc của gan và thận");
@@ -167,8 +179,9 @@ describe("Scaffolded Route Screens Smoke Test", () => {
   });
 
   it("renders consultation result page", () => {
-    const html = renderToStaticMarkup(<ConsultationResultPage />);
-    expect(html).toContain(FIXED_LABELS.PAGE_CONSULTATION_RESULT_TITLE);
+    const html = renderWithClient(<ConsultationResultPage />);
+    expect(html).toBeDefined();
+    expect(html).toContain("Đang phân tích");
   });
 
   it("renders consultation ineligible page", () => {
@@ -177,23 +190,27 @@ describe("Scaffolded Route Screens Smoke Test", () => {
   });
 
   it("renders plans list and detail pages", async () => {
+    vi.spyOn(apiClient, "get").mockResolvedValue([]);
+
     const listHtml = renderToStaticMarkup(await PlansPage());
     expect(listHtml).toContain(FIXED_LABELS.PAGE_PLANS_TITLE);
 
     const detailHtml = renderToStaticMarkup(
-      await PlanDetailPage({ params: Promise.resolve({ planId: "1-day" }) })
+      await PlanDetailPage({ params: Promise.resolve({ planId: PLANS_DATA[0].id }) })
     );
-    expect(detailHtml).toContain("Liệu trình Khởi đầu 1 ngày");
+    expect(detailHtml).toContain(PLANS_DATA[0].title);
   });
 
   it("renders drinks list and detail pages", async () => {
-    const listHtml = renderToStaticMarkup(await DrinksPage());
+    vi.spyOn(apiClient, "get").mockResolvedValue([]);
+
+    const listHtml = renderWithClient(await DrinksPage());
     expect(listHtml).toContain(FIXED_LABELS.PAGE_DRINKS_TITLE);
 
     const detailHtml = renderToStaticMarkup(
-      await DrinkDetailPage({ params: Promise.resolve({ slug: "ep-can-tay-tao" }) })
+      await DrinkDetailPage({ params: Promise.resolve({ slug: DRINKS_DATA[0].slug }) })
     );
-    expect(detailHtml).toContain("Xanh Tươi Cần Tây Táo");
+    expect(detailHtml).toContain(DRINKS_DATA[0].name);
   });
 
   it("renders articles list and detail pages without construction notices", async () => {

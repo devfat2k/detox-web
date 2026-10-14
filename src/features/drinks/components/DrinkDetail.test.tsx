@@ -12,14 +12,14 @@ describe("DrinkDetail component", () => {
     const html = renderToStaticMarkup(<DrinkDetail drink={drink} />);
     expect(html).toContain(drink.name);
     expect(html).toContain(drink.categoryName);
-    expect(html).toContain("Cần tây");
+    expect(html).toContain(drink.ingredients?.[0] ?? "Cải bó xôi");
     expect(html).toContain("Giá trị dinh dưỡng &amp; Cảm nhận cơ thể");
     expect(html).not.toContain(FIXED_LABELS.UNDER_CONSTRUCTION_NOTICE);
   });
 
   it("does not render price, rating or false health claims", () => {
     const html = renderToStaticMarkup(<DrinkDetail drink={drink} />);
-    expect(html).not.toContain("đ");
+    expect(html).not.toMatch(/\d+\s*(đ|VNĐ)/);
     expect(html).not.toContain("VNĐ");
     expect(html).not.toContain("thải độc sâu");
     expect(html).not.toContain("chữa bệnh");

@@ -50,7 +50,7 @@ export const ARTICLES_DATA: readonly Article[] = [
       },
       {
         heading: "Lưu ý để tiếp cận an toàn",
-        content: "Nên xem nước ép như một phần bổ sung rau củ nhẹ nhàng cho chế độ ăn, không nhịn ăn kéo dài và không kỳ vọng nước ép có tác dụng chữa bệnh hay thay thế điều trị y khoa.",
+        content: "Nên xem nước ép như một phần bổ sung rau củ nhẹ nhàng cho chế độ ăn, không nhịn ăn kéo dài và không kỳ vọng nước ép có tác dụng điều trị bệnh hay thay thế can thiệp y khoa.",
       },
     ],
     sources: [

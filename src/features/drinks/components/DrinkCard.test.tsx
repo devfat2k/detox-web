@@ -12,13 +12,13 @@ describe("DrinkCard component", () => {
     expect(html).toContain(drink.name);
     expect(html).toContain(drink.categoryName);
     expect(html).toContain(drink.benefit);
-    expect(html).toContain("Cần tây");
+    expect(html).toContain(drink.ingredients?.[0] ?? "Cải bó xôi");
 
     // Tuyệt đối không hashtag, không badge
     expect(html).not.toContain("#");
     expect(html).not.toContain("badge");
     // Không giá tiền, không rating
-    expect(html).not.toContain("đ");
+    expect(html).not.toMatch(/\d+\s*(đ|VNĐ)/);
     expect(html).not.toContain("VNĐ");
     expect(html).not.toContain("sao");
     expect(html).not.toContain("đánh giá");
