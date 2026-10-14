@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { fontVariables } from "./fonts";
 import { SITE_CONFIG, THEME_COLOR } from "@/config/site";
 import { FIXED_LABELS } from "@/config/copy";
+import { QueryProvider } from "@/providers/query-provider";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -42,7 +43,7 @@ export default function RootLayout({
         >
           {FIXED_LABELS.SKIP_TO_CONTENT}
         </a>
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );
