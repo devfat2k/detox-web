@@ -39,7 +39,7 @@ export function DrinkCard({ drink }: DrinkCardProps) {
               Thành phần
             </span>
             <p className="font-body text-xs text-text leading-relaxed">
-              {drink.ingredients.join(" · ")}
+              {(drink.ingredients ?? []).join(" · ")}
             </p>
           </div>
 
@@ -49,7 +49,7 @@ export function DrinkCard({ drink }: DrinkCardProps) {
               Cảm nhận cơ thể
             </span>
             <p className="font-body text-xs text-text-muted leading-relaxed">
-              {drink.benefit}
+              {drink.benefit ?? "Cung cấp dinh dưỡng thanh lọc nhẹ nhàng"}
             </p>
           </div>
         </div>

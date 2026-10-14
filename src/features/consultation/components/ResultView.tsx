@@ -16,7 +16,7 @@ import { useConsultation } from "../context";
 import { recommendPlan } from "@/domain/recommend";
 import { calculateBmi } from "@/domain/screening";
 import { FIXED_LABELS } from "@/config/copy";
-import { ROUTES, routes } from "@/config/routes";
+import { ROUTES } from "@/config/routes";
 import { PLANS_DATA } from "@/data/plans";
 import { SITE_CONFIG } from "@/config/site";
 import { Check, Sparkles } from "lucide-react";
@@ -44,7 +44,7 @@ export function ResultView() {
   });
 
   const matchedPlan =
-    PLANS_DATA.find((p) => p.id === recommendation.planId) ?? PLANS_DATA[1];
+    PLANS_DATA.find((p) => p.id === recommendation.planId) ?? PLANS_DATA[0];
 
   const rawName = body?.name?.trim();
   const isFemale = body?.gender === "female";

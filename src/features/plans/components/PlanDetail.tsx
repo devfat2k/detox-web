@@ -57,17 +57,17 @@ export function PlanDetail({ plan }: PlanDetailProps) {
           </div>
 
           <div className="space-y-10">
-            {plan.days.map((day) => (
+            {(plan.days ?? []).map((day) => (
               <div key={day.dayNumber} className="space-y-4">
                 <div className="flex items-baseline justify-between border-b border-border/70 pb-2">
                   <Heading level={3} size="xl" className="font-medium text-text">
-                    Ngày {day.dayNumber} · {day.theme}
+                    Ngày {day.dayNumber} · {day.theme ?? ""}
                   </Heading>
                   <span className="text-xs text-text-muted">5 chai / ngày</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
-                  {day.bottles.map((bottle, idx) => (
+                  {(day.bottles ?? []).map((bottle, idx) => (
                     <Card
                       key={`${day.dayNumber}-${bottle.time}-${idx}`}
                       className="flex flex-col items-center text-center p-4 space-y-3 bg-surface hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-2xs transition-all duration-200 ease-soft group"
@@ -78,9 +78,9 @@ export function PlanDetail({ plan }: PlanDetailProps) {
 
                       <div className="py-1">
                         <DetoxBottle
-                          color={bottle.color}
+                          color={bottle.color ?? "green"}
                           size="sm"
-                          level={bottle.level}
+                          level={bottle.level ?? 80}
                           className="mx-auto transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
@@ -93,7 +93,7 @@ export function PlanDetail({ plan }: PlanDetailProps) {
                           {bottle.name}
                         </Link>
                         <p className="font-body text-xs text-text-muted leading-relaxed line-clamp-2">
-                          {bottle.desc}
+                          {bottle.desc ?? ""}
                         </p>
                       </div>
                     </Card>
@@ -114,7 +114,7 @@ export function PlanDetail({ plan }: PlanDetailProps) {
                 <span>Đối tượng phù hợp</span>
               </div>
               <ul className="space-y-2 text-sm text-text-muted font-body leading-relaxed list-disc list-inside">
-                {plan.suitableFor.map((item, idx) => (
+                {(plan.suitableFor ?? []).map((item, idx) => (
                   <li key={idx}>{item}</li>
                 ))}
               </ul>
@@ -126,7 +126,7 @@ export function PlanDetail({ plan }: PlanDetailProps) {
                 <span>Trường hợp cần thận trọng</span>
               </div>
               <ul className="space-y-2 text-sm text-text-muted font-body leading-relaxed list-disc list-inside">
-                {plan.notSuitableFor.map((item, idx) => (
+                {(plan.notSuitableFor ?? []).map((item, idx) => (
                   <li key={idx}>{item}</li>
                 ))}
               </ul>

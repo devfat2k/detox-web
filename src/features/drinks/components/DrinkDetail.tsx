@@ -63,7 +63,7 @@ export function DrinkDetail({ drink }: DrinkDetailProps) {
                 Được chuẩn bị từ 100% nguyên liệu tươi sạch, không pha loãng với nước, không thêm đường tinh luyện:
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
-                {drink.ingredients.map((item) => (
+                {(drink.ingredients ?? []).map((item) => (
                   <span
                     key={item}
                     className="px-3 py-1 bg-background text-text text-xs rounded-lg border border-border"

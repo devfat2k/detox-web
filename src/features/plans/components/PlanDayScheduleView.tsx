@@ -20,8 +20,9 @@ const BOTTLE_TYPE_LABELS: Record<string, string> = {
 
 export function PlanDayScheduleView({ plan }: PlanDayScheduleViewProps) {
   const [activeDayIndex, setActiveDayIndex] = useState(0);
-  const totalDays = plan.days.length;
-  const currentDay = plan.days[activeDayIndex] ?? plan.days[0];
+  const days = plan.days ?? [];
+  const totalDays = days.length;
+  const currentDay = days[activeDayIndex] ?? days[0];
 
   const handlePrev = () => {
     setActiveDayIndex((prev) => Math.max(0, prev - 1));
@@ -30,6 +31,8 @@ export function PlanDayScheduleView({ plan }: PlanDayScheduleViewProps) {
   const handleNext = () => {
     setActiveDayIndex((prev) => Math.min(totalDays - 1, prev + 1));
   };
+
+  if (!currentDay) return null;
 
   return (
     <Card className="p-6 sm:p-8 space-y-6">
@@ -42,7 +45,7 @@ export function PlanDayScheduleView({ plan }: PlanDayScheduleViewProps) {
           </div>
           <Heading level={2} size="xl" className="font-semibold text-xl text-text">
             {totalDays > 1
-              ? `Lịch ngày ${currentDay.dayNumber} · ${currentDay.theme}`
+              ? `Lịch ngày ${currentDay.dayNumber} · ${currentDay.theme ?? ""}`
               : "Lịch 5 chai phân bổ nhịp nhàng"}
           </Heading>
           <p className="text-xs text-text-muted font-body leading-relaxed max-w-xl">
@@ -54,7 +57,7 @@ export function PlanDayScheduleView({ plan }: PlanDayScheduleViewProps) {
         {totalDays > 1 && (
           <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
             <div className="flex items-center gap-1 mr-1">
-              {plan.days.map((day, idx) => (
+              {days.map((day, idx) => (
                 <button
                   key={day.dayNumber}
                   type="button"

@@ -601,7 +601,7 @@ export default function HomePage() {
                   </p>
 
                   <div className="flex flex-wrap gap-1.5 pt-1">
-                    {drink.ingredients.map((ing) => (
+                    {(drink.ingredients ?? []).map((ing) => (
                       <span
                         key={ing}
                         className="px-2 py-0.5 rounded text-xs text-text-muted bg-bg border border-border/70"
