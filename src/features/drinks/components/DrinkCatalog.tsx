@@ -1,35 +1,39 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { DRINK_CATEGORIES, INITIAL_DRINKS } from "@/data/drinks";
 import { Container, Section, Heading, Kicker, Button, Skeleton } from "@/components/ui";
 import { FIXED_LABELS } from "@/config/copy";
 import { DrinkCard } from "./DrinkCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useCategoriesQuery, useDrinksQuery } from "../hooks/use-drinks-query";
+import { DRINKS_DATA } from "@/data/drinks";
+import { FALLBACK_CATEGORIES } from "@/services/categories.service";
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 6;
 
 export function DrinkCatalog() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  // Xử lý đổi bộ lọc danh mục kèm giả lập loading nhẹ để test UI
+  const { data: categories = FALLBACK_CATEGORIES } = useCategoriesQuery();
+  const { data: drinks = DRINKS_DATA, isLoading } = useDrinksQuery();
+
+  // Xử lý đổi bộ lọc danh mục
   const handleCategoryChange = (catId: string) => {
     if (catId === activeCategory) return;
     setActiveCategory(catId);
     setCurrentPage(1);
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 150);
   };
 
   // Danh sách sau khi lọc
   const filteredDrinks = useMemo(() => {
-    if (activeCategory === "all") return INITIAL_DRINKS;
-    return INITIAL_DRINKS.filter((d) => d.category === activeCategory);
-  }, [activeCategory]);
+    if (activeCategory === "all") return drinks;
+    return drinks.filter(
+      (d) =>
+        d.category === activeCategory ||
+        d.categoryName?.toLowerCase().includes(activeCategory.toLowerCase())
+    );
+  }, [drinks, activeCategory]);
 
   // Phân trang
   const totalPages = Math.max(1, Math.ceil(filteredDrinks.length / ITEMS_PER_PAGE));
@@ -54,7 +58,7 @@ export function DrinkCatalog() {
 
         {/* Thanh lọc danh mục 1 chạm tinh tế */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          {DRINK_CATEGORIES.map((cat) => {
+          {categories.map((cat) => {
             const isActive = activeCategory === cat.id;
             return (
               <button
@@ -67,7 +71,7 @@ export function DrinkCatalog() {
                     : "bg-surface text-text-muted hover:text-text border border-border/70 hover:border-border"
                 }`}
               >
-                {cat.label}
+                {cat.name}
               </button>
             );
           })}
@@ -76,7 +80,7 @@ export function DrinkCatalog() {
         {/* Lưới sản phẩm hoặc Skeleton Loading */}
         {isLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
-            {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+            {Array.from({ length: 3 }).map((_, i) => (
               <div
                 key={i}
                 className="p-5 sm:p-6 bg-surface border border-border rounded-xl space-y-4"
