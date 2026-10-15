@@ -11,5 +11,5 @@ export const MAIN_NAV_ITEMS: readonly NavItem[] = [
   { href: ROUTES.PRICING, label: FIXED_LABELS.NAV_PRICING },
   { href: ROUTES.PLANS, label: FIXED_LABELS.NAV_PLANS },
   { href: ROUTES.DRINKS, label: FIXED_LABELS.NAV_DRINKS },
-  { href: ROUTES.ARTICLES, label: FIXED_LABELS.NAV_ARTICLES },
+  { href: ROUTES.ABOUT, label: FIXED_LABELS.NAV_ABOUT },
 ] as const;

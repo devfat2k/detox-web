@@ -37,6 +37,12 @@ export function Footer() {
 
           <div className="flex flex-wrap items-center gap-4 sm:gap-6 font-body text-sm pt-1">
             <Link
+              href={ROUTES.ARTICLES}
+              className="text-text-muted hover:text-primary transition-colors duration-fast"
+            >
+              {FIXED_LABELS.NAV_ARTICLES}
+            </Link>
+            <Link
               href={ROUTES.POLICY}
               className="text-text-muted hover:text-primary transition-colors duration-fast"
             >

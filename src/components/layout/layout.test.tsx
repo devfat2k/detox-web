@@ -29,7 +29,7 @@ describe("Layout Components (Stage E)", () => {
       expect(html).toContain(FIXED_LABELS.NAV_CONSULTATION);
       expect(html).toContain(FIXED_LABELS.NAV_PLANS);
       expect(html).toContain(FIXED_LABELS.NAV_DRINKS);
-      expect(html).toContain(FIXED_LABELS.NAV_ARTICLES);
+      expect(html).toContain(FIXED_LABELS.NAV_ABOUT);
 
       // Featured CTA
       expect(html).toContain(FIXED_LABELS.CTA_CONSULTATION);

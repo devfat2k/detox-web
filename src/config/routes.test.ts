@@ -10,6 +10,7 @@ describe("ROUTES config", () => {
     expect(ROUTES.DRINKS).toBe("/drinks");
     expect(ROUTES.ARTICLES).toBe("/articles");
     expect(ROUTES.POLICY).toBe("/policy");
+    expect(ROUTES.ABOUT).toBe("/about");
   });
 
   it("generates correct dynamic detail routes", () => {
@@ -46,5 +47,6 @@ describe("ROUTES config", () => {
     expect(routes.articles()).toBe("/articles");
     expect(routes.article("bai-1")).toBe("/articles/bai-1");
     expect(routes.policy()).toBe("/policy");
+    expect(routes.about()).toBe("/about");
   });
 });

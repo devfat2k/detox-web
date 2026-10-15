@@ -12,6 +12,7 @@ export const FIXED_LABELS = {
   NAV_PLANS: "Liệu trình",
   NAV_DRINKS: "Thức uống",
   NAV_ARTICLES: "Bài viết",
+  NAV_ABOUT: "Về Shop",
 
   // Nút hành động nổi bật
   CTA_CONSULTATION: "Tư vấn lộ trình",
@@ -22,6 +23,8 @@ export const FIXED_LABELS = {
   ACTION_CONTINUE: "Tiếp tục",
   ACTION_BACK: "Quay lại",
   ACTION_MESSAGE_THREADS: "Nhắn shop trên Threads",
+  ACTION_CONNECT_THREADS: "Trang Threads chính thức",
+  ACTION_CONNECT_TIKTOK: "Kênh TikTok chính thức",
   ACTION_COPY_SUMMARY: "Sao chép tóm tắt để gửi shop",
   ACTION_RETRY: "Thử lại",
   ACTION_BACK_TO_HOME: "Về trang chủ",
@@ -79,6 +82,8 @@ export const FIXED_LABELS = {
 
   PAGE_POLICY_TITLE: "Chính sách và miễn trừ",
   PAGE_POLICY_DESC: "Điều khoản sử dụng, chính sách riêng tư và miễn trừ trách nhiệm y tế.",
+  PAGE_ABOUT_TITLE: "Về tiệm Ép Xanh Chữa Lành",
+  PAGE_ABOUT_DESC: "Câu chuyện tiệm nước ép, thông điệp vỗ về cơ thể dành cho phái đẹp và các kênh kết nối chính thức.",
 } as const;
 
 export type FixedLabel = typeof FIXED_LABELS[keyof typeof FIXED_LABELS];

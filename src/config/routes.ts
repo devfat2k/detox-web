@@ -20,6 +20,7 @@ export const ROUTES = {
   ARTICLES: "/articles" as Route,
   ARTICLE_DETAIL: (slug: string) => `/articles/${slug}` as Route,
   POLICY: "/policy" as Route,
+  ABOUT: "/about" as Route,
 } as const;
 
 export type RoutePath = typeof ROUTES[keyof Omit<typeof ROUTES, "PLAN_DETAIL" | "DRINK_DETAIL" | "ARTICLE_DETAIL">];
@@ -45,4 +46,5 @@ export const routes = {
   articles: () => ROUTES.ARTICLES,
   article: (slug: string) => ROUTES.ARTICLE_DETAIL(slug),
   policy: () => ROUTES.POLICY,
+  about: () => ROUTES.ABOUT,
 } as const;
