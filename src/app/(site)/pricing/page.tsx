@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <Section spacing="md">
-      <Container className="space-y-8 sm:space-y-12 max-w-5xl">
+      <Container className="space-y-8 sm:space-y-12">
         <div className="space-y-3 text-center max-w-2xl mx-auto">
           <Heading level={1} size="3xl" className="font-semibold text-text tracking-tight">
             Bảng giá combo nước ép tươi mỗi sáng

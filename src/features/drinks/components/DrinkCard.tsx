@@ -13,7 +13,7 @@ export function DrinkCard({ drink }: DrinkCardProps) {
   const ingredientsText = (drink.ingredients ?? []).join(" · ");
 
   return (
-    <article className="flex flex-col justify-between p-5 sm:p-6 rounded-3xl border border-border/70 bg-surface hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-2xs transition-all duration-300 ease-soft group">
+    <article className="h-full flex flex-col justify-between p-5 sm:p-6 rounded-3xl border border-border/70 bg-surface hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-2xs transition-all duration-300 ease-soft group">
       <div className="space-y-4">
         <div className="w-full h-44 sm:h-48 flex items-center justify-center p-2 select-none">
           <DetoxBottle

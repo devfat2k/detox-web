@@ -1,15 +1,42 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { Container, Section, Heading, Card } from "@/components/ui";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Container, Section, Heading, Skeleton } from "@/components/ui";
 import { ROUTES } from "@/config/routes";
-import { type Drink } from "@/data/drinks";
+import { type Drink, DRINKS_DATA } from "@/data/drinks";
+import { useDrinksQuery } from "@/features/drinks/hooks/use-drinks-query";
+import { DrinkCard } from "@/features/drinks/components/DrinkCard";
 
 export interface HomeFeaturedDrinksSectionProps {
-  readonly drinks: readonly Drink[];
+  readonly drinks?: readonly Drink[];
 }
 
-export function HomeFeaturedDrinksSection({ drinks }: HomeFeaturedDrinksSectionProps) {
+export function HomeFeaturedDrinksSection({
+  drinks: propDrinks,
+}: HomeFeaturedDrinksSectionProps) {
+  const { data: apiDrinks, isLoading } = useDrinksQuery();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const sourceDrinks =
+    apiDrinks && apiDrinks.length > 0
+      ? apiDrinks
+      : propDrinks && propDrinks.length > 0
+        ? propDrinks
+        : DRINKS_DATA;
+
+  const drinks = sourceDrinks.slice(0, 5);
+
+  const handleScroll = (direction: "left" | "right") => {
+    if (!scrollContainerRef.current) return;
+    const scrollAmount = 340;
+    scrollContainerRef.current.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <Section spacing="md" className="border-b border-border">
       <Container className="space-y-6 sm:space-y-8">
@@ -27,61 +54,69 @@ export function HomeFeaturedDrinksSection({ drinks }: HomeFeaturedDrinksSectionP
             </p>
           </div>
 
-          <Link
-            href={ROUTES.DRINKS}
-            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline select-none"
-          >
-            <span>Xem toàn bộ thực đơn</span>
-            <ArrowUpRight size={15} strokeWidth={1.75} aria-hidden="true" />
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href={ROUTES.DRINKS}
+              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline select-none"
+            >
+              <span>Xem toàn bộ thực đơn</span>
+              <ArrowUpRight size={15} strokeWidth={1.75} aria-hidden="true" />
+            </Link>
+
+            {drinks && drinks.length > 1 && (
+              <div className="hidden sm:flex items-center gap-1.5 pl-2 border-l border-border/80">
+                <button
+                  type="button"
+                  onClick={() => handleScroll("left")}
+                  className="h-8 w-8 rounded-full border border-border bg-surface flex items-center justify-center text-text hover:text-primary hover:border-primary/50 active:scale-95 transition-all cursor-pointer"
+                  aria-label="Xem món trước"
+                >
+                  <ChevronLeft size={16} strokeWidth={1.75} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleScroll("right")}
+                  className="h-8 w-8 rounded-full border border-border bg-surface flex items-center justify-center text-text hover:text-primary hover:border-primary/50 active:scale-95 transition-all cursor-pointer"
+                  aria-label="Xem món sau"
+                >
+                  <ChevronRight size={16} strokeWidth={1.75} />
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
-        {drinks && drinks.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {drinks.map((drink) => (
-              <Card
-                key={drink.slug}
-                className="flex flex-col justify-between space-y-4 hover:border-primary/40 transition-colors shadow-2xs"
+        {isLoading && (!drinks || drinks.length === 0) ? (
+          <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 pt-1 scrollbar-none animate-fade-in -mx-4 px-4 sm:mx-0 sm:px-0">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div
+                key={i}
+                className="w-[280px] sm:w-[320px] shrink-0 p-5 sm:p-6 bg-surface border border-border rounded-3xl space-y-4"
               >
-                <div className="space-y-3">
-                  <span className="text-xs text-text-muted font-body">
-                    {drink.categoryName}
-                  </span>
-
-                  <Heading
-                    level={3}
-                    size="xl"
-                    className="font-semibold text-lg sm:text-xl text-text"
-                  >
-                    {drink.name}
-                  </Heading>
-
-                  <p className="text-sm text-text-muted font-body leading-relaxed">
-                    {drink.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {(drink.ingredients ?? []).map((ing) => (
-                      <span
-                        key={ing}
-                        className="px-2 py-0.5 rounded text-xs text-text-muted bg-bg border border-border/70"
-                      >
-                        {ing}
-                      </span>
-                    ))}
-                  </div>
+                <Skeleton className="w-full h-44 rounded-2xl" />
+                <div className="space-y-2">
+                  <Skeleton className="h-3 w-1/4 rounded" />
+                  <Skeleton className="h-5 w-3/4 rounded" />
                 </div>
-
-                <div className="pt-2 border-t border-border/60">
-                  <Link
-                    href={ROUTES.DRINK_DETAIL(drink.slug)}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline transition-colors select-none"
-                  >
-                    <span>Xem chi tiết thức uống</span>
-                    <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" />
-                  </Link>
+                <div className="space-y-2 pt-2">
+                  <Skeleton className="h-3 w-full rounded" />
+                  <Skeleton className="h-3 w-4/5 rounded" />
                 </div>
-              </Card>
+              </div>
+            ))}
+          </div>
+        ) : drinks && drinks.length > 0 ? (
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 pt-1 scroll-smooth snap-x snap-mandatory scrollbar-none animate-fade-in -mx-4 px-4 sm:mx-0 sm:px-0"
+          >
+            {drinks.map((drink) => (
+              <div
+                key={drink.id || drink.slug}
+                className="w-[280px] sm:w-[320px] shrink-0 snap-start flex flex-col"
+              >
+                <DrinkCard drink={drink} />
+              </div>
             ))}
           </div>
         ) : (

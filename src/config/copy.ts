@@ -15,7 +15,7 @@ export const FIXED_LABELS = {
   NAV_ABOUT: "Về Shop",
 
   // Nút hành động nổi bật
-  CTA_CONSULTATION: "Tư vấn lộ trình",
+  CTA_CONSULTATION: "Tư vấn ngay",
 
   // Nút cố định luồng
   ACTION_VIEW_MY_PLAN: "Xem lộ trình của tôi",
@@ -49,41 +49,56 @@ export const FIXED_LABELS = {
     "Mọi thông tin và lộ trình nước ép trên website chỉ mang tính chất tham khảo, không thay thế chẩn đoán hoặc điều trị y khoa.",
 
   // Thông báo giữ chỗ (Placeholder)
-  UNDER_CONSTRUCTION_NOTICE: "Đang xây dựng. Nội dung và giao diện chi tiết sẽ sớm được hoàn thiện.",
+  UNDER_CONSTRUCTION_NOTICE:
+    "Đang xây dựng. Nội dung và giao diện chi tiết sẽ sớm được hoàn thiện.",
 
   // Tiêu đề & mô tả các trang (Pages metadata & copy)
   PAGE_CONSULTATION_STEP1_TITLE: "Thông tin cơ thể",
-  PAGE_CONSULTATION_STEP1_DESC: "Cung cấp chỉ số cơ thể để ước tính nhu cầu năng lượng phù hợp.",
+  PAGE_CONSULTATION_STEP1_DESC:
+    "Cung cấp chỉ số cơ thể để ước tính nhu cầu năng lượng phù hợp.",
   PAGE_CONSULTATION_STEP2_TITLE: "Vấn đề và mục tiêu",
-  PAGE_CONSULTATION_STEP2_DESC: "Chọn mục tiêu sức khỏe và cảm nhận cơ thể bạn mong muốn cải thiện.",
+  PAGE_CONSULTATION_STEP2_DESC:
+    "Chọn mục tiêu sức khỏe và cảm nhận cơ thể bạn mong muốn cải thiện.",
   PAGE_CONSULTATION_STEP3_TITLE: "Kinh nghiệm và số ngày",
-  PAGE_CONSULTATION_STEP3_DESC: "Chọn kinh nghiệm detox và thời lượng lộ trình bạn mong muốn thực hiện.",
+  PAGE_CONSULTATION_STEP3_DESC:
+    "Chọn kinh nghiệm detox và thời lượng lộ trình bạn mong muốn thực hiện.",
   PAGE_CONSULTATION_STEP4_TITLE: "Lưu ý an toàn",
-  PAGE_CONSULTATION_STEP4_DESC: "Khảo sát an toàn sức khỏe trước khi hoàn tất lộ trình nước ép.",
+  PAGE_CONSULTATION_STEP4_DESC:
+    "Khảo sát an toàn sức khỏe trước khi hoàn tất lộ trình nước ép.",
   PAGE_CONSULTATION_RESULT_TITLE: "Kết quả cá nhân hóa",
-  PAGE_CONSULTATION_RESULT_DESC: "Lộ trình nước ép gợi ý được tính toán dành riêng cho bạn.",
+  PAGE_CONSULTATION_RESULT_DESC:
+    "Lộ trình nước ép gợi ý được tính toán dành riêng cho bạn.",
   PAGE_CONSULTATION_INELIGIBLE_TITLE: "Không phù hợp tham gia",
-  PAGE_CONSULTATION_INELIGIBLE_DESC: "Một số điều kiện sức khỏe hiện tại chưa thích hợp để áp dụng detox nước ép.",
+  PAGE_CONSULTATION_INELIGIBLE_DESC:
+    "Một số điều kiện sức khỏe hiện tại chưa thích hợp để áp dụng detox nước ép.",
 
   PAGE_PLANS_TITLE: "Danh sách liệu trình",
-  PAGE_PLANS_DESC: "Khám phá các liệu trình nước ép tươi 1 ngày, 3 ngày và 6 ngày từ menu quán.",
+  PAGE_PLANS_DESC:
+    "Khám phá các liệu trình nước ép tươi 1 ngày, 3 ngày và 6 ngày từ menu quán.",
   PAGE_PLAN_DETAIL_TITLE: "Chi tiết liệu trình",
-  PAGE_PLAN_DETAIL_DESC: "Lịch uống chi tiết và thành phần từng chai nước ép trong liệu trình.",
+  PAGE_PLAN_DETAIL_DESC:
+    "Lịch uống chi tiết và thành phần từng chai nước ép trong liệu trình.",
 
   PAGE_DRINKS_TITLE: "Danh mục thức uống",
-  PAGE_DRINKS_DESC: "Khám phá các loại nước ép xanh tươi thanh mát từ rau củ quả tự nhiên.",
+  PAGE_DRINKS_DESC:
+    "Khám phá các loại nước ép xanh tươi thanh mát từ rau củ quả tự nhiên.",
   PAGE_DRINK_DETAIL_TITLE: "Chi tiết thức uống",
-  PAGE_DRINK_DETAIL_DESC: "Thành phần nguyên liệu và đóng góp dinh dưỡng của thức uống.",
+  PAGE_DRINK_DETAIL_DESC:
+    "Thành phần nguyên liệu và đóng góp dinh dưỡng của thức uống.",
 
   PAGE_ARTICLES_TITLE: "Bài viết và kiến thức",
-  PAGE_ARTICLES_DESC: "Mẹo vặt, công thức và kiến thức dinh dưỡng detox có trích dẫn nguồn uy tín.",
+  PAGE_ARTICLES_DESC:
+    "Mẹo vặt, công thức và kiến thức dinh dưỡng detox có trích dẫn nguồn uy tín.",
   PAGE_ARTICLE_DETAIL_TITLE: "Chi tiết bài viết",
-  PAGE_ARTICLE_DETAIL_DESC: "Nội dung bài viết chia sẻ và tài liệu tham khảo khoa học.",
+  PAGE_ARTICLE_DETAIL_DESC:
+    "Nội dung bài viết chia sẻ và tài liệu tham khảo khoa học.",
 
   PAGE_POLICY_TITLE: "Chính sách và miễn trừ",
-  PAGE_POLICY_DESC: "Điều khoản sử dụng, chính sách riêng tư và miễn trừ trách nhiệm y tế.",
+  PAGE_POLICY_DESC:
+    "Điều khoản sử dụng, chính sách riêng tư và miễn trừ trách nhiệm y tế.",
   PAGE_ABOUT_TITLE: "Về tiệm Ép Xanh Chữa Lành",
-  PAGE_ABOUT_DESC: "Câu chuyện tiệm nước ép, thông điệp vỗ về cơ thể dành cho phái đẹp và các kênh kết nối chính thức.",
+  PAGE_ABOUT_DESC:
+    "Câu chuyện tiệm nước ép, thông điệp vỗ về cơ thể dành cho phái đẹp và các kênh kết nối chính thức.",
 } as const;
 
-export type FixedLabel = typeof FIXED_LABELS[keyof typeof FIXED_LABELS];
+export type FixedLabel = (typeof FIXED_LABELS)[keyof typeof FIXED_LABELS];

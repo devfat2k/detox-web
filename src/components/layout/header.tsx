@@ -29,15 +29,15 @@ export function Header() {
       <div
         className={`mx-auto transition-all duration-300 ${
           scrolled
-            ? "max-w-5xl rounded-full bg-surface px-5 sm:px-7 h-16 sm:h-18 flex items-center justify-between mt-3 border border-border/80 shadow-2xs"
-            : "max-w-5xl px-6 py-4 sm:py-5 flex items-center justify-between border-none"
+            ? "max-w-6xl rounded-full bg-surface px-5 sm:px-7 h-16 sm:h-18 flex items-center justify-between mt-3 border border-border/80 shadow-2xs"
+            : "max-w-6xl px-6 py-4 sm:py-5 flex items-center justify-between border-none"
         }`}
       >
         <Link
           href={ROUTES.HOME}
           className="flex items-center gap-2.5 sm:gap-3 text-primary hover:text-primary/85 transition-colors duration-fast shrink-0 group"
         >
-          <div className="relative shrink-0 h-11 w-11 sm:h-13 sm:w-13 transition-transform duration-300 group-hover:scale-105">
+          <div className="relative shrink-0 h-12 w-12 sm:h-14 sm:w-14 transition-transform duration-300 group-hover:scale-105">
             <Image
               src="/images/logo.png"
               alt={SITE_CONFIG.name}
@@ -70,13 +70,13 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center ">
             <LinkButton
               href={ROUTES.CONSULTATION}
               variant="primary"
-              className="rounded-full text-xs sm:text-sm font-medium select-none transition-all duration-fast whitespace-nowrap shrink-0 px-4 sm:px-6 py-2 sm:py-2.5 min-h-10 sm:min-h-11"
+              className="rounded-full text-md sm:text-md font-semibold select-none transition-all duration-300 ease-soft whitespace-nowrap shrink-0 px-5 sm:px-7 py-2.5 sm:py-3 min-h-11 sm:min-h-12 flex items-center gap-2 shadow-sm hover:shadow-md ring-2 ring-primary/25 hover:ring-primary/50 hover:-translate-y-0.5 active:scale-95 group cursor-pointer"
             >
-              {FIXED_LABELS.CTA_CONSULTATION}
+              <span>{FIXED_LABELS.CTA_CONSULTATION}</span>
             </LinkButton>
             <MobileNav />
           </div>

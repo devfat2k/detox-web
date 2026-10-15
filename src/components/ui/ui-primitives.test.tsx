@@ -69,7 +69,7 @@ describe("UI Primitives", () => {
         <Container as="main">Nội dung</Container>
       );
       expect(html).toContain("<main");
-      expect(html).toContain("max-w-5xl");
+      expect(html).toContain("max-w-6xl");
       expect(html).toContain("px-4");
       expect(html).toContain("Nội dung");
     });

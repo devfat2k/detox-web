@@ -12,7 +12,7 @@ import {
 } from "@/features/home/components";
 
 export default function HomePage() {
-  const featuredDrinks = DRINKS_DATA.slice(0, 3);
+  const featuredDrinks = DRINKS_DATA.slice(0, 5);
   const featuredArticle = ARTICLES_DATA[0];
 
   return (

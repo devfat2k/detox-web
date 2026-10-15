@@ -20,7 +20,7 @@ export function Container({
   return (
     <Component
       ref={ref}
-      className={cn("mx-auto w-full max-w-5xl px-4 sm:px-6", className)}
+      className={cn("mx-auto w-full max-w-6xl px-4 sm:px-6", className)}
       {...props}
     >
       {children}
