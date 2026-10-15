@@ -2,8 +2,15 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, ArrowLeft, Check, Plus, X } from "lucide-react";
-import { Container, Section, Heading, Card, Button, Input, DisclaimerNote } from "@/components/ui";
+import { ArrowRight, ArrowLeft, Check, X } from "lucide-react";
+import {
+  Container,
+  Section,
+  Heading,
+  Card,
+  Button,
+  Input,
+} from "@/components/ui";
 import { useConsultation } from "../context";
 import { useStepGuard } from "../hooks/use-step-guard";
 import { evaluateSafety, type SafetyAnswers } from "@/domain/screening";
@@ -40,14 +47,22 @@ const MEDICAL_CONDITIONS: MedicalConditionOption[] = [
   },
 ];
 
-const SUGGESTED_ALLERGENS = [
+const VEGETABLE_INGREDIENTS = [
   "Cần tây",
   "Củ dền",
   "Dứa (thơm)",
   "Gừng",
-  "Các loại hạt",
+  "Bạc hà",
+  "Khổ qua",
+  "Ớt chuông",
+];
+
+const SENSITIVE_ALLERGENS = [
+  "Các loại hạt (hạnh nhân, óc chó)",
   "Đậu nành",
   "Sữa bò",
+  "Mật ong",
+  "Gluten",
 ];
 
 export function SafetyForm() {
@@ -64,7 +79,7 @@ export function SafetyForm() {
 
   const hasAnyMedicalIssue = Object.values(medicalAnswers).some(Boolean);
   const [isHealthyPreset, setIsHealthyPreset] = useState<boolean>(
-    safety ? !hasAnyMedicalIssue : true
+    safety ? !hasAnyMedicalIssue : true,
   );
 
   const [allergies, setAllergies] = useState<string[]>(safety?.allergies ?? []);
@@ -95,7 +110,7 @@ export function SafetyForm() {
 
   const toggleAllergen = (item: string) => {
     setAllergies((prev) =>
-      prev.includes(item) ? prev.filter((a) => a !== item) : [...prev, item]
+      prev.includes(item) ? prev.filter((a) => a !== item) : [...prev, item],
     );
   };
 
@@ -132,7 +147,7 @@ export function SafetyForm() {
     if (!evaluation.isEligible) {
       setIneligible(
         evaluation.reason ??
-          "Rất tiếc, thể trạng của bạn hiện tại chưa thích hợp để áp dụng liệu trình detox thanh lọc."
+          "Rất tiếc, thể trạng của bạn hiện tại chưa thích hợp để áp dụng liệu trình detox thanh lọc.",
       );
       router.push(routes.consultationIneligible());
       return;
@@ -153,55 +168,208 @@ export function SafetyForm() {
 
   return (
     <Section className="py-8 sm:py-12">
-      <Container className="max-w-xl space-y-6">
-        <Card className="p-6 sm:p-8 space-y-6">
-          <header className="space-y-1.5 border-b border-border/60 pb-4">
-            <span className="text-xs font-medium text-primary tracking-wide block uppercase">
+      <Container className="max-w-7xl space-y-6">
+        <Card className="p-6 sm:p-10 space-y-8">
+          <header className="space-y-2 border-b border-border/60 pb-5">
+            <span className="text-md font-mono font-medium text-primary tracking-wider block">
               Bước 4/4 · Tiêu chuẩn an toàn
             </span>
-            <Heading level={1} className="text-2xl sm:text-3xl font-semibold text-text">
+            <Heading
+              level={1}
+              className="text-2xl sm:text-3xl font-semibold text-text"
+            >
               Lưu ý an toàn & Dị ứng
             </Heading>
-            <p className="font-body text-sm text-text-muted leading-relaxed">
-              Đảm bảo liệu trình an toàn tuyệt đối cho thể trạng và cơ địa của bạn.
+            <p className="font-body text-sm sm:text-base text-text-muted leading-relaxed">
+              Đảm bảo liệu trình an toàn và phù hợp nhất với thể trạng, cơ địa
+              của bạn.
             </p>
           </header>
 
-          <form onSubmit={handleContinue} className="space-y-6">
-            {/* Mục 1: Đánh giá y tế & an toàn */}
-            <div className="space-y-3">
-              <label className="font-body text-sm font-medium text-text select-none block">
-                Tình trạng sức khỏe đặc biệt <span className="text-danger">*</span>
-              </label>
+          <form onSubmit={handleContinue} className="space-y-8">
+            <div className="space-y-5">
+              <div className="space-y-1">
+                <span className="font-body text-base font-semibold text-text select-none block">
+                  1. Dị ứng hoặc không quen dùng nguyên liệu nào?
+                </span>
+                <p className="font-body text-xs sm:text-sm text-text-muted leading-relaxed">
+                  Quán sẽ điều chỉnh công thức, loại bỏ hoặc thay thế nguyên
+                  liệu phù hợp trong thực đơn của bạn.
+                </p>
+              </div>
 
-              {/* Preset sức khỏe ổn định */}
+              <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-surface border border-border">
+                <span className="text-xs font-medium text-text-muted block select-none">
+                  Nguyên liệu rau củ thường gặp:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {VEGETABLE_INGREDIENTS.map((item) => {
+                    const isSelected = allergies.includes(item);
+                    return (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => toggleAllergen(item)}
+                        className={`px-3.5 py-1.5 rounded-full font-body text-xs font-medium transition-all duration-200 select-none flex items-center gap-1.5 cursor-pointer ${
+                          isSelected
+                            ? "bg-primary text-bg shadow-2xs border border-primary font-semibold"
+                            : "bg-bg text-text border border-border hover:border-primary/40 hover:bg-surface"
+                        }`}
+                      >
+                        {isSelected && (
+                          <Check
+                            className="w-3.5 h-3.5 text-bg"
+                            strokeWidth={1.75}
+                          />
+                        )}
+                        <span>{item}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-surface border border-border">
+                <span className="text-xs font-medium text-text-muted block select-none">
+                  Nhóm dị ứng / cơ địa nhạy cảm:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {SENSITIVE_ALLERGENS.map((item) => {
+                    const isSelected = allergies.includes(item);
+                    return (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => toggleAllergen(item)}
+                        className={`px-3.5 py-1.5 rounded-full font-body text-xs font-medium transition-all duration-200 select-none flex items-center gap-1.5 cursor-pointer ${
+                          isSelected
+                            ? "bg-primary text-bg shadow-2xs border border-primary font-semibold"
+                            : "bg-bg text-text border border-border hover:border-primary/40 hover:bg-surface"
+                        }`}
+                      >
+                        {isSelected && (
+                          <Check
+                            className="w-3.5 h-3.5 text-bg"
+                            strokeWidth={1.75}
+                          />
+                        )}
+                        <span>{item}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-surface border border-border">
+                <label
+                  htmlFor="custom-allergen"
+                  className="font-body text-xs sm:text-sm font-medium text-text select-none block"
+                >
+                  Nguyên liệu khác ngoài danh sách trên (nếu có):
+                </label>
+                <div className="relative flex items-center">
+                  <Input
+                    id="custom-allergen"
+                    placeholder="Nhập nguyên liệu (ví dụ: kiwi, dưa leo...) rồi nhấn Enter"
+                    value={customAllergen}
+                    onChange={(e) => setCustomAllergen(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        addCustomAllergen();
+                      }
+                    }}
+                    className="pr-20 text-sm"
+                  />
+                  {customAllergen.trim() && (
+                    <button
+                      type="button"
+                      onClick={() => addCustomAllergen()}
+                      className="absolute right-2 px-3 py-1 text-xs font-medium rounded-md bg-primary text-bg hover:opacity-90 transition-opacity"
+                    >
+                      Thêm
+                    </button>
+                  )}
+                </div>
+
+                {allergies.length > 0 && (
+                  <div className="space-y-1.5 pt-2 border-t border-border/60">
+                    <span className="text-xs text-text-muted block">
+                      Đã ghi nhận ({allergies.length}):
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {allergies.map((item) => (
+                        <span
+                          key={item}
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft text-primary border border-primary/25 text-xs font-medium"
+                        >
+                          <span>{item}</span>
+                          <button
+                            type="button"
+                            onClick={() => removeAllergen(item)}
+                            className="hover:text-error focus:outline-none p-0.5 rounded cursor-pointer"
+                            aria-label={`Xóa ${item}`}
+                          >
+                            <X className="w-3 h-3" strokeWidth={1.75} />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-4 pt-4 border-t border-border/60">
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-body text-base font-semibold text-text select-none block">
+                    2. Tình trạng sức khỏe đặc biệt
+                  </span>
+                </div>
+                <p className="font-body text-xs sm:text-sm text-text-muted leading-relaxed">
+                  Thông tin giúp đảm bảo an toàn tuyệt đối, không gây quá tải
+                  cho cơ thể.
+                </p>
+              </div>
+
               <button
                 type="button"
                 onClick={selectHealthy}
-                className={`w-full p-4 rounded-xl border text-left transition-all duration-200 select-none flex items-center gap-3.5 ${
+                className={`w-full p-4.5 sm:p-5 rounded-2xl border text-left transition-all duration-200 select-none flex items-center gap-4 cursor-pointer ${
                   isHealthyPreset
-                    ? "bg-accent-soft/70 border-primary shadow-2xs"
+                    ? "bg-accent-soft/80 border-primary shadow-2xs ring-1 ring-primary/20"
                     : "bg-surface border-border hover:border-primary/40 hover:bg-bg"
                 }`}
               >
                 <div
-                  className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors ${
-                    isHealthyPreset ? "bg-primary border-primary text-white" : "border-border bg-bg"
+                  className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                    isHealthyPreset
+                      ? "bg-primary border-primary text-bg"
+                      : "border-border bg-bg"
                   }`}
                 >
-                  {isHealthyPreset && <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />}
+                  {isHealthyPreset && (
+                    <Check className="w-3.5 h-3.5 text-bg" strokeWidth={2} />
+                  )}
                 </div>
                 <div className="space-y-0.5">
-                  <span className={`font-body text-sm font-semibold block ${isHealthyPreset ? "text-primary" : "text-text"}`}>
-                    Sức khỏe hoàn toàn ổn định
+                  <span
+                    className={`font-heading font-medium text-base block ${isHealthyPreset ? "text-primary" : "text-text"}`}
+                  >
+                    Cơ thể bình thường / Sức khỏe ổn định
                   </span>
-                  <span className="font-body text-xs text-text-muted leading-relaxed block">
-                    Không mang thai, không có bệnh nền hoặc dùng thuốc điều trị kéo dài
+                  <span className="font-body text-xs sm:text-sm text-text-muted leading-relaxed block">
+                    Không mang thai, không có bệnh lý nền nặng hay dùng thuốc
+                    điều trị chuyên khoa
                   </span>
                 </div>
               </button>
 
               <div className="space-y-2.5 pt-1">
+                <span className="text-xs text-text-muted block select-none">
+                  Hoặc chọn nếu bạn thuộc một trong các trường hợp sau:
+                </span>
                 {MEDICAL_CONDITIONS.map((cond) => {
                   const isChecked = medicalAnswers[cond.key];
                   return (
@@ -209,24 +377,30 @@ export function SafetyForm() {
                       key={cond.key}
                       type="button"
                       onClick={() => toggleMedical(cond.key)}
-                      className={`w-full p-3.5 rounded-xl border text-left transition-all duration-200 select-none flex items-start gap-3 ${
+                      className={`w-full p-4 sm:p-4.5 rounded-2xl border text-left transition-all duration-200 select-none flex items-start gap-4 cursor-pointer ${
                         isChecked
-                          ? "bg-danger/10 border-danger/40"
+                          ? "bg-error/10 border-error/50 shadow-2xs"
                           : "bg-surface border-border hover:border-border-hover hover:bg-bg"
                       }`}
                     >
                       <div
-                        className={`w-4 h-4 rounded border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
-                          isChecked ? "bg-danger border-danger text-white" : "border-border bg-bg"
+                        className={`w-5 h-5 rounded-full border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
+                          isChecked
+                            ? "bg-error border-error text-bg"
+                            : "border-border bg-bg"
                         }`}
                       >
-                        {isChecked && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+                        {isChecked && (
+                          <Check className="w-3 h-3 text-bg" strokeWidth={2} />
+                        )}
                       </div>
                       <div className="space-y-0.5">
-                        <span className={`font-body text-sm font-medium block ${isChecked ? "text-danger" : "text-text"}`}>
+                        <span
+                          className={`font-heading font-medium text-sm sm:text-base block ${isChecked ? "text-error" : "text-text"}`}
+                        >
                           {cond.label}
                         </span>
-                        <span className="font-body text-xs text-text-muted leading-relaxed block">
+                        <span className="font-body text-xs sm:text-sm text-text-muted leading-relaxed block">
                           {cond.desc}
                         </span>
                       </div>
@@ -236,98 +410,6 @@ export function SafetyForm() {
               </div>
             </div>
 
-            {/* Mục 2: Dị ứng nguyên liệu riêng biệt (không chặn) */}
-            <div className="space-y-3 pt-3 border-t border-border/60">
-              <div>
-                <label className="font-body text-sm font-medium text-text select-none block">
-                  Dị ứng hoặc không quen dùng nguyên liệu nào?
-                </label>
-                <p className="font-body text-xs text-text-muted mt-0.5">
-                  Quán sẽ ghi chú loại bỏ hoặc đề xuất công thức thay thế trong lộ trình của bạn.
-                </p>
-              </div>
-
-              {/* Danh sách đề xuất chọn nhanh */}
-              <div className="flex flex-wrap gap-2">
-                {SUGGESTED_ALLERGENS.map((item) => {
-                  const isSelected = allergies.includes(item);
-                  return (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => toggleAllergen(item)}
-                      className={`px-3 py-1.5 rounded-full font-body text-xs font-medium transition-all duration-200 select-none flex items-center gap-1.5 ${
-                        isSelected
-                          ? "bg-primary text-white shadow-2xs border border-primary"
-                          : "bg-surface text-text-muted border border-border hover:border-primary/40 hover:text-text hover:bg-bg"
-                      }`}
-                    >
-                      {isSelected && <Check className="w-3 h-3 text-white" strokeWidth={2.5} />}
-                      <span>{item}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Ô tự nhập nguyên liệu khác */}
-              <div className="flex gap-2 pt-1">
-                <Input
-                  placeholder="Nhập nguyên liệu khác nếu có (ví dụ: bạc hà, kiwi...)"
-                  value={customAllergen}
-                  onChange={(e) => setCustomAllergen(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      addCustomAllergen();
-                    }
-                  }}
-                  className="flex-1 text-sm"
-                />
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => addCustomAllergen()}
-                  disabled={!customAllergen.trim()}
-                  className="shrink-0 flex items-center gap-1.5 text-xs px-3"
-                >
-                  <Plus className="w-3.5 h-3.5" strokeWidth={2} />
-                  <span>Thêm</span>
-                </Button>
-              </div>
-
-              {/* Danh sách tags đã chọn/nhập */}
-              {allergies.length > 0 && (
-                <div className="space-y-1 pt-1">
-                  <span className="text-[11px] font-medium text-text-muted uppercase tracking-wider block">
-                    Đã ghi nhận ({allergies.length}):
-                  </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {allergies.map((item) => (
-                      <span
-                        key={item}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-accent-soft/80 border border-primary/20 text-primary text-xs font-medium"
-                      >
-                        <span>{item}</span>
-                        <button
-                          type="button"
-                          onClick={() => removeAllergen(item)}
-                          className="hover:text-danger focus:outline-none p-0.5 rounded"
-                          aria-label={`Xóa ${item}`}
-                        >
-                          <X className="w-3 h-3" strokeWidth={2.5} />
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <DisclaimerNote>
-              Lộ trình mang tính tham khảo dinh dưỡng thực vật lành mạnh, không thay thế chẩn đoán hay điều trị y tế chuyên sâu.
-            </DisclaimerNote>
-
-            {/* Điều hướng */}
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Button
                 type="button"

@@ -36,31 +36,35 @@ const EXP_OPTIONS: ExpOption[] = [
 
 interface DurationOption {
   id: 1 | 3 | 6;
+  tag: string;
   title: string;
   bottles: string;
   desc: string;
-  recommendedText?: string;
+  isRecommended?: boolean;
 }
 
 const DURATION_OPTIONS: DurationOption[] = [
   {
     id: 1,
+    tag: "Khởi đầu",
     title: "1 ngày",
     bottles: "5 chai",
-    desc: "Khởi đầu nhẹ nhàng làm quen với nhịp thanh lọc trong 24 giờ",
+    desc: "Làm quen với nhịp thanh lọc nhẹ nhàng trong 24 giờ",
   },
   {
     id: 3,
+    tag: "Phổ biến",
     title: "3 ngày",
     bottles: "15 chai",
-    desc: "Cân bằng & xoa dịu đường ruột, thiết lập lại cảm giác thèm ăn",
+    desc: "Cân bằng & xoa dịu đường ruột, nhẹ bụng rõ rệt",
   },
   {
     id: 6,
+    tag: "Khuyên dùng",
     title: "6 ngày",
     bottles: "30 chai",
-    desc: "Chuyên sâu tái tạo năng lượng và phục hồi dưỡng chất toàn diện",
-    recommendedText: "Khuyên dùng",
+    desc: "Chuyên sâu tái tạo năng lượng và phục hồi dưỡng chất",
+    isRecommended: true,
   },
 ];
 
@@ -74,7 +78,7 @@ export function ExperienceForm() {
   >(experience?.experienceLevel ?? null);
 
   const [durationDays, setDurationDays] = useState<1 | 3 | 6 | null>(
-    experience?.durationDays ?? null
+    experience?.durationDays ?? null,
   );
 
   const isValid = Boolean(experienceLevel && durationDays);
@@ -103,27 +107,32 @@ export function ExperienceForm() {
 
   return (
     <Section className="py-8 sm:py-12">
-      <Container className="max-w-xl space-y-6">
-        <Card className="p-6 sm:p-8 space-y-6">
-          <header className="space-y-1.5 border-b border-border/60 pb-4">
-            <span className="text-xs font-medium text-primary tracking-wide block uppercase">
-              Bước 3/4 · Thói quen & Thời gian
+      <Container className="max-w-7xl space-y-6">
+        <Card className="p-6 sm:p-10 space-y-8">
+          <header className="space-y-2 border-b border-border/60 pb-5">
+            <span className="text-md font-mono font-medium text-primary tracking-wider block">
+              Bước 3/4 · Thói quen & thời gian
             </span>
-            <Heading level={1} className="text-2xl sm:text-3xl font-semibold text-text">
+            <Heading
+              level={1}
+              className="text-2xl sm:text-3xl font-semibold text-text"
+            >
               Kinh nghiệm và số ngày
             </Heading>
-            <p className="font-body text-sm text-text-muted leading-relaxed">
-              Chọn nhịp độ làm quen và thời gian phù hợp với lịch sinh hoạt của bạn.
+            <p className="font-body text-sm sm:text-base text-text-muted leading-relaxed">
+              Chọn nhịp độ làm quen và thời gian phù hợp với lịch sinh hoạt của
+              bạn.
             </p>
           </header>
 
-          <form onSubmit={handleContinue} className="space-y-6">
+          <form onSubmit={handleContinue} className="space-y-8">
             {/* Kinh nghiệm detox */}
             <div className="space-y-3">
               <label className="font-body text-sm font-medium text-text select-none block">
-                Bạn đã từng trải nghiệm uống nước ép thanh lọc chưa? <span className="text-danger">*</span>
+                Bạn đã từng trải nghiệm uống nước ép thanh lọc chưa?{" "}
+                <span className="text-error">*</span>
               </label>
-              <div className="space-y-2.5">
+              <div className="space-y-3">
                 {EXP_OPTIONS.map((opt) => {
                   const isSelected = experienceLevel === opt.id;
                   return (
@@ -131,24 +140,30 @@ export function ExperienceForm() {
                       key={opt.id}
                       type="button"
                       onClick={() => setExperienceLevel(opt.id)}
-                      className={`w-full p-3.5 sm:p-4 rounded-xl border text-left transition-all duration-200 select-none flex items-start gap-3 ${
+                      className={`w-full p-4.5 sm:p-5 rounded-2xl border text-left transition-all duration-200 select-none flex items-start gap-4 cursor-pointer ${
                         isSelected
-                          ? "bg-accent-soft/70 border-primary shadow-2xs"
+                          ? "bg-accent-soft/80 border-primary shadow-2xs ring-1 ring-primary/20"
                           : "bg-surface border-border hover:border-primary/40 hover:bg-bg"
                       }`}
                     >
                       <div
-                        className={`w-4 h-4 rounded-full border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
-                          isSelected ? "border-primary bg-primary" : "border-border bg-bg"
+                        className={`w-5 h-5 rounded-full border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
+                          isSelected
+                            ? "border-primary bg-primary text-bg"
+                            : "border-border bg-bg"
                         }`}
                       >
-                        {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                        {isSelected && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-surface" />
+                        )}
                       </div>
-                      <div className="space-y-0.5">
-                        <span className={`font-body text-sm font-medium block ${isSelected ? "text-primary" : "text-text"}`}>
+                      <div className="space-y-1">
+                        <span
+                          className={`font-heading font-medium text-base block leading-snug ${isSelected ? "text-primary" : "text-text"}`}
+                        >
                           {opt.label}
                         </span>
-                        <span className="font-body text-xs text-text-muted leading-relaxed block">
+                        <span className="font-body text-xs sm:text-sm text-text-muted leading-relaxed block">
                           {opt.desc}
                         </span>
                       </div>
@@ -161,9 +176,10 @@ export function ExperienceForm() {
             {/* Số ngày dự kiến */}
             <div className="space-y-3 pt-2">
               <label className="font-body text-sm font-medium text-text select-none block">
-                Số ngày bạn muốn trải nghiệm <span className="text-danger">*</span>
+                Số ngày bạn muốn trải nghiệm{" "}
+                <span className="text-error">*</span>
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
                 {DURATION_OPTIONS.map((opt) => {
                   const isSelected = durationDays === opt.id;
                   return (
@@ -171,28 +187,55 @@ export function ExperienceForm() {
                       key={opt.id}
                       type="button"
                       onClick={() => setDurationDays(opt.id)}
-                      className={`relative p-4 rounded-xl border text-left transition-all duration-200 select-none flex flex-col justify-between gap-2 ${
+                      className={`p-5 sm:p-5.5 rounded-2xl border text-left transition-all duration-200 select-none flex flex-col justify-between gap-4 h-full cursor-pointer ${
                         isSelected
-                          ? "bg-accent-soft/70 border-primary shadow-2xs"
+                          ? "bg-accent-soft/80 border-primary shadow-2xs ring-1 ring-primary/20"
                           : "bg-surface border-border hover:border-primary/40 hover:bg-bg"
                       }`}
                     >
-                      {opt.recommendedText && (
-                        <span className="text-[10px] uppercase font-semibold tracking-wider text-primary">
-                          {opt.recommendedText}
+                      <div className="flex items-center justify-between gap-2 w-full">
+                        <span
+                          className={`text-xs font-normal px-2.5 py-0.5 rounded-full border transition-colors ${
+                            opt.isRecommended
+                              ? "bg-primary/10 text-primary border-primary/25 font-medium"
+                              : isSelected
+                                ? "bg-primary/10 text-primary border-primary/25"
+                                : "bg-bg text-text-muted border-border"
+                          }`}
+                        >
+                          {opt.tag}
                         </span>
-                      )}
-                      <div>
-                        <span className={`font-heading text-lg font-semibold block ${isSelected ? "text-primary" : "text-text"}`}>
-                          {opt.title}
-                        </span>
-                        <span className="font-body text-xs text-primary font-medium block">
+                        <span className="text-xs font-normal text-text-muted bg-bg px-2.5 py-0.5 rounded-full border border-border">
                           {opt.bottles}
                         </span>
                       </div>
-                      <p className="font-body text-xs text-text-muted leading-relaxed">
-                        {opt.desc}
-                      </p>
+
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span
+                            className={`font-heading text-xl font-medium block ${isSelected ? "text-primary" : "text-text"}`}
+                          >
+                            {opt.title}
+                          </span>
+                          <div
+                            className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                              isSelected
+                                ? "border-primary bg-primary text-bg"
+                                : "border-border bg-bg"
+                            }`}
+                          >
+                            {isSelected && (
+                              <Check
+                                className="w-3.5 h-3.5 text-bg"
+                                strokeWidth={2}
+                              />
+                            )}
+                          </div>
+                        </div>
+                        <p className="font-body text-xs sm:text-sm text-text-muted leading-relaxed">
+                          {opt.desc}
+                        </p>
+                      </div>
                     </button>
                   );
                 })}

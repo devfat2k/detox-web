@@ -68,7 +68,7 @@ Next.js 16 (App Router) + React 19 + TypeScript strict + Tailwind CSS v4 (CSS-fi
 
 - **Privacy & Không thu thập dữ liệu nhạy cảm:** Tuyệt đối KHÔNG thu thập thông tin định danh cá nhân nhạy cảm (Căn cước công dân/ID, số điện thoại, email, địa chỉ, tài khoản). Hệ thống chỉ thu thập thông tin sinh hoạt và thể trạng cơ bản (tuổi, chiều cao, cân nặng, vận động, mục tiêu dinh dưỡng, khẩu vị, tiền sử dị ứng) hoàn toàn ẩn danh theo phiên (session-scoped) để phục vụ gợi ý lộ trình nước ép (xem `docs/product-spec.md` §9 & `.claude/rules/privacy.md`).
 - **Content & Medical:** Tiếng Việt "mình"/"bạn", phi thương mại 100%. Trích dẫn nguồn theo `sourceIds` (xem `docs/product-spec.md` §7 & `.claude/rules/content.md`).
-- **UI & Design:** Chỉ dùng token từ `globals.css`, duy nhất font Be Vietnam Pro thanh mảnh, mobile-first 390px, tuyệt đối không emoji hay text làm icon (xem `DESIGN.md` & `.claude/rules/ui.md`).
+- **UI & Design:** Chỉ dùng token từ `globals.css`, duy nhất font Be Vietnam Pro thanh mảnh, mobile-first 390px, tuyệt đối không emoji hay text làm icon (xem `DESIGN.md` & `.claude/rules/ui.md`). Tuyệt đối KHÔNG viết comment/ghi chú giải thích JSX hiển nhiên trong code (ví dụ `<!-- Tên khách hàng -->`, `{/* Giới tính */}`, v.v.); code phải tự rõ nghĩa qua tên component/biến.
 - **Domain & Services:** TypeScript thuần 100%, hàm thuần, unit test cạnh file; API services kết nối qua Axios + TanStack Query kèm cơ chế fallback tự động về dữ liệu cục bộ (xem `docs/product-spec.md` §8 & `.claude/rules/domain.md`).
 - **Testing:** Chạy qua `bun run test` / `bun run test:e2e`, kiểm thử bắt buộc với `src/domain/` and `src/content/schema.ts` (xem `.claude/rules/testing.md`).
 

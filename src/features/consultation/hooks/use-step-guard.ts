@@ -48,10 +48,8 @@ export function useStepGuard(target: GuardTargetStep) {
       return;
     }
 
-    if (target === "result" && (!body || goals.length === 0 || !experience || !safety)) {
-      router.replace(routes.consultation());
-      return;
-    }
+    // Lưu ý: Không tự ý redirect âm thầm khi vào /consultation/result mà thiếu dữ liệu.
+    // ResultView sẽ tự hiển thị thông báo phiên làm mới (privacy-friendly) và cung cấp nút tư vấn lại.
   }, [target, body, goals, experience, safety, ineligibleReason, router]);
 
   return { isAllowed };

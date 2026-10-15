@@ -24,6 +24,19 @@ export function PlanDayScheduleView({ plan }: PlanDayScheduleViewProps) {
   const totalDays = days.length;
   const currentDay = days[activeDayIndex] ?? days[0];
 
+  const durationGuide = React.useMemo(() => {
+    if (totalDays === 1) {
+      return "Gợi ý trải nghiệm thanh lọc nhẹ nhàng trong 24 giờ để cơ thể làm quen với nhịp rau củ tươi.";
+    }
+    if (totalDays === 3) {
+      return "Gợi ý thực đơn 3 ngày giúp hệ tiêu hóa được nghỉ ngơi, nhẹ bụng và giải phóng năng lượng êm ái.";
+    }
+    if (totalDays === 6) {
+      return "Gợi ý thực đơn 6 ngày giúp tái tạo dưỡng chất chuyên sâu và nuôi dưỡng thói quen sống xanh lành mạnh.";
+    }
+    return `Gợi ý thực đơn ${totalDays} ngày thanh lọc nhẹ nhàng cùng nông sản tươi ép chậm mỗi sáng.`;
+  }, [totalDays]);
+
   const handlePrev = () => {
     setActiveDayIndex((prev) => Math.max(0, prev - 1));
   };
@@ -36,67 +49,71 @@ export function PlanDayScheduleView({ plan }: PlanDayScheduleViewProps) {
 
   return (
     <Card className="p-6 sm:p-8 space-y-6">
-      {/* Header & Bộ điều hướng ngày */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="space-y-1">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-accent-soft text-primary font-heading font-medium text-xs border border-border">
-            <Sparkles size={11} strokeWidth={1.75} className="text-primary" />
-            <span>Quy chuẩn 5 chai/ngày (3:1:1)</span>
-          </div>
-          <Heading level={2} size="xl" className="font-semibold text-xl text-text">
-            {totalDays > 1
-              ? `Lịch ngày ${currentDay.dayNumber} · ${currentDay.theme ?? ""}`
-              : "Lịch 5 chai phân bổ nhịp nhàng"}
-          </Heading>
-          <p className="text-xs text-text-muted font-body leading-relaxed max-w-xl">
-            Cơ cấu chuẩn: 3 Sinh tố xanh (no lâu, giàu xơ thô) + 1 Nước ép (bù khoáng) + 1 Sữa hạt hoặc Trà thảo mộc (êm bụng cữ tối).
-          </p>
+      {/* Header thông tin lịch trình */}
+      <div className="space-y-2 border-b border-border/60 pb-5">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft text-primary font-heading font-medium text-xs border border-border">
+          <Sparkles size={12} strokeWidth={1.75} className="text-primary" />
+          <span>Thực đơn 5 chai mỗi ngày</span>
         </div>
-
-        {/* Nút lùi/tiến ngày khi lộ trình có nhiều ngày */}
-        {totalDays > 1 && (
-          <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
-            <div className="flex items-center gap-1 mr-1">
-              {days.map((day, idx) => (
-                <button
-                  key={day.dayNumber}
-                  type="button"
-                  onClick={() => setActiveDayIndex(idx)}
-                  className={`px-2.5 py-1 text-xs rounded-full font-medium transition-colors ${
-                    activeDayIndex === idx
-                      ? "bg-primary text-surface"
-                      : "bg-surface text-text-muted hover:text-text border border-border"
-                  }`}
-                  aria-label={`Xem ngày ${day.dayNumber}`}
-                >
-                  Ngày {day.dayNumber}
-                </button>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-1 border border-border rounded-lg p-0.5 bg-surface">
-              <button
-                type="button"
-                onClick={handlePrev}
-                disabled={activeDayIndex === 0}
-                className="p-1.5 rounded text-text-muted hover:text-text hover:bg-bg disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                aria-label="Ngày trước đó"
-              >
-                <ChevronLeft size={16} strokeWidth={1.75} />
-              </button>
-              <button
-                type="button"
-                onClick={handleNext}
-                disabled={activeDayIndex === totalDays - 1}
-                className="p-1.5 rounded text-text-muted hover:text-text hover:bg-bg disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                aria-label="Ngày tiếp theo"
-              >
-                <ChevronRight size={16} strokeWidth={1.75} />
-              </button>
-            </div>
-          </div>
-        )}
+        <Heading level={2} size="xl" className="font-semibold text-xl sm:text-2xl text-text">
+          {totalDays > 1
+            ? `Lịch ngày ${currentDay.dayNumber} · ${currentDay.theme ?? ""}`
+            : "Lịch 5 chai phân bổ nhịp nhàng"}
+        </Heading>
+        <p className="text-xs sm:text-sm text-text-muted font-body leading-relaxed max-w-2xl">
+          {durationGuide}
+        </p>
+        <p className="text-xs text-text-muted/80 font-body leading-relaxed">
+          Mỗi ngày gồm 3 chai sinh tố xanh no lâu, 1 chai nước ép bù khoáng và 1 chai sữa hạt ấm bụng cữ tối.
+        </p>
       </div>
+
+      {/* Thanh chọn ngày tách biệt hoàn toàn xuống dòng riêng */}
+      {totalDays > 1 && (
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+            <span className="text-xs font-medium text-text-muted select-none mr-1 shrink-0">
+              Chọn ngày:
+            </span>
+            {days.map((day, idx) => (
+              <button
+                key={day.dayNumber}
+                type="button"
+                onClick={() => setActiveDayIndex(idx)}
+                className={`px-3.5 py-1.5 text-xs rounded-full font-medium transition-all duration-200 select-none cursor-pointer shrink-0 ${
+                  activeDayIndex === idx
+                    ? "bg-primary text-bg font-semibold shadow-2xs"
+                    : "bg-surface text-text-muted hover:text-text hover:border-primary/40 border border-border"
+                }`}
+                aria-label={`Xem thực đơn ngày ${day.dayNumber}`}
+              >
+                Ngày {day.dayNumber}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-1 border border-border rounded-lg p-0.5 bg-surface shrink-0">
+            <button
+              type="button"
+              onClick={handlePrev}
+              disabled={activeDayIndex === 0}
+              className="p-1.5 rounded text-text-muted hover:text-text hover:bg-bg disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+              aria-label="Ngày trước đó"
+            >
+              <ChevronLeft size={16} strokeWidth={1.75} />
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={activeDayIndex === totalDays - 1}
+              className="p-1.5 rounded text-text-muted hover:text-text hover:bg-bg disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+              aria-label="Ngày tiếp theo"
+            >
+              <ChevronRight size={16} strokeWidth={1.75} />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Danh sách 5 chai nước ép trong ngày đang chọn */}
       <div className="flex flex-col gap-3">

@@ -72,11 +72,11 @@ export default function DevUIPage() {
             Thư viện Thành phần & Tokens Cơ sở
           </Heading>
           <p className="text-text-muted font-body text-base max-w-prose">
-            Trang kiểm thử trực quan cho quy chuẩn DESIGN.md và DNA Hallmark Narrative Workflow (390px mobile và 1280px desktop).
+            Trang kiểm thử trực quan cho quy chuẩn DESIGN.md và DNA Hallmark
+            Narrative Workflow (390px mobile và 1280px desktop).
           </p>
         </header>
 
-        {/* 1. Bảng màu (Color Palette Tokens) */}
         <Section spacing="sm" className="space-y-4">
           <div className="space-y-1">
             <Kicker>01 · Màu sắc</Kicker>
@@ -147,30 +147,44 @@ export default function DevUIPage() {
           <div className="space-y-4 border border-border bg-surface p-6 rounded-xl">
             <div className="space-y-2 border-b border-border pb-4">
               <Heading level={1}>Heading 1 — 3xl (Be Vietnam Pro 600)</Heading>
-              <p className="text-xs text-text-muted font-body">1.875rem (30px) · line-height 1.2 · Semibold</p>
+              <p className="text-xs text-text-muted font-body">
+                1.875rem (30px) · line-height 1.2 · Semibold
+              </p>
             </div>
             <div className="space-y-2 border-b border-border pb-4">
               <Heading level={2}>Heading 2 — 2xl (Be Vietnam Pro 600)</Heading>
-              <p className="text-xs text-text-muted font-body">1.5rem (24px) · line-height 1.3 · Semibold</p>
+              <p className="text-xs text-text-muted font-body">
+                1.5rem (24px) · line-height 1.3 · Semibold
+              </p>
             </div>
             <div className="space-y-2 border-b border-border pb-4">
               <Heading level={3}>Heading 3 — xl (Be Vietnam Pro 500)</Heading>
-              <p className="text-xs text-text-muted font-body">1.25rem (20px) · line-height 1.4 · Medium</p>
+              <p className="text-xs text-text-muted font-body">
+                1.25rem (20px) · line-height 1.4 · Medium
+              </p>
             </div>
             <div className="space-y-2 border-b border-border pb-4">
-              <p className="font-body text-base font-medium">Text Base — 1rem (Be Vietnam Pro 500/400)</p>
+              <p className="font-body text-base font-medium">
+                Text Base — 1rem (Be Vietnam Pro 500/400)
+              </p>
               <p className="text-text-muted font-body text-base leading-relaxed">
-                Nước ép tươi mỗi sáng giúp thanh lọc dịu nhẹ, giữ lại trọn vẹn chất chống oxy hóa tự nhiên và vitamin tươi từ rau củ hữu cơ.
+                Nước ép tươi mỗi sáng giúp thanh lọc dịu nhẹ, giữ lại trọn vẹn
+                chất chống oxy hóa tự nhiên và vitamin tươi từ rau củ hữu cơ.
               </p>
             </div>
             <div className="space-y-1 border-b border-border pb-4">
-              <p className="font-body text-sm font-medium">Text Sm — 0.875rem (14px)</p>
+              <p className="font-body text-sm font-medium">
+                Text Sm — 0.875rem (14px)
+              </p>
               <p className="text-text-muted font-body text-sm">
-                Ước tính khoảng cân nặng tham khảo, phần lớn là nước và giảm cảm giác đầy bụng.
+                Ước tính khoảng cân nặng tham khảo, phần lớn là nước và giảm cảm
+                giác đầy bụng.
               </p>
             </div>
             <div className="space-y-1">
-              <p className="font-body text-xs font-medium">Text Xs — 0.75rem (12px)</p>
+              <p className="font-body text-xs font-medium">
+                Text Xs — 0.75rem (12px)
+              </p>
               <p className="text-text-muted font-body text-xs uppercase tracking-wider">
                 01 · Thông tin cơ thể · Khảo sát không lưu trữ
               </p>
@@ -178,7 +192,6 @@ export default function DevUIPage() {
           </div>
         </Section>
 
-        {/* 3. Nút bấm (Buttons) */}
         <Section spacing="sm" className="space-y-4">
           <div className="space-y-1">
             <Kicker>03 · Tương tác</Kicker>
@@ -196,7 +209,11 @@ export default function DevUIPage() {
             <LinkButton href="/" variant="primary">
               LinkButton (Trang chủ)
             </LinkButton>
-            <LinkButton href="https://threads.net" isExternal variant="secondary">
+            <LinkButton
+              href="https://threads.net"
+              isExternal
+              variant="secondary"
+            >
               Nhắn qua Threads
             </LinkButton>
           </div>
@@ -233,7 +250,8 @@ export default function DevUIPage() {
                 Thẻ đơn tiêu chuẩn
               </Heading>
               <p className="text-text font-body text-sm">
-                Nền surface, viền mảnh 1px border-border, không bóng đổ nặng, bo góc 12px.
+                Nền surface, viền mảnh 1px border-border, không bóng đổ nặng, bo
+                góc 12px.
               </p>
             </Card>
             <Card>
@@ -242,7 +260,8 @@ export default function DevUIPage() {
               </Heading>
               <Card>
                 <p className="text-text-muted font-body text-sm">
-                  Card con bị lồng: tự động hủy bỏ viền/nền thừa qua CSS selector [data-card] [data-card].
+                  Card con bị lồng: tự động hủy bỏ viền/nền thừa qua CSS
+                  selector [data-card] [data-card].
                 </p>
               </Card>
             </Card>
@@ -278,10 +297,12 @@ export default function DevUIPage() {
               Các chai nước ép tươi được chuẩn bị và giao vào sáng sớm mỗi ngày.
             </Notice>
             <Notice variant="warning" title="Miễn trừ trách nhiệm y tế">
-              Nước ép hỗ trợ cân bằng dinh dưỡng, không thay thế điều trị y khoa.
+              Nước ép hỗ trợ cân bằng dinh dưỡng, không thay thế điều trị y
+              khoa.
             </Notice>
             <Notice variant="error" title="Không phù hợp">
-              Người có bệnh lý dạ dày nặng không nên áp dụng liệu trình ép xanh đậm vị chua.
+              Người có bệnh lý dạ dày nặng không nên áp dụng liệu trình ép xanh
+              đậm vị chua.
             </Notice>
           </div>
         </Section>
@@ -314,19 +335,25 @@ export default function DevUIPage() {
             <Reveal delay={0}>
               <Card>
                 <p className="font-heading font-semibold text-base">Khối 01</p>
-                <p className="text-text-muted text-sm mt-1">Xuất hiện ngay lập tức</p>
+                <p className="text-text-muted text-sm mt-1">
+                  Xuất hiện ngay lập tức
+                </p>
               </Card>
             </Reveal>
             <Reveal delay={100}>
               <Card>
                 <p className="font-heading font-semibold text-base">Khối 02</p>
-                <p className="text-text-muted text-sm mt-1">Trì hoãn 100ms nhẹ</p>
+                <p className="text-text-muted text-sm mt-1">
+                  Trì hoãn 100ms nhẹ
+                </p>
               </Card>
             </Reveal>
             <Reveal delay={200}>
               <Card>
                 <p className="font-heading font-semibold text-base">Khối 03</p>
-                <p className="text-text-muted text-sm mt-1">Trì hoãn 200ms nhẹ</p>
+                <p className="text-text-muted text-sm mt-1">
+                  Trì hoãn 200ms nhẹ
+                </p>
               </Card>
             </Reveal>
           </div>
