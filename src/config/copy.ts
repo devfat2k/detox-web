@@ -8,6 +8,7 @@ export const FIXED_LABELS = {
 
   // Nhãn menu điều hướng
   NAV_CONSULTATION: "Tư vấn",
+  NAV_PRICING: "Bảng giá",
   NAV_PLANS: "Liệu trình",
   NAV_DRINKS: "Thức uống",
   NAV_ARTICLES: "Bài viết",

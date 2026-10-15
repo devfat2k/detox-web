@@ -9,13 +9,8 @@ import { ROUTES } from "@/config/routes";
 import { LinkButton } from "@/components/ui";
 import { NavLink } from "./nav-link";
 import { MobileNav } from "./mobile-nav";
+import { MAIN_NAV_ITEMS } from "./constants";
 
-/**
- * Header chính của website - Client Component.
- * Scroll-Morph Floating Pill Header (N10 archetype theo thiết kế Bubble Hum-07):
- * - Màu chữ tên thương hiệu: Dùng màu xanh lá tươi dịu text-primary thay vì đen thô.
- * - Loại bỏ viền kẻ ngang đen 100% full-width ở vị trí đầu trang (top = 0) để tạo cảm giác liền mạch.
- */
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -29,60 +24,45 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navItems = [
-    { href: ROUTES.CONSULTATION, label: FIXED_LABELS.NAV_CONSULTATION },
-    { href: ROUTES.PLANS, label: FIXED_LABELS.NAV_PLANS },
-    { href: ROUTES.DRINKS, label: FIXED_LABELS.NAV_DRINKS },
-    { href: ROUTES.ARTICLES, label: FIXED_LABELS.NAV_ARTICLES },
-  ];
-
   return (
-    <header
-      className={`sticky top-0 z-40 w-full transition-all duration-fast select-none pt-[env(safe-area-inset-top)]`}
-    >
+    <header className="sticky top-0 z-40 w-full transition-all duration-fast select-none pt-[env(safe-area-inset-top)]">
       <div
         className={`mx-auto transition-all duration-300 ${
           scrolled
-            ? "max-w-5xl rounded-full bg-surface px-6 sm:px-8 h-20 sm:h-20 flex items-center justify-between mt-4 border border-border/70 shadow-2xs"
-            : "max-w-5xl px-6 py-6 sm:px-6 sm:py-6 sm:h-22 flex items-center justify-between border-none"
+            ? "max-w-5xl rounded-full bg-surface px-5 sm:px-7 h-16 sm:h-18 flex items-center justify-between mt-3 border border-border/80 shadow-2xs"
+            : "max-w-5xl px-6 py-4 sm:py-5 flex items-center justify-between border-none"
         }`}
       >
         <Link
           href={ROUTES.HOME}
-          className="flex items-center gap-2 sm:gap-2 text-primary hover:text-primary/80 transition-colors duration-fast shrink-0"
+          className="flex items-center gap-2.5 sm:gap-3 text-primary hover:text-primary/85 transition-colors duration-fast shrink-0 group"
         >
-          <div
-            className={`relative overflow-hidden rounded-full border border-border/80 bg-surface shrink-0 transition-all duration-fast ${
-              scrolled
-                ? "h-14 w-14 sm:h-14 sm:w-14"
-                : "h-18 w-18 sm:h-18 sm:w-18"
-            }`}
-          >
+          <div className="relative shrink-0 h-11 w-11 sm:h-13 sm:w-13 transition-transform duration-300 group-hover:scale-105">
             <Image
               src="/images/logo.png"
               alt={SITE_CONFIG.name}
               fill
-              sizes="(max-width: 640px) 56px, 64px"
-              className="object-cover"
+              sizes="(max-width: 640px) 44px, 52px"
+              className="object-contain"
               priority
             />
           </div>
-          <span className="text-xl sm:text-2xl font-bold tracking-tight text-primary">
+          <span className="text-lg sm:text-xl font-heading font-semibold tracking-tight text-primary">
             <span className="sm:hidden">Ép Xanh</span>
             <span className="hidden sm:inline">{SITE_CONFIG.name}</span>
           </span>
         </Link>
 
-        <div className="flex items-center gap-6 lg:gap-8">
+        <div className="flex items-center gap-5 lg:gap-8">
           <nav
             aria-label={FIXED_LABELS.NAV_MAIN_LABEL}
-            className="hidden md:flex items-center gap-6 lg:gap-8"
+            className="hidden md:flex items-center gap-5 lg:gap-7"
           >
-            {navItems.map((item) => (
+            {MAIN_NAV_ITEMS.map((item) => (
               <NavLink
                 key={item.href}
                 href={item.href}
-                className="font-body text-base text-text hover:text-primary py-1.5 select-none font-semibold transition-colors"
+                className="font-body text-sm sm:text-base text-text-muted hover:text-text py-1.5 select-none font-medium transition-colors"
                 activeClassName="text-primary font-semibold"
               >
                 {item.label}
@@ -90,15 +70,11 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <LinkButton
               href={ROUTES.CONSULTATION}
               variant="primary"
-              className={`rounded-full text-xs sm:text-base font-semibold select-none transition-all duration-fast whitespace-nowrap shrink-0 ${
-                scrolled
-                  ? "px-3.5 sm:px-6 py-2 sm:py-2.5"
-                  : "px-3.5 sm:px-7 py-2 sm:py-3"
-              }`}
+              className="rounded-full text-xs sm:text-sm font-medium select-none transition-all duration-fast whitespace-nowrap shrink-0 px-4 sm:px-6 py-2 sm:py-2.5 min-h-10 sm:min-h-11"
             >
               {FIXED_LABELS.CTA_CONSULTATION}
             </LinkButton>

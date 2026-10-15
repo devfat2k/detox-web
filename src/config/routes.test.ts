@@ -6,6 +6,7 @@ describe("ROUTES config", () => {
     expect(ROUTES.HOME).toBe("/");
     expect(ROUTES.CONSULTATION).toBe("/consultation");
     expect(ROUTES.PLANS).toBe("/plans");
+    expect(ROUTES.PRICING).toBe("/pricing");
     expect(ROUTES.DRINKS).toBe("/drinks");
     expect(ROUTES.ARTICLES).toBe("/articles");
     expect(ROUTES.POLICY).toBe("/policy");
@@ -38,6 +39,7 @@ describe("ROUTES config", () => {
     expect(routes.consultationResult()).toBe("/consultation/result");
     expect(routes.consultationIneligible()).toBe("/consultation/ineligible");
     expect(routes.plans()).toBe("/plans");
+    expect(routes.pricing()).toBe("/pricing");
     expect(routes.plan("3-day")).toBe("/plans/3-day");
     expect(routes.drinks()).toBe("/drinks");
     expect(routes.drink("cam-ca-rot")).toBe("/drinks/cam-ca-rot");
