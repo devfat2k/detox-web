@@ -17,6 +17,7 @@ export const FIXED_LABELS = {
 
   // Nút cố định luồng
   ACTION_VIEW_MY_PLAN: "Xem lộ trình của tôi",
+  ACTION_VIEW_PRICING: "Xem bảng giá",
   ACTION_CONTINUE: "Tiếp tục",
   ACTION_BACK: "Quay lại",
   ACTION_MESSAGE_THREADS: "Nhắn shop trên Threads",
