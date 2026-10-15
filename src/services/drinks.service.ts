@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/api-client";
-import { DRINKS_DATA, type Drink as UIDrink, type DrinkCategory } from "@/data/drinks";
+import { type Drink as UIDrink, type DrinkCategory } from "@/data/drinks";
 import type { Drink as ApiDrink } from "@/types/api";
 
 function mapApiDrinkToUIDrink(apiDrink: ApiDrink): UIDrink {
@@ -71,9 +71,9 @@ export async function getDrinks(filters?: DrinkFilters): Promise<readonly UIDrin
     if (Array.isArray(apiDrinks) && apiDrinks.length > 0) {
       return apiDrinks.map(mapApiDrinkToUIDrink);
     }
-    return DRINKS_DATA;
+    return [];
   } catch {
-    return DRINKS_DATA;
+    return [];
   }
 }
 
@@ -83,9 +83,8 @@ export async function getDrinkBySlug(slug: string): Promise<UIDrink | null> {
     if (apiDrink && apiDrink.slug) {
       return mapApiDrinkToUIDrink(apiDrink);
     }
+    return null;
   } catch {
-    // fallback
+    return null;
   }
-  const fallback = DRINKS_DATA.find((d) => d.slug === slug);
-  return fallback ?? null;
 }

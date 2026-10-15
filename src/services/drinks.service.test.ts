@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getDrinks, getDrinkBySlug } from "./drinks.service";
 import { apiClient } from "@/lib/api-client";
-import { DRINKS_DATA } from "@/data/drinks";
 
 describe("drinks.service", () => {
   beforeEach(() => {
@@ -29,12 +28,11 @@ describe("drinks.service", () => {
     expect(drinks[0].color).toBe("green");
   });
 
-  it("falls back to DRINKS_DATA when API fails", async () => {
+  it("returns empty array without fallback when API fails or returns empty", async () => {
     vi.spyOn(apiClient, "get").mockRejectedValueOnce(new Error("Network Error"));
 
     const drinks = await getDrinks();
-    expect(drinks.length).toBe(DRINKS_DATA.length);
-    expect(drinks[0].slug).toBe(DRINKS_DATA[0].slug);
+    expect(drinks).toEqual([]);
   });
 
   it("fetches single drink by slug from API", async () => {
@@ -52,5 +50,12 @@ describe("drinks.service", () => {
     const drink = await getDrinkBySlug("nuoc-ep-can-tay-tao");
     expect(drink).not.toBeNull();
     expect(drink?.slug).toBe("nuoc-ep-can-tay-tao");
+  });
+
+  it("returns null when fetching single drink fails without fallback", async () => {
+    vi.spyOn(apiClient, "get").mockRejectedValueOnce(new Error("Not Found"));
+
+    const drink = await getDrinkBySlug("mon-khong-ton-tai");
+    expect(drink).toBeNull();
   });
 });
