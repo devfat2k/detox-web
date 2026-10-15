@@ -13,7 +13,7 @@ export interface RevealProps extends React.HTMLAttributes<HTMLElement> {
 
 /**
  * Hiệu ứng xuất hiện khi cuộn màn hình bằng IntersectionObserver (chạy đúng 1 lần).
- * Chỉ dùng transform và opacity, thời lượng 300ms với easing mềm.
+ * Chỉ dùng transform và opacity, thời lượng 500ms với easing mềm dịu.
  * Tôn trọng hoàn toàn `prefers-reduced-motion` (tắt hẳn chuyển dịch qua CSS motion-reduce).
  */
 export function Reveal({
@@ -70,10 +70,10 @@ export function Reveal({
     <Component
       ref={mergedRef}
       className={cn(
-        "duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)]",
+        "duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)]",
         isVisible
           ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-2 pointer-events-none motion-reduce:opacity-100 motion-reduce:translate-y-0 motion-reduce:pointer-events-auto motion-reduce:transition-none",
+          : "opacity-0 translate-y-3 pointer-events-none motion-reduce:opacity-100 motion-reduce:translate-y-0 motion-reduce:pointer-events-auto motion-reduce:transition-none",
         className
       )}
       style={{
