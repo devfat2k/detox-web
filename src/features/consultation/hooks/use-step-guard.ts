@@ -2,51 +2,57 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useConsultationStore } from "../store";
+import { useConsultation } from "../context";
 import { routes } from "@/config/routes";
 
-export type GuardTargetStep = 1 | 2 | 3 | 4 | "result";
+export type GuardTargetStep = "body" | "goals" | "experience" | "safety" | "result";
 
 export function useStepGuard(target: GuardTargetStep) {
   const router = useRouter();
-  const { completedStep, isEligible } = useConsultationStore();
+  const { body, goals, experience, safety, ineligibleReason } = useConsultation();
 
   const isAllowed = (() => {
-    if (!isEligible && target !== 1) return false;
-    if (target === 1) return true;
-    if (target === 2) return completedStep >= 1;
-    if (target === 3) return completedStep >= 2;
-    if (target === 4) return completedStep >= 3;
-    if (target === "result") return completedStep >= 4;
+    if (ineligibleReason && target !== "body") return false;
+    if (target === "body") return true;
+    if (target === "goals") return Boolean(body);
+    if (target === "experience") return Boolean(body && goals.length > 0);
+    if (target === "safety") return Boolean(body && goals.length > 0 && experience);
+    if (target === "result") return Boolean(body && goals.length > 0 && experience && safety);
     return false;
   })();
 
   useEffect(() => {
-    if (!isEligible && target !== 1) {
+    if (ineligibleReason && target !== "body") {
       router.replace(routes.consultationIneligible());
       return;
     }
 
-    if (target === 2 && completedStep < 1) {
+    if (target === "goals" && !body) {
       router.replace(routes.consultation());
       return;
     }
 
-    if (target === 3 && completedStep < 2) {
-      router.replace(routes.consultationGoals());
+    if (target === "experience" && (!body || goals.length === 0)) {
+      router.replace(body ? routes.consultationGoals() : routes.consultation());
       return;
     }
 
-    if (target === 4 && completedStep < 3) {
-      router.replace(routes.consultationExperience());
+    if (target === "safety" && (!body || goals.length === 0 || !experience)) {
+      router.replace(
+        !body
+          ? routes.consultation()
+          : goals.length === 0
+            ? routes.consultationGoals()
+            : routes.consultationExperience()
+      );
       return;
     }
 
-    if (target === "result" && completedStep < 4) {
-      router.replace(routes.consultationSafety());
+    if (target === "result" && (!body || goals.length === 0 || !experience || !safety)) {
+      router.replace(routes.consultation());
       return;
     }
-  }, [target, completedStep, isEligible, router]);
+  }, [target, body, goals, experience, safety, ineligibleReason, router]);
 
   return { isAllowed };
 }

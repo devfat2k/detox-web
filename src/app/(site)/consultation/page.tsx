@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Step2Form } from "@/features/consultation";
+import { BodyForm } from "@/features/consultation";
 import { FIXED_LABELS } from "@/config/copy";
 
 export const metadata: Metadata = {
@@ -7,10 +7,10 @@ export const metadata: Metadata = {
   description: FIXED_LABELS.PAGE_CONSULTATION_STEP1_DESC,
 };
 
-export default function ConsultationStep1Page() {
+export default function ConsultationPage() {
   return (
     <main>
-      <Step2Form />
+      <BodyForm />
     </main>
   );
 }

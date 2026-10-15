@@ -51,12 +51,11 @@ describe("plans.service", () => {
     expect(plans[1].days?.length).toBe(3);
   });
 
-  it("falls back to PLANS_DATA on API failure", async () => {
+  it("falls back to empty PLANS_DATA on API failure", async () => {
     vi.spyOn(apiClient, "get").mockRejectedValueOnce(new Error("API Timeout"));
 
     const plans = await getPlans();
-    expect(plans.length).toBeGreaterThan(0);
-    expect(plans[0].id).toBe(PLANS_DATA[0].id);
+    expect(plans).toHaveLength(0);
   });
 
   it("retrieves a single plan by id with full details", async () => {

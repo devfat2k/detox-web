@@ -19,7 +19,7 @@ import {
   DetoxBottle,
   DisclaimerNote,
 } from "@/components/ui";
-import { PLANS_DATA } from "@/data/plans";
+import { type PlanId } from "@/data/plans";
 import { DRINKS_DATA } from "@/data/drinks";
 import { ARTICLES_DATA } from "@/data/articles";
 import { FIXED_LABELS } from "@/config/copy";
@@ -282,21 +282,13 @@ export default function HomePage() {
           </div>
 
           <div className="space-y-6 sm:space-y-8">
-            {PLANS_DATA.map((plan, idx) => {
-              const details = PLAN_STAGE_DETAILS[plan.id] ?? {
-                step: `0${idx + 1}`,
-                kicker: `Giai đoạn ${idx + 1}`,
-                subheading: plan.title,
-                description: plan.description,
-                durationPill: `${plan.durationDays} ngày`,
-                intensityPill: "Tiêu chuẩn",
-                progressPercent: Math.round(((idx + 1) / 3) * 100),
-                progressLabel: "Tiến trình thích ứng",
-                bottleSize: "md" as const,
-                bottleLevel: 65,
-                bottleColor: "green" as const,
-              };
-              const isLast = idx === PLANS_DATA.length - 1;
+            {([
+              { id: "1-day" as PlanId, title: "Combo Detox 1 Ngày" },
+              { id: "3-day" as PlanId, title: "Combo Detox 3 Ngày" },
+              { id: "6-day" as PlanId, title: "Combo Detox 6 Ngày" },
+            ] as const).map((plan, idx, arr) => {
+              const details = PLAN_STAGE_DETAILS[plan.id];
+              const isLast = idx === arr.length - 1;
 
               const nodeColor =
                 idx === 0

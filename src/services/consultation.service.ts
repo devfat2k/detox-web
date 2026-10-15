@@ -6,21 +6,17 @@ import type {
   ActivityLevel,
   ExperienceLevel,
 } from "@/types/api";
-import type { FullBodyData } from "@/features/consultation/context";
-import type { SafetyAnswers } from "@/domain/screening";
 import type {
-  ExperienceLevel as DomainExperienceLevel,
-  DurationChoice,
-} from "@/domain/recommend";
+  BodyFormData,
+  ExperienceFormData,
+  SafetyFormData,
+} from "@/features/consultation/schemas/consultation.schema";
 
 export interface ConsultationSubmissionInput {
-  body: FullBodyData | null;
-  safety: SafetyAnswers | null;
+  body: BodyFormData | null;
+  safety: SafetyFormData | null;
   goals: string[];
-  experience: {
-    level: DomainExperienceLevel;
-    duration: DurationChoice;
-  } | null;
+  experience: ExperienceFormData | null;
 }
 
 export function buildConsultationPayload(
@@ -50,15 +46,9 @@ export function buildConsultationPayload(
 
   // Map ExperienceLevel
   const experienceLevel: ExperienceLevel =
-    experience?.level === "never" ? "BEGINNER" : "EXPERIENCED";
+    experience?.experienceLevel === "never" ? "BEGINNER" : "EXPERIENCED";
 
-  // Map DurationDays
-  let durationDays: 1 | 3 | 6 = 3;
-  if (experience?.duration === 1) {
-    durationDays = 1;
-  } else if (experience?.duration === 6) {
-    durationDays = 6;
-  }
+  const durationDays = experience?.durationDays;
 
   return {
     baseline: {
@@ -71,14 +61,14 @@ export function buildConsultationPayload(
     goal,
     preferences: {
       experienceLevel,
-      canDrinkBitterOrEarthy: experience?.level === "experienced_good",
-      durationDays,
+      canDrinkBitterOrEarthy: experience?.experienceLevel === "experienced_good",
+      ...(durationDays ? { durationDays } : {}),
     },
     risks: {
       hasStomachPain: safety?.medicalConditions ?? false,
       isPregnantOrNursing: safety?.pregnantOrNursing ?? false,
       hasDiabetes: false,
-      allergies: [],
+      allergies: safety?.allergies ?? [],
     },
   };
 }

@@ -6,7 +6,14 @@ import { PLANS_DATA, type Plan } from "@/data/plans";
 import { FIXED_LABELS } from "@/config/copy";
 
 const testPlans: readonly Plan[] = [
-  PLANS_DATA[0],
+  {
+    id: "1-day",
+    title: "Combo Detox 1 Ngày",
+    durationDays: 1,
+    totalBottles: 5,
+    kcalRange: "850 – 950 kcal/ngày",
+    description: "1 ngày khởi đầu",
+  },
   {
     id: "3-day",
     title: "Combo Detox 3 Ngày",

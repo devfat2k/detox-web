@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import { useRouter } from "next/navigation";
 import {
   Container,
   Section,
@@ -13,15 +14,23 @@ import {
   DisclaimerNote,
 } from "@/components/ui";
 import { useConsultation } from "../context";
+import { useStepGuard } from "../hooks/use-step-guard";
 import { useConsultationMutation } from "../hooks/use-consultation-mutation";
-import { recommendPlan } from "@/domain/recommend";
+import { useDrinksQuery } from "@/features/drinks/hooks/use-drinks-query";
 import { calculateBmi } from "@/domain/screening";
 import { FIXED_LABELS } from "@/config/copy";
-import { ROUTES } from "@/config/routes";
-import { PLANS_DATA } from "@/data/plans";
+import { routes } from "@/config/routes";
+import {
+  type Plan,
+  type PlanDaySchedule,
+  type PlanBottle,
+  type PlanId,
+} from "@/data/plans";
+import { DRINKS_DATA, type Drink as UIDrink } from "@/data/drinks";
 import { SITE_CONFIG } from "@/config/site";
-import { Check, Sparkles } from "lucide-react";
+import { Check, Sparkles, AlertCircle, RefreshCw, Pencil, RotateCcw } from "lucide-react";
 import { PlanDayScheduleView } from "@/features/plans";
+import type { ConsultationScheduleDay } from "@/types/api";
 
 const GOAL_LABELS: Record<string, string> = {
   digestion: "nặng bụng, đầy hơi, khó tiêu",
@@ -32,34 +41,162 @@ const GOAL_LABELS: Record<string, string> = {
   other: "thanh lọc định kỳ & duy trì lối sống xanh",
 };
 
+const GOAL_SHORT_NAMES: Record<string, string> = {
+  digestion: "Tiêu hóa & Nhẹ bụng",
+  weight: "Giảm mỡ & Vòng eo",
+  heat: "Thanh nhiệt & Giảm nóng",
+  acne: "Sáng da & Năng lượng",
+  sleep: "Ngủ sâu & Tĩnh dưỡng",
+  other: "Lối sống xanh định kỳ",
+};
+
+const ACTIVITY_LABELS: Record<string, string> = {
+  low: "Ít vận động",
+  moderate: "Vận động vừa",
+  high: "Năng động",
+};
+
+const EXPERIENCE_LABELS: Record<string, string> = {
+  never: "Mới bắt đầu",
+  experienced_good: "Đã quen, thích ứng tốt",
+  experienced_tired: "Đã từng nhưng thấy mệt",
+};
+
+function mapApiScheduleToPlanDays(
+  dailySchedule: readonly ConsultationScheduleDay[],
+  drinks: readonly UIDrink[]
+): readonly PlanDaySchedule[] {
+  return dailySchedule.map((daySchedule, dayIdx) => {
+    const dayNumber = daySchedule.day ?? dayIdx + 1;
+    const theme =
+      daySchedule.title ?? `Ngày ${dayNumber}: Nhịp điệu thanh lọc cân bằng`;
+    const bottles: PlanBottle[] = (daySchedule.meals ?? []).map(
+      (meal, mealIdx) => {
+        const timeParts = (meal.time ?? "").split(" - ");
+        const time = timeParts[0]?.trim() || "07:00";
+        const slotName =
+          timeParts[1]?.trim() || meal.name || `Cữ ${mealIdx + 1}`;
+
+        const suggestedName = meal.suggestedItems?.[0];
+        const matchedDrink = suggestedName
+          ? drinks.find(
+              (d) =>
+                d.name.toLowerCase() === suggestedName.toLowerCase() ||
+                d.slug === suggestedName.toLowerCase() ||
+                suggestedName.toLowerCase().includes(d.name.toLowerCase())
+            )
+          : undefined;
+
+        let bottleType: "smoothie" | "juice" | "nut_milk" | "herbal_tea" =
+          "smoothie";
+        if (meal.category === "JUICE") {
+          bottleType = "juice";
+        } else if (meal.category === "NUT_MILK_TEA") {
+          bottleType = suggestedName?.toLowerCase().includes("trà")
+            ? "herbal_tea"
+            : "nut_milk";
+        } else {
+          bottleType = "smoothie";
+        }
+
+        const fallbackColor =
+          bottleType === "smoothie"
+            ? "green"
+            : bottleType === "juice"
+              ? "warm"
+              : "soft";
+
+        return {
+          time,
+          slotName,
+          name: suggestedName || meal.name || "Nước ép dinh dưỡng",
+          desc:
+            meal.role ||
+            matchedDrink?.benefit ||
+            "Bổ sung vi chất tự nhiên cho cơ thể",
+          drinkSlug:
+            matchedDrink?.slug ||
+            (bottleType === "smoothie"
+              ? "sinh-to-xanh-healthy"
+              : bottleType === "juice"
+                ? "ep-tao-can-tay"
+                : "tra-thao-moc-thanh-nhiet"),
+          color: matchedDrink?.color || fallbackColor,
+          level: matchedDrink?.level || 80,
+          bottleType,
+        };
+      }
+    );
+
+    return {
+      dayNumber,
+      theme,
+      bottles,
+    };
+  });
+}
+
 export function ResultView() {
-  const { body, safety, experience, goals, warningMessage, reset } = useConsultation();
+  const { isAllowed } = useStepGuard("result");
+  const { body, safety, experience, goals, warningMessage, reset, result, setResult } =
+    useConsultation();
   const [copied, setCopied] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(true);
+  const [isAnalyzing, setIsAnalyzing] = useState(() => !result);
 
-  const { mutate, data: apiResult, isPending } = useConsultationMutation();
+  const { data: drinks = DRINKS_DATA } = useDrinksQuery();
 
+  const {
+    mutate,
+    data: mutateData,
+    isPending,
+    isError,
+    error,
+  } = useConsultationMutation();
+  const router = useRouter();
+  const hasSubmittedRef = useRef(false);
+
+  const apiResult = result ?? mutateData;
+
+  // Khi người dùng bấm Back trình duyệt ở trang Kết quả -> Chuyển hướng thẳng về Trang Chủ
   useEffect(() => {
-    mutate({ body, safety, goals, experience });
-  }, [mutate, body, safety, goals, experience]);
+    window.history.pushState(null, "", window.location.href);
+
+    const handlePopState = () => {
+      router.replace(routes.home());
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [router]);
+
+  // Chỉ submit lên server đúng 1 lần khi chưa có kết quả trong context
+  useEffect(() => {
+    if (!result && !hasSubmittedRef.current && body && safety && experience) {
+      hasSubmittedRef.current = true;
+      mutate(
+        { body, safety, goals, experience },
+        {
+          onSuccess: (data) => {
+            setResult(data);
+          },
+        }
+      );
+    }
+  }, [mutate, body, safety, goals, experience, result, setResult]);
+
+  // Hiệu ứng phân tích cá nhân hóa mềm mại ~2.2s (chỉ chạy khi chưa có kết quả)
+  useEffect(() => {
+    if (result) return;
+    const timer = setTimeout(() => {
+      setIsAnalyzing(false);
+    }, 2200);
+    return () => clearTimeout(timer);
+  }, [result]);
 
   const clientBmi = body ? calculateBmi(body.heightCm, body.weightKg) : 21.5;
   const bmi = apiResult?.bmi ?? apiResult?.assessment?.bmi ?? clientBmi;
-
-  const recommendation = recommendPlan({
-    experienceLevel: experience?.level ?? "never",
-    durationChoice: experience?.duration ?? "auto",
-    bmi: Number(bmi),
-  });
-
-  const resolvedPlanId = apiResult?.recommendedPlan?.id ?? recommendation.planId;
-  const matchedPlan =
-    PLANS_DATA.find((p) => p.id === resolvedPlanId) ?? PLANS_DATA[0];
-
-  const recommendationReason =
-    apiResult?.recommendedPlan?.reason ??
-    apiResult?.assessment?.recommendationNote ??
-    recommendation.reason;
 
   const rawName = body?.name?.trim();
   const isFemale = body?.gender === "female";
@@ -83,19 +220,52 @@ export function ResultView() {
       ? goals.map((g) => GOAL_LABELS[g] || g).join(", ")
       : "cảm giác đường tiêu hóa cần được nghỉ ngơi nhẹ nhàng";
 
-  // Hiệu ứng phân tích cá nhân hóa mềm mại ~2.2s
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsAnalyzing(false);
-    }, 2200);
-    return () => clearTimeout(timer);
-  }, []);
+  const displayPlan: Plan | null = useMemo(() => {
+    if (!apiResult?.recommendedPlan) return null;
+
+    const durationDays =
+      apiResult.recommendedPlan.duration_days ??
+      apiResult.durationDays ??
+      (experience?.durationDays ?? 3);
+
+    const totalBottles =
+      apiResult.recommendedPlan.total_bottles ?? durationDays * 5;
+
+    const title =
+      apiResult.recommendedPlan.name ??
+      (durationDays === 1
+        ? "Combo Detox 1 Ngày"
+        : durationDays === 3
+          ? "Combo Detox 3 Ngày"
+          : "Combo Detox 6 Ngày");
+
+    let days: readonly PlanDaySchedule[] = [];
+    if (apiResult.dailySchedule && apiResult.dailySchedule.length > 0) {
+      days = mapApiScheduleToPlanDays(apiResult.dailySchedule, drinks);
+    }
+
+    return {
+      id: (apiResult.recommendedPlan.id as PlanId) || `${durationDays}-day`,
+      title,
+      durationDays,
+      totalBottles,
+      days,
+      description: apiResult.recommendedPlan.description,
+    };
+  }, [apiResult, drinks, experience]);
+
+  const recommendationReason =
+    apiResult?.recommendedPlan?.reason ??
+    apiResult?.assessment?.recommendationNote ??
+    "Lộ trình được cân đối tỉ lệ 3 Sinh tố : 1 Nước ép : 1 Sữa hạt/Trà giúp cơ thể thích nghi êm ái.";
 
   const handleCopySummary = async () => {
+    if (!displayPlan) return;
     const summaryText = `[Ép Xanh Chữa Lành] Thông tin tư vấn cho ${capitalHonorific}:
-- Lộ trình đề xuất: ${matchedPlan.title} (${matchedPlan.durationDays} ngày · ${matchedPlan.totalBottles} chai)
-- Thể trạng: Chiều cao ${body?.heightCm ?? 160}cm, Cân nặng ${body?.weightKg ?? 52}kg (BMI ~${bmi})
+- Lộ trình đề xuất: ${displayPlan.title} (${displayPlan.durationDays} ngày · ${displayPlan.totalBottles} chai)
+- Thể trạng: Chiều cao ${body?.heightCm ?? 160}cm, Cân nặng ${body?.weightKg ?? 52}kg (BMI ~${bmi}${apiResult?.assessment?.category ? ` · ${apiResult.assessment.category}` : ""})
 - Mục tiêu quan tâm: ${goalsSummary}
+- Dị ứng ghi nhận: ${safety?.allergies && safety.allergies.length > 0 ? safety.allergies.join(", ") : "Không có"}
 - Cơ cấu mỗi ngày: 5 chai (3 Sinh tố xanh + 1 Nước ép tươi + 1 Sữa hạt/Trà thảo mộc)
 *Em gửi shop xem qua thực đơn và hỗ trợ tư vấn chi tiết giúp em nhé!
 Ép Xanh Chữa Lành · Nông sản tươi ép chậm mỗi sáng`;
@@ -109,12 +279,22 @@ export function ResultView() {
     }
   };
 
-  const allWarnings = [
-    ...(warningMessage ? [warningMessage] : []),
-    ...(apiResult?.warnings ?? apiResult?.safetyAlerts ?? []),
-  ];
+  const handleRetrySubmit = () => {
+    if (body && safety && experience) {
+      mutate(
+        { body, safety, goals, experience },
+        {
+          onSuccess: (data) => {
+            setResult(data);
+          },
+        }
+      );
+    }
+  };
 
-  // Trạng thái màn hình Loading / Phân tích trung gian nhẹ nhàng
+  if (!isAllowed) return null;
+
+  // Trạng thái màn hình Loading / Phân tích trung gian
   if (isAnalyzing || isPending) {
     return (
       <Section spacing="md">
@@ -148,7 +328,6 @@ export function ResultView() {
               </div>
             </div>
 
-            {/* Tiến trình phân tích nhẹ nhàng */}
             <div className="space-y-3 text-left max-w-md mx-auto pt-2">
               <div className="flex items-center gap-3 p-3 rounded-xl bg-bg border border-border/80 text-xs font-body text-text">
                 <div className="h-4 w-4 rounded-full bg-primary text-bg flex items-center justify-center shrink-0">
@@ -182,7 +361,54 @@ export function ResultView() {
     );
   }
 
-  // Màn hình kết quả hoàn chỉnh sau khi phân tích
+  // Màn hình báo lỗi nếu API gặp sự cố (không fallback về mock)
+  if (isError || !displayPlan) {
+    return (
+      <Section spacing="md">
+        <Container className="max-w-xl space-y-6">
+          <Card className="p-6 sm:p-10 space-y-6 text-center bg-surface border-border shadow-2xs">
+            <div className="flex justify-center">
+              <div className="w-12 h-12 rounded-full bg-danger/10 text-danger flex items-center justify-center">
+                <AlertCircle className="w-6 h-6" strokeWidth={2} />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Heading level={1} className="text-xl sm:text-2xl font-semibold text-text">
+                Không thể tải kết quả phân tích
+              </Heading>
+              <p className="font-body text-sm text-text-muted leading-relaxed">
+                {error?.message || "Đã xảy ra sự cố kết nối tới máy chủ khi tổng hợp lộ trình. Vui lòng thử lại."}
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+              <Button
+                variant="primary"
+                onClick={handleRetrySubmit}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 min-h-11 px-5"
+              >
+                <RefreshCw className="w-4 h-4" strokeWidth={2} />
+                <span>Thử lại</span>
+              </Button>
+              <LinkButton
+                href={routes.consultation()}
+                variant="secondary"
+                onClick={reset}
+                className="w-full sm:w-auto min-h-11 px-5"
+              >
+                {FIXED_LABELS.ACTION_RETRY}
+              </LinkButton>
+            </div>
+          </Card>
+        </Container>
+      </Section>
+    );
+  }
+
+  const allWarnings = [
+    ...(warningMessage ? [warningMessage] : []),
+    ...(apiResult?.warnings ?? apiResult?.safetyAlerts ?? []),
+  ];
+
   return (
     <Section spacing="md">
       <Container className="max-w-3xl space-y-8 animate-fade-in">
@@ -207,7 +433,7 @@ export function ResultView() {
           </p>
         </div>
 
-        {/* Khối chia sẻ & thấu hiểu thể trạng */}
+        {/* Khối chia sẻ thể trạng */}
         <Card className="p-6 sm:p-7 space-y-4 bg-surface border-border">
           <div className="flex items-start gap-3.5">
             <div
@@ -219,129 +445,181 @@ export function ResultView() {
                 Chia sẻ thể trạng cùng {honorific}
               </h2>
               <p className="font-body text-sm text-text leading-relaxed">
-                {capitalHonorific} đang quan tâm đến vấn đề{" "}
-                <b className="font-semibold text-primary">{goalsSummary}</b>{" "}
-                với cân nặng <b>{body?.weightKg ?? 52} kg</b> (chiều cao{" "}
-                {body?.heightCm ?? 160} cm, BMI ước tính ~{bmi}).
+                Dựa trên thông tin {honorific} chia sẻ (
+                <b>
+                  BMI ~{bmi}
+                  {apiResult?.assessment?.category
+                    ? ` · ${apiResult.assessment.category}`
+                    : ""}
+                </b>
+                ), cơ thể {honorific} đang phản ánh rõ nhu cầu cần được nghỉ ngơi
+                ở hệ tiêu hóa và xoa dịu cảm giác <b>{goalsSummary}</b>.
               </p>
-              <p className="font-body text-sm text-text-muted leading-relaxed pt-1">
-                Với kinh nghiệm nhỏ chuẩn bị nước ép rau củ mỗi sáng, Ép Xanh hiểu {honorific} đang cảm thấy đường tiêu hóa cần một khoảng nghỉ êm dịu sau những ngày ăn uống nhiều dầu mỡ. Quán gửi đến {honorific} lựa chọn nhẹ nhàng như sau:
+              <p className="font-body text-sm text-text-muted leading-relaxed">
+                Tại Ép Xanh Chữa Lành, các bạn barista ép tươi từng chai mỗi sáng
+                từ nông sản canh tác an toàn. Lộ trình này được thiết kế để{" "}
+                {honorific} uống trọn vẹn trong ngày một cách dễ chịu, không bị
+                hụt năng lượng hay cồn cào bao tử.
               </p>
             </div>
           </div>
+
+          {/* Dị ứng nguyên liệu ghi nhận */}
+          {safety?.allergies && safety.allergies.length > 0 && (
+            <div className="p-3.5 rounded-xl bg-accent-soft/50 border border-primary/20 text-xs text-text space-y-1">
+              <span className="font-semibold text-primary block">
+                Lưu ý về dị ứng & khẩu vị của bạn:
+              </span>
+              <p className="text-text-muted">
+                Quán đã ghi nhận cơ thể bạn dị ứng hoặc không quen dùng:{" "}
+                <b className="text-text">{safety.allergies.join(", ")}</b>. Đội
+                ngũ sẽ tự động điều chỉnh công thức thay thế tương đương khi chuẩn
+                bị chai cho bạn.
+              </p>
+            </div>
+          )}
+
+          {allWarnings.length > 0 && (
+            <div className="space-y-2 pt-2">
+              {allWarnings.map((warning, idx) => (
+                <Notice key={idx} variant="warning">
+                  {warning}
+                </Notice>
+              ))}
+            </div>
+          )}
         </Card>
 
-        {allWarnings.length > 0 ? (
-          <div className="space-y-3">
-            {allWarnings.map((warn, i) => (
-              <Notice key={i} variant="warning">
-                {warn}
-              </Notice>
-            ))}
-          </div>
-        ) : null}
-
-        {/* Thẻ số liệu lộ trình trực quan */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="p-4 rounded-2xl bg-surface border border-border space-y-1 transition-all duration-200 ease-soft hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-2xs">
-            <span className="text-xs font-medium text-primary block">
-              Thời gian
-            </span>
-            <span className="text-xl font-heading font-semibold text-text block">
-              {matchedPlan.durationDays} ngày
-            </span>
-            <span className="text-xs text-text-muted">Nhịp sinh học nhẹ</span>
-          </div>
-          <div className="p-4 rounded-2xl bg-surface border border-border space-y-1 transition-all duration-200 ease-soft hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-2xs">
-            <span className="text-xs font-medium text-primary block">
-              Số lượng
-            </span>
-            <span className="text-xl font-heading font-semibold text-text block">
-              {matchedPlan.durationDays * 5} chai
-            </span>
-            <span className="text-xs text-text-muted">5 chai mỗi ngày</span>
-          </div>
-          <div className="p-4 rounded-2xl bg-surface border border-border space-y-1 transition-all duration-200 ease-soft hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-2xs">
-            <span className="text-xs font-medium text-primary block">
-              Năng lượng
-            </span>
-            <span className="text-xl font-heading font-semibold text-text block">
-              ~{matchedPlan.kcalRange}
-            </span>
-            <span className="text-xs text-text-muted">kcal mỗi ngày</span>
-          </div>
-          <div className="p-4 rounded-2xl bg-surface border border-border space-y-1 transition-all duration-200 ease-soft hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-2xs">
-            <span className="text-xs font-medium text-primary block">
-              Cảm nhận cơ thể
-            </span>
-            <span className="text-xl font-heading font-semibold text-text block">
-              ~0.5 - 1.5 kg
-            </span>
-            <span className="text-xs text-text-muted">Chủ yếu nước & tiêu hóa</span>
-          </div>
-        </div>
-
-        {/* Khối giải thích thành phần và công dụng tự nhiên (không máy móc khô cứng) */}
-        <Card className="p-6 sm:p-8 space-y-5">
-          <div className="space-y-1">
-            <span className="text-xs font-medium text-primary tracking-wide block">
-              Dinh dưỡng tự nhiên từ nông sản tươi
-            </span>
-            <Heading
-              level={2}
-              size="xl"
-              className="font-semibold text-xl text-text"
+        {/* Khối xem lại & chỉnh sửa thông tin từng bước */}
+        <Card className="p-5 sm:p-6 space-y-4 bg-surface border-border">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/60 pb-3">
+            <div>
+              <h2 className="font-heading font-semibold text-base sm:text-lg text-text">
+                Thông tin bạn đã cung cấp
+              </h2>
+              <p className="font-body text-xs text-text-muted">
+                Bạn có thể chọn chỉnh sửa bất kỳ bước nào mà không làm mất các thông tin đã điền.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                reset();
+                router.push(routes.consultation());
+              }}
+              className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-danger transition-colors self-start sm:self-auto py-1 px-2 rounded-md hover:bg-danger/10 cursor-pointer"
             >
-              Rau củ quả tươi phối hợp giúp xoa dịu cơ thể như thế nào?
-            </Heading>
-            <p className="text-xs sm:text-sm text-text-muted font-body leading-relaxed">
-              Mỗi công thức được kết hợp để các nguyên liệu bổ trợ lẫn nhau, tạo vị thanh dễ uống và giảm cảm giác ậm ạch:
-            </p>
+              <RotateCcw className="w-3.5 h-3.5" strokeWidth={1.75} />
+              <span>Làm lại từ đầu</span>
+            </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
-            <div className="p-4 rounded-xl bg-bg border border-border space-y-1.5">
-              <span className="font-heading font-semibold text-sm text-text block">
-                Sinh tố xanh (Cải kale, bó xôi &amp; hạt dinh dưỡng)
-              </span>
-              <p className="font-body text-xs text-text-muted leading-relaxed">
-                Chiếm 3 cữ/ngày, cung cấp lượng chất xơ thô và diệp lục đậm đặc giúp no lâu tự nhiên, bảo vệ niêm mạc dạ dày và xoa dịu đường ruột.
-              </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Bước 1: Cơ thể */}
+            <div className="p-3.5 rounded-xl border border-border/70 bg-bg/40 flex items-start justify-between gap-3">
+              <div className="space-y-1 text-xs">
+                <span className="font-semibold text-primary block">01. Thông tin cơ thể</span>
+                <p className="text-text font-medium">
+                  {body?.name || "Bạn"} · {body?.gender === "male" ? "Nam" : "Nữ"} · {body?.age ?? "--"} tuổi
+                </p>
+                <p className="text-text-muted">
+                  {body?.heightCm ?? "--"}cm · {body?.weightKg ?? "--"}kg (BMI ~{bmi})
+                  {body?.activityLevel ? ` · ${ACTIVITY_LABELS[body.activityLevel]}` : ""}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => router.push(routes.consultation())}
+                className="shrink-0 p-1.5 text-xs font-medium text-primary hover:text-primary hover:bg-accent-soft rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                aria-label="Sửa thông tin cơ thể"
+              >
+                <Pencil className="w-3.5 h-3.5" strokeWidth={1.75} />
+                <span>Sửa</span>
+              </button>
             </div>
 
-            <div className="p-4 rounded-xl bg-bg border border-border space-y-1.5">
-              <span className="font-heading font-semibold text-sm text-text block">
-                Nước ép táo &amp; cần tây Đà Lạt
-              </span>
-              <p className="font-body text-xs text-text-muted leading-relaxed">
-                Giàu kali và nước thực vật thanh khiết, hỗ trợ đào thải nhanh lượng muối thừa, giảm cảm giác tích nước và nặng nề vùng bụng.
-              </p>
+            {/* Bước 2: Mục tiêu */}
+            <div className="p-3.5 rounded-xl border border-border/70 bg-bg/40 flex items-start justify-between gap-3">
+              <div className="space-y-1 text-xs">
+                <span className="font-semibold text-primary block">02. Nhu cầu & Mục tiêu</span>
+                <p className="text-text font-medium leading-relaxed">
+                  {goals && goals.length > 0
+                    ? goals.map((g) => GOAL_SHORT_NAMES[g] ?? g).join(", ")
+                    : "Chưa chọn"}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => router.push(routes.consultationGoals())}
+                className="shrink-0 p-1.5 text-xs font-medium text-primary hover:text-primary hover:bg-accent-soft rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                aria-label="Sửa mục tiêu"
+              >
+                <Pencil className="w-3.5 h-3.5" strokeWidth={1.75} />
+                <span>Sửa</span>
+              </button>
             </div>
 
-            <div className="p-4 rounded-xl bg-bg border border-border space-y-1.5">
-              <span className="font-heading font-semibold text-sm text-text block">
-                Nước ép cam, cà rốt &amp; gừng ấm
-              </span>
-              <p className="font-body text-xs text-text-muted leading-relaxed">
-                Bổ sung vitamin C và beta-carotene tự nhiên; tinh dầu gừng sẻ giữ ấm dạ dày, hạn chế tính hàn khi dùng đồ uống tươi sống.
-              </p>
+            {/* Bước 3: Kinh nghiệm & Lộ trình */}
+            <div className="p-3.5 rounded-xl border border-border/70 bg-bg/40 flex items-start justify-between gap-3">
+              <div className="space-y-1 text-xs">
+                <span className="font-semibold text-primary block">03. Kinh nghiệm & Thời gian</span>
+                <p className="text-text font-medium">
+                  {experience?.durationDays ? `Gói ${experience.durationDays} ngày` : "Chưa chọn"}
+                </p>
+                <p className="text-text-muted">
+                  {experience?.experienceLevel
+                    ? EXPERIENCE_LABELS[experience.experienceLevel]
+                    : "Chưa có kinh nghiệm"}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => router.push(routes.consultationExperience())}
+                className="shrink-0 p-1.5 text-xs font-medium text-primary hover:text-primary hover:bg-accent-soft rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                aria-label="Sửa kinh nghiệm và số ngày"
+              >
+                <Pencil className="w-3.5 h-3.5" strokeWidth={1.75} />
+                <span>Sửa</span>
+              </button>
             </div>
 
-            <div className="p-4 rounded-xl bg-bg border border-border space-y-1.5">
-              <span className="font-heading font-semibold text-sm text-text block">
-                Sữa hạt điều &amp; hạnh nhân cữ tối
-              </span>
-              <p className="font-body text-xs text-text-muted leading-relaxed">
-                Cung cấp chất béo lành tính và khoáng chất tự nhiên vào cữ tối 19h, giúp cơ thể không bị hụt năng lượng và dưỡng giấc ngủ sâu.
-              </p>
+            {/* Bước 4: Lưu ý an toàn & Dị ứng */}
+            <div className="p-3.5 rounded-xl border border-border/70 bg-bg/40 flex items-start justify-between gap-3">
+              <div className="space-y-1 text-xs">
+                <span className="font-semibold text-primary block">04. Lưu ý & Dị ứng</span>
+                <p className="text-text font-medium">
+                  {safety?.allergies && safety.allergies.length > 0
+                    ? `Dị ứng: ${safety.allergies.join(", ")}`
+                    : "Không dị ứng nguyên liệu nào"}
+                </p>
+                <p className="text-text-muted">
+                  {safety?.pregnantOrNursing ||
+                  safety?.medicalConditions ||
+                  safety?.regularMedication ||
+                  safety?.eatingDisorder
+                    ? "Có tiền sử bệnh/thuốc"
+                    : "Sức khỏe cơ bản ổn định"}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => router.push(routes.consultationSafety())}
+                className="shrink-0 p-1.5 text-xs font-medium text-primary hover:text-primary hover:bg-accent-soft rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                aria-label="Sửa lưu ý an toàn và dị ứng"
+              >
+                <Pencil className="w-3.5 h-3.5" strokeWidth={1.75} />
+                <span>Sửa</span>
+              </button>
             </div>
           </div>
         </Card>
 
-        {/* Lịch nước ép phân bổ theo ngày */}
-        <PlanDayScheduleView plan={matchedPlan} />
+        {/* Chi tiết lộ trình theo ngày */}
+        {displayPlan.days && displayPlan.days.length > 0 && (
+          <PlanDayScheduleView plan={displayPlan} />
+        )}
 
-        {/* Khối trao đổi cùng quán & sao chép gửi Threads */}
+        {/* Khối liên hệ & sao chép gửi shop */}
         <div className="p-6 rounded-3xl bg-accent-soft/30 border border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1 text-center sm:text-left">
             <h3 className="font-heading font-semibold text-base text-text">
@@ -372,12 +650,14 @@ export function ResultView() {
           </div>
         </div>
 
-        {/* DisclaimerNote dùng chung */}
-        <DisclaimerNote className="max-w-xl mx-auto pt-2" />
+        {/* Disclaimer Note */}
+        <DisclaimerNote className="max-w-xl mx-auto pt-2">
+          {apiResult?.disclaimer ? `*${apiResult.disclaimer}` : undefined}
+        </DisclaimerNote>
 
         <div className="flex items-center justify-center gap-4 pt-2">
           <LinkButton
-            href={ROUTES.CONSULTATION}
+            href={routes.consultation()}
             variant="ghost"
             onClick={reset}
             className="text-xs font-medium text-text-muted hover:text-text"
@@ -388,7 +668,7 @@ export function ResultView() {
             ·
           </span>
           <LinkButton
-            href={ROUTES.HOME}
+            href={routes.home()}
             variant="ghost"
             className="text-xs font-medium text-text-muted hover:text-text"
           >

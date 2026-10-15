@@ -26,12 +26,12 @@ describe("consultation.service", () => {
       medicalConditions: false,
       regularMedication: false,
       eatingDisorder: false,
-      allergies: false,
+      allergies: ["cần tây", "dứa"],
     },
     goals: ["weight"],
     experience: {
-      level: "never",
-      duration: 3,
+      experienceLevel: "never",
+      durationDays: 3,
     },
   };
 
@@ -46,6 +46,7 @@ describe("consultation.service", () => {
     expect(payload.preferences?.experienceLevel).toBe("BEGINNER");
     expect(payload.preferences?.durationDays).toBe(3);
     expect(payload.risks?.isPregnantOrNursing).toBe(false);
+    expect(payload.risks?.allergies).toEqual(["cần tây", "dứa"]);
   });
 
   it("posts payload and returns consultation result from API", async () => {

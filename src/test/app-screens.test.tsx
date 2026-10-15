@@ -190,15 +190,23 @@ describe("Scaffolded Route Screens Smoke Test", () => {
   });
 
   it("renders plans list and detail pages", async () => {
-    vi.spyOn(apiClient, "get").mockResolvedValue([]);
+    vi.spyOn(apiClient, "get").mockResolvedValue([
+      {
+        id: "1-day",
+        title: "Combo Detox 1 Ngày",
+        duration_days: 1,
+        total_bottles: 5,
+        description: "Thanh lọc nhẹ nhàng",
+      },
+    ]);
 
     const listHtml = renderToStaticMarkup(await PlansPage());
     expect(listHtml).toContain(FIXED_LABELS.PAGE_PLANS_TITLE);
 
     const detailHtml = renderToStaticMarkup(
-      await PlanDetailPage({ params: Promise.resolve({ planId: PLANS_DATA[0].id }) })
+      await PlanDetailPage({ params: Promise.resolve({ planId: "1-day" }) })
     );
-    expect(detailHtml).toContain(PLANS_DATA[0].title);
+    expect(detailHtml).toContain("Combo Detox 1 Ngày");
   });
 
   it("renders drinks list and detail pages", async () => {

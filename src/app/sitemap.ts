@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { PLANS_DATA } from "@/data/plans";
+import { VALID_PLAN_IDS } from "@/data/plans";
 import { DRINKS_DATA } from "@/data/drinks";
 import { ARTICLES_DATA } from "@/data/articles";
 import { routes } from "@/config/routes";
@@ -27,8 +27,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "/" ? 1.0 : 0.8,
   }));
 
-  const planEntries: MetadataRoute.Sitemap = PLANS_DATA.map((plan) => ({
-    url: `${BASE_URL}${routes.plan(plan.id)}`,
+  const planEntries: MetadataRoute.Sitemap = VALID_PLAN_IDS.map((planId) => ({
+    url: `${BASE_URL}${routes.plan(planId)}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.7,

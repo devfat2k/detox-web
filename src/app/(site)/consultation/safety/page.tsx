@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Step1Form } from "@/features/consultation";
+import { SafetyForm } from "@/features/consultation";
 import { FIXED_LABELS } from "@/config/copy";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function ConsultationSafetyPage() {
   return (
     <main>
-      <Step1Form />
+      <SafetyForm />
     </main>
   );
 }

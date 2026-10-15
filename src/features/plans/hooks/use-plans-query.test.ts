@@ -27,24 +27,23 @@ describe("use-plans-query", () => {
     expect(planQueryKeys.detail("1-day")).toEqual(["plans", "detail", "1-day"]);
   });
 
-  it("fetches plans with usePlansQuery and returns initial data", async () => {
-    const mockPlans = [
-      {
-        id: "1-day" as const,
-        title: "Combo Detox 1 Ngày",
-        durationDays: 1,
-        totalBottles: 5,
-        kcalRange: "850 – 950 kcal/ngày",
-        description: "Mô tả 1 ngày",
-        tagline: "Tagline 1 ngày",
-        suitableFor: [],
-        notSuitableFor: [],
-        preparationGuide: "",
-        recoveryGuide: "",
-        days: [],
-      },
-    ];
+  const mockPlan = {
+    id: "1-day" as const,
+    title: "Combo Detox 1 Ngày",
+    durationDays: 1,
+    totalBottles: 5,
+    kcalRange: "850 – 950 kcal/ngày",
+    description: "Mô tả 1 ngày",
+    tagline: "Tagline 1 ngày",
+    suitableFor: [],
+    notSuitableFor: [],
+    preparationGuide: "",
+    recoveryGuide: "",
+    days: [],
+  };
+  const mockPlans = [mockPlan];
 
+  it("fetches plans with usePlansQuery and returns initial data", async () => {
     vi.spyOn(plansService, "getPlans").mockResolvedValueOnce(mockPlans);
 
     const { result } = renderHook(() => usePlansQuery(), {
@@ -60,7 +59,7 @@ describe("use-plans-query", () => {
   });
 
   it("fetches single plan with usePlanDetailQuery", async () => {
-    const mockPlan = PLANS_DATA[0];
+    const mockPlan = mockPlans[0];
     vi.spyOn(plansService, "getPlanById").mockResolvedValueOnce(mockPlan);
 
     const { result } = renderHook(() => usePlanDetailQuery("1-day"), {

@@ -1,97 +1,121 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
-import type { SafetyAnswers, BodyAnswers } from "@/domain/screening";
-import type { ExperienceLevel, DurationChoice } from "@/domain/recommend";
-
-export interface FullBodyData extends BodyAnswers {
-  name?: string;
-  gender: "female" | "male";
-  activityLevel: "low" | "moderate" | "high";
-}
+import React, { createContext, useContext, useState, useMemo } from "react";
+import type {
+  BodyFormData,
+  ExperienceFormData,
+  SafetyFormData,
+} from "./schemas/consultation.schema";
+import type { ConsultationResult } from "@/types/api";
 
 export interface ConsultationContextValue {
-  safety: SafetyAnswers | null;
-  body: FullBodyData | null;
+  body: BodyFormData | null;
   goals: string[];
-  experience: {
-    level: ExperienceLevel;
-    duration: DurationChoice;
-  } | null;
+  experience: ExperienceFormData | null;
+  safety: SafetyFormData | null;
   ineligibleReason: string | null;
   warningMessage: string | null;
-  updateSafety: (data: SafetyAnswers) => void;
-  updateBody: (data: FullBodyData, warning?: string) => void;
+  result: ConsultationResult | null;
+
+  updateBody: (data: BodyFormData, warning?: string) => void;
   updateGoals: (goals: string[]) => void;
-  updateExperience: (exp: { level: ExperienceLevel; duration: DurationChoice }) => void;
+  updateExperience: (exp: ExperienceFormData) => void;
+  updateSafety: (data: SafetyFormData) => void;
   setIneligible: (reason: string) => void;
+  setResult: (res: ConsultationResult | null) => void;
   reset: () => void;
 }
 
 const defaultContextValue: ConsultationContextValue = {
-  safety: null,
   body: null,
   goals: [],
   experience: null,
+  safety: null,
   ineligibleReason: null,
   warningMessage: null,
-  updateSafety: () => {},
+  result: null,
   updateBody: () => {},
   updateGoals: () => {},
   updateExperience: () => {},
+  updateSafety: () => {},
   setIneligible: () => {},
+  setResult: () => {},
   reset: () => {},
 };
 
-const ConsultationContext = createContext<ConsultationContextValue>(defaultContextValue);
+const ConsultationContext =
+  createContext<ConsultationContextValue>(defaultContextValue);
 
-export function ConsultationProvider({ children }: { children: React.ReactNode }) {
-  const [safety, setSafety] = useState<SafetyAnswers | null>(null);
-  const [body, setBody] = useState<FullBodyData | null>(null);
+export function ConsultationProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [body, setBody] = useState<BodyFormData | null>(null);
   const [goals, setGoals] = useState<string[]>([]);
-  const [experience, setExperience] = useState<{
-    level: ExperienceLevel;
-    duration: DurationChoice;
-  } | null>(null);
+  const [experience, setExperience] = useState<ExperienceFormData | null>(null);
+  const [safety, setSafety] = useState<SafetyFormData | null>(null);
   const [ineligibleReason, setIneligibleReason] = useState<string | null>(null);
   const [warningMessage, setWarningMessage] = useState<string | null>(null);
+  const [result, setResult] = useState<ConsultationResult | null>(null);
 
-  const updateSafety = (data: SafetyAnswers) => setSafety(data);
-  const updateBody = (data: FullBodyData, warning?: string) => {
+  const updateBody = (data: BodyFormData, warning?: string) => {
     setBody(data);
     setWarningMessage(warning ?? null);
+    setResult(null);
   };
-  const updateGoals = (g: string[]) => setGoals(g);
-  const updateExperience = (exp: { level: ExperienceLevel; duration: DurationChoice }) =>
+
+  const updateGoals = (g: string[]) => {
+    setGoals(g);
+    setResult(null);
+  };
+
+  const updateExperience = (exp: ExperienceFormData) => {
     setExperience(exp);
-  const setIneligible = (reason: string) => setIneligibleReason(reason);
+    setResult(null);
+  };
+
+  const updateSafety = (data: SafetyFormData) => {
+    setSafety(data);
+    setResult(null);
+  };
+
+  const setIneligible = (reason: string) => {
+    setIneligibleReason(reason);
+  };
 
   const reset = () => {
-    setSafety(null);
     setBody(null);
     setGoals([]);
     setExperience(null);
+    setSafety(null);
     setIneligibleReason(null);
     setWarningMessage(null);
+    setResult(null);
   };
 
+  const value = useMemo(
+    () => ({
+      body,
+      goals,
+      experience,
+      safety,
+      ineligibleReason,
+      warningMessage,
+      result,
+      updateBody,
+      updateGoals,
+      updateExperience,
+      updateSafety,
+      setIneligible,
+      setResult,
+      reset,
+    }),
+    [body, goals, experience, safety, ineligibleReason, warningMessage, result],
+  );
+
   return (
-    <ConsultationContext.Provider
-      value={{
-        safety,
-        body,
-        goals,
-        experience,
-        ineligibleReason,
-        warningMessage,
-        updateSafety,
-        updateBody,
-        updateGoals,
-        updateExperience,
-        setIneligible,
-        reset,
-      }}
-    >
+    <ConsultationContext.Provider value={value}>
       {children}
     </ConsultationContext.Provider>
   );
