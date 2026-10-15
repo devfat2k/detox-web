@@ -15,7 +15,10 @@ import {
   type ResultViewModel,
 } from "../utils/result-view.utils";
 import type { ConsultationResult } from "@/types/api";
-import type { SafetyFormData } from "../schemas/consultation.schema";
+import type {
+  BodyFormData,
+  SafetyFormData,
+} from "../schemas/consultation.schema";
 import type { LinkButtonProps } from "@/components/ui";
 
 export interface ResultViewState extends ResultViewModel {
@@ -25,6 +28,8 @@ export interface ResultViewState extends ResultViewModel {
   readonly errorMessage?: string;
   readonly copied: boolean;
   readonly isPricingModalOpen: boolean;
+  readonly isThreadsModalOpen: boolean;
+  readonly body: BodyFormData | null;
   readonly weightKg: number;
   readonly apiResult: ConsultationResult | null | undefined;
   readonly safety: SafetyFormData | null;
@@ -36,6 +41,7 @@ export interface ResultViewActions {
   readonly retrySubmit: () => void;
   readonly copySummary: () => Promise<void>;
   readonly setIsPricingModalOpen: (open: boolean) => void;
+  readonly setIsThreadsModalOpen: (open: boolean) => void;
 }
 
 export function useResultViewController(): {
@@ -56,6 +62,7 @@ export function useResultViewController(): {
 
   const [copied, setCopied] = useState(false);
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
+  const [isThreadsModalOpen, setIsThreadsModalOpen] = useState(false);
   const { data: drinks = DRINKS_DATA } = useDrinksQuery();
   const {
     mutate,
@@ -139,6 +146,8 @@ export function useResultViewController(): {
       errorMessage: error?.message,
       copied,
       isPricingModalOpen,
+      isThreadsModalOpen,
+      body,
       weightKg: body?.weightKg ?? 52,
       apiResult,
       safety,
@@ -149,6 +158,7 @@ export function useResultViewController(): {
       retrySubmit,
       copySummary,
       setIsPricingModalOpen,
+      setIsThreadsModalOpen,
     },
   };
 }

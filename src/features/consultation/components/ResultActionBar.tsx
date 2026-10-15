@@ -7,9 +7,10 @@ import { Tag } from "lucide-react";
 
 interface ResultActionBarProps {
   readonly copied: boolean;
-  readonly threadsUrl: LinkButtonProps["href"];
+  readonly threadsUrl?: LinkButtonProps["href"];
   readonly onOpenPricing: () => void;
   readonly onCopySummary: () => void;
+  readonly onOpenThreadsModal?: () => void;
 }
 
 export function ResultActionBar({
@@ -17,6 +18,7 @@ export function ResultActionBar({
   threadsUrl,
   onOpenPricing,
   onCopySummary,
+  onOpenThreadsModal,
 }: ResultActionBarProps) {
   return (
     <div className="p-6 rounded-3xl bg-accent-soft/30 border border-border flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in-slow">
@@ -42,20 +44,31 @@ export function ResultActionBar({
         </Button>
         <Button
           variant="secondary"
-          onClick={onCopySummary}
+          onClick={onOpenThreadsModal ?? onCopySummary}
           className="rounded-full text-sm min-h-11 px-5 transition-all duration-200 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
         >
           {copied ? "Đã sao chép ✓" : FIXED_LABELS.ACTION_COPY_SUMMARY}
         </Button>
-        <LinkButton
-          href={threadsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="primary"
-          className="rounded-full text-sm min-h-11 px-6 transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
-        >
-          {FIXED_LABELS.ACTION_MESSAGE_THREADS}
-        </LinkButton>
+        {onOpenThreadsModal ? (
+          <Button
+            type="button"
+            variant="primary"
+            onClick={onOpenThreadsModal}
+            className="rounded-full text-sm min-h-11 px-6 transition-all duration-200 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+          >
+            {FIXED_LABELS.ACTION_MESSAGE_THREADS}
+          </Button>
+        ) : (
+          <LinkButton
+            href={threadsUrl ?? "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="primary"
+            className="rounded-full text-sm min-h-11 px-6 transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+          >
+            {FIXED_LABELS.ACTION_MESSAGE_THREADS}
+          </LinkButton>
+        )}
       </div>
     </div>
   );

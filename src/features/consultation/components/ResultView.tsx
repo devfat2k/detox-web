@@ -11,6 +11,7 @@ import { routes } from "@/config/routes";
 import { FIXED_LABELS } from "@/config/copy";
 import { PlanDayScheduleView } from "@/features/plans";
 import { PricingModal } from "./PricingModal";
+import { ThreadsMessageModal } from "./ThreadsMessageModal";
 import { ResultSessionExpired } from "./ResultSessionExpired";
 import { ResultLoading } from "./ResultLoading";
 import { ResultError } from "./ResultError";
@@ -99,6 +100,7 @@ export function ResultView() {
           threadsUrl={state.threadsUrl}
           onOpenPricing={() => actions.setIsPricingModalOpen(true)}
           onCopySummary={actions.copySummary}
+          onOpenThreadsModal={() => actions.setIsThreadsModalOpen(true)}
         />
 
         <div className="space-y-4 animate-fade-in-slow">
@@ -135,6 +137,18 @@ export function ResultView() {
         isOpen={state.isPricingModalOpen}
         onClose={() => actions.setIsPricingModalOpen(false)}
         selectedDurationDays={displayPlan.durationDays}
+      />
+
+      <ThreadsMessageModal
+        isOpen={state.isThreadsModalOpen}
+        onClose={() => actions.setIsThreadsModalOpen(false)}
+        name={state.body?.name}
+        heightCm={state.body?.heightCm}
+        weightKg={state.body?.weightKg}
+        planTitle={displayPlan.title}
+        goalsSummary={state.goalsSummary}
+        allergies={state.safety?.allergies}
+        threadsUrl={state.threadsUrl as string}
       />
     </Section>
   );
