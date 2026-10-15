@@ -76,4 +76,15 @@ describe("consultation.service", () => {
       })
     );
   });
+
+  it("falls back to domain calculation when API fails", async () => {
+    vi.spyOn(apiClient, "post").mockRejectedValueOnce(new Error("Network Error"));
+
+    const result = await submitConsultation(mockInput);
+    expect(result).toBeDefined();
+    expect(result.recommendedPlan?.id).toBe("3-day");
+    expect(result.recommendedPlan?.duration_days).toBe(3);
+    expect(result.dailySchedule?.length).toBe(3);
+    expect(result.bmi).toBeCloseTo(20.3, 1);
+  });
 });
