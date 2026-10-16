@@ -13,3 +13,4 @@ export * from "./detox-bottle";
 export * from "./input";
 export * from "./select";
 export * from "./disclaimer-note";
+export * from "./toast";

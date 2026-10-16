@@ -13,6 +13,7 @@ import {
   Skeleton,
   Kicker,
   Reveal,
+  Toast,
 } from "./index";
 
 describe("UI Primitives", () => {
@@ -217,6 +218,25 @@ describe("UI Primitives", () => {
       expect(html).toContain("duration-300");
       expect(html).toContain("motion-reduce:opacity-100");
       expect(html).toContain("Nội dung chuyển động");
+    });
+  });
+
+  describe("Toast", () => {
+    it("renders nothing when isOpen is false", () => {
+      const html = renderToStaticMarkup(
+        <Toast isOpen={false} message="Thông báo" onClose={() => {}} />
+      );
+      expect(html).toBe("");
+    });
+
+    it("renders message and status role when isOpen is true", () => {
+      const html = renderToStaticMarkup(
+        <Toast isOpen={true} message="Đã sao chép tin nhắn" onClose={() => {}} />
+      );
+      expect(html).toContain('role="status"');
+      expect(html).toContain('aria-live="polite"');
+      expect(html).toContain("Đã sao chép tin nhắn");
+      expect(html).toContain("Đóng thông báo");
     });
   });
 });
