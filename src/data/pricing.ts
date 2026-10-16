@@ -61,8 +61,6 @@ export const PRICING_COMBOS: readonly PricingCombo[] = [
     originalPrice: 1110000,
     price: 999000,
     unit: "30 chai",
-    isRecommendedDefault: true,
-    badgeText: "Khuyên dùng",
     itemsSummary: [
       "3 sinh tố xanh",
       "1 nước ép",

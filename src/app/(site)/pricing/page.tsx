@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Container, Section, Heading, LinkButton } from "@/components/ui";
-import { PRICING_COMBOS, PRICING_FOOTNOTE, formatVndPrice } from "@/data/pricing";
+import { PricingCard } from "@/components/common";
+import { PRICING_COMBOS, PRICING_FOOTNOTE } from "@/data/pricing";
 import { SITE_CONFIG } from "@/config/site";
 import { ROUTES } from "@/config/routes";
 import { FIXED_LABELS } from "@/config/copy";
-import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Bảng giá combo nước ép tươi",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <Section spacing="md">
-      <Container className="space-y-8 sm:space-y-12">
+      <Container className="space-y-10 sm:space-y-14">
         <div className="space-y-3 text-center max-w-2xl mx-auto">
           <Heading level={1} size="3xl" className="font-semibold text-text tracking-tight">
             Bảng giá combo nước ép tươi mỗi sáng
@@ -26,83 +27,14 @@ export default function PricingPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 items-stretch">
           {PRICING_COMBOS.map((combo) => (
-            <div
-              key={combo.id}
-              className="flex flex-col justify-between p-6 sm:p-7 rounded-2xl border border-border bg-surface shadow-2xs space-y-6"
-            >
-              <div className="space-y-4">
-                <div className="space-y-1">
-                  <span className="text-sm font-medium text-primary">
-                    Liệu trình {combo.durationDays} ngày
-                  </span>
-                  <h2 className="font-heading font-semibold text-xl text-text">
-                    {combo.title}
-                  </h2>
-                </div>
-
-                <div className="space-y-1 pt-2 border-t border-border/70">
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-heading font-semibold text-2xl sm:text-3xl text-text">
-                      {formatVndPrice(combo.price)}
-                    </span>
-                    <span className="text-xs text-text-muted font-body">
-                      / {combo.unit}
-                    </span>
-                  </div>
-                  {combo.originalPrice ? (
-                    <p className="text-xs text-text-muted line-through font-body">
-                      Giá gốc: {formatVndPrice(combo.originalPrice)}
-                    </p>
-                  ) : null}
-                </div>
-
-                <div className="space-y-2 pt-2 border-t border-border/70">
-                  <p className="text-xs font-medium text-text">
-                    Khẩu phần mỗi ngày (5 chai):
-                  </p>
-                  <ul className="space-y-1.5 text-xs text-text-muted font-body">
-                    {combo.itemsSummary.map((item) => (
-                      <li key={item} className="flex items-center gap-2">
-                        <Check size={14} strokeWidth={2} className="text-primary shrink-0" aria-hidden="true" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="space-y-2 pt-2 border-t border-border/70">
-                  <p className="text-xs font-medium text-text">
-                    Cảm nhận thể trạng:
-                  </p>
-                  <ul className="space-y-1.5 text-xs text-text-muted font-body">
-                    {combo.benefits.map((benefit) => (
-                      <li key={benefit} className="flex items-start gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-primary mt-1.5 shrink-0" aria-hidden="true" />
-                        <span>{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <LinkButton
-                  href={ROUTES.PLAN_DETAIL(combo.id)}
-                  variant="secondary"
-                  className="w-full text-xs sm:text-sm font-medium justify-center min-h-11"
-                >
-                  <span>Xem chi tiết thực đơn</span>
-                  <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" />
-                </LinkButton>
-              </div>
-            </div>
+            <PricingCard key={combo.id} combo={combo} mode="page" />
           ))}
         </div>
 
-        <div className="p-6 sm:p-8 rounded-2xl bg-surface border border-border flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-          <div className="space-y-1 max-w-xl">
+        <div className="p-6 sm:p-8 rounded-3xl bg-surface border border-border/80 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left shadow-2xs">
+          <div className="space-y-1.5 max-w-xl">
             <h3 className="font-heading font-semibold text-lg text-text">
               Bạn chưa rõ thể trạng mình phù hợp với gói nào?
             </h3>
@@ -115,7 +47,8 @@ export default function PricingPage() {
             <LinkButton
               href={ROUTES.CONSULTATION}
               variant="primary"
-              className="w-full sm:w-auto min-h-11 px-6 text-xs sm:text-sm font-medium justify-center"
+              rounded="full"
+              className="w-full sm:w-auto min-h-11 px-6 text-xs sm:text-sm font-medium justify-center rounded-full"
             >
               <span>{FIXED_LABELS.CTA_CONSULTATION}</span>
               <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" />
@@ -125,7 +58,8 @@ export default function PricingPage() {
               target="_blank"
               rel="noopener noreferrer"
               variant="secondary"
-              className="w-full sm:w-auto min-h-11 px-5 text-xs sm:text-sm font-medium justify-center"
+              rounded="full"
+              className="w-full sm:w-auto min-h-11 px-5 text-xs sm:text-sm font-medium justify-center rounded-full"
             >
               <span>{FIXED_LABELS.ACTION_MESSAGE_THREADS}</span>
               <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
