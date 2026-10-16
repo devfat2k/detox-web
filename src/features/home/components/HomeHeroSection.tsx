@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container, Section, Heading, LinkButton } from "@/components/ui";
+import { ConsultationCtaButton } from "@/components/common";
 import { ROUTES } from "@/config/routes";
 import { FIXED_LABELS } from "@/config/copy";
 import { HERO_SAMPLE_SCHEDULE } from "../constants/hero";
@@ -31,25 +32,23 @@ export function HomeHeroSection() {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto pt-1">
-              <LinkButton
-                href={ROUTES.CONSULTATION}
-                variant="primary"
-                rounded="full"
-                className="w-full sm:w-auto min-h-12 text-base px-8 py-3.5 font-medium shadow-xs justify-center"
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto pt-2">
+              <ConsultationCtaButton
+                size="lg"
+                icon="arrow"
+                className="w-full sm:w-auto justify-center"
               >
-                <span>{FIXED_LABELS.ACTION_VIEW_MY_PLAN}</span>
-                <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
-              </LinkButton>
+                {FIXED_LABELS.CTA_CONSULTATION}
+              </ConsultationCtaButton>
 
               <LinkButton
                 href={ROUTES.PRICING}
                 variant="secondary"
                 rounded="full"
-                className="w-full sm:w-auto min-h-12 text-base px-7 py-3.5 font-medium text-text hover:text-primary hover:border-primary/50 justify-center"
+                className="w-full sm:w-auto min-h-14 sm:min-h-16 text-base sm:text-lg px-8 py-3.5 sm:py-4 font-medium text-text hover:text-primary hover:border-primary/50 justify-center"
               >
                 <span>{FIXED_LABELS.ACTION_VIEW_PRICING}</span>
-                <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
               </LinkButton>
             </div>
           </div>

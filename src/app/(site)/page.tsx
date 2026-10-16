@@ -1,19 +1,16 @@
 import React from "react";
 import { Container, Reveal } from "@/components/ui";
 import { DRINKS_DATA } from "@/data/drinks";
-import { ARTICLES_DATA } from "@/data/articles";
 import {
   HomeWelcomeGreeting,
-  HomeHeroSection,
+  HomeHeroSectionV2, // Để dùng lại bản Hero cũ: đổi thành HomeHeroSection
   HomeDetoxJourneySection,
   HomeFaqMythsSection,
   HomeFeaturedDrinksSection,
-  HomeFeaturedArticleSection,
 } from "@/features/home/components";
 
 export default function HomePage() {
   const featuredDrinks = DRINKS_DATA.slice(0, 5);
-  const featuredArticle = ARTICLES_DATA[0];
 
   return (
     <div className="flex flex-col">
@@ -24,7 +21,8 @@ export default function HomePage() {
       </div>
 
       <Reveal delay={100}>
-        <HomeHeroSection />
+        {/* Để dùng lại bản Hero cũ: đổi HomeHeroSectionV2 thành HomeHeroSection */}
+        <HomeHeroSectionV2 />
       </Reveal>
 
       <Reveal delay={150}>
@@ -37,10 +35,6 @@ export default function HomePage() {
 
       <Reveal delay={250}>
         <HomeFeaturedDrinksSection drinks={featuredDrinks} />
-      </Reveal>
-
-      <Reveal delay={300}>
-        <HomeFeaturedArticleSection article={featuredArticle} />
       </Reveal>
     </div>
   );
