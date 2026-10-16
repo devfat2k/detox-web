@@ -4,7 +4,6 @@ import {
   Container,
   Section,
   Heading,
-  DisclaimerNote,
   LinkButton,
 } from "@/components/ui";
 import { routes } from "@/config/routes";
@@ -18,7 +17,6 @@ import { ResultError } from "./ResultError";
 import { ResultAssessmentCard } from "./ResultAssessmentCard";
 import { ResultPricingBanner } from "./ResultPricingBanner";
 import { ResultSummaryReview } from "./ResultSummaryReview";
-import { ResultActionBar } from "./ResultActionBar";
 import { useResultViewController } from "../hooks/use-result-view-controller";
 
 export function ResultView() {
@@ -81,55 +79,43 @@ export function ResultView() {
             durationDays={displayPlan.durationDays}
             totalBottles={displayPlan.totalBottles}
             onOpenPricing={() => actions.setIsPricingModalOpen(true)}
+            onOpenShopMessage={() => actions.setIsThreadsModalOpen(true)}
           />
         </div>
+
+        {displayPlan.days && displayPlan.days.length > 0 && (
+          <div className="animate-fade-in-slow">
+            <PlanDayScheduleView
+              plan={displayPlan}
+              onOpenShopMessage={() => actions.setIsThreadsModalOpen(true)}
+            />
+          </div>
+        )}
 
         <ResultSummaryReview
           stepCards={state.stepCards}
           onReset={actions.reset}
         />
 
-        {displayPlan.days && displayPlan.days.length > 0 && (
-          <div className="animate-fade-in-slow">
-            <PlanDayScheduleView plan={displayPlan} />
-          </div>
-        )}
-
-        <ResultActionBar
-          copied={state.copied}
-          threadsUrl={state.threadsUrl}
-          onOpenPricing={() => actions.setIsPricingModalOpen(true)}
-          onCopySummary={actions.copySummary}
-          onOpenThreadsModal={() => actions.setIsThreadsModalOpen(true)}
-        />
-
-        <div className="space-y-4 animate-fade-in-slow">
-          <DisclaimerNote className="max-w-xl mx-auto pt-2">
-            {state.apiResult?.disclaimer
-              ? `*${state.apiResult.disclaimer}`
-              : undefined}
-          </DisclaimerNote>
-
-          <div className="flex items-center justify-center gap-4 pt-2">
-            <LinkButton
-              href={routes.consultation()}
-              variant="ghost"
-              onClick={actions.reset}
-              className="text-xs font-medium text-text-muted hover:text-text"
-            >
-              {FIXED_LABELS.ACTION_RETRY}
-            </LinkButton>
-            <span className="text-border" aria-hidden="true">
-              ·
-            </span>
-            <LinkButton
-              href={routes.home()}
-              variant="ghost"
-              className="text-xs font-medium text-text-muted hover:text-text"
-            >
-              {FIXED_LABELS.ACTION_BACK_TO_HOME}
-            </LinkButton>
-          </div>
+        <div className="flex items-center justify-center gap-4 pt-4 animate-fade-in-slow">
+          <LinkButton
+            href={routes.consultation()}
+            variant="ghost"
+            onClick={actions.reset}
+            className="text-xs font-medium text-text-muted hover:text-text"
+          >
+            {FIXED_LABELS.ACTION_RETRY}
+          </LinkButton>
+          <span className="text-border" aria-hidden="true">
+            ·
+          </span>
+          <LinkButton
+            href={routes.home()}
+            variant="ghost"
+            className="text-xs font-medium text-text-muted hover:text-text"
+          >
+            {FIXED_LABELS.ACTION_BACK_TO_HOME}
+          </LinkButton>
         </div>
       </Container>
 
@@ -145,7 +131,10 @@ export function ResultView() {
         name={state.body?.name}
         heightCm={state.body?.heightCm}
         weightKg={state.body?.weightKg}
+        bmi={state.bmi}
         planTitle={displayPlan.title}
+        durationDays={displayPlan.durationDays}
+        totalBottles={displayPlan.totalBottles}
         goalsSummary={state.goalsSummary}
         allergies={state.safety?.allergies}
         threadsUrl={state.threadsUrl as string}

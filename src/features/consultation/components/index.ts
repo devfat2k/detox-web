@@ -14,7 +14,6 @@ export * from "./ResultError";
 export * from "./ResultAssessmentCard";
 export * from "./ResultPricingBanner";
 export * from "./ResultSummaryReview";
-export * from "./ResultActionBar";
 export * from "./IneligibleView";
 export * from "./PricingModal";
 export * from "./ThreadsMessageModal";

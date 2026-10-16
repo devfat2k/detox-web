@@ -3,13 +3,14 @@
 import React from "react";
 import { Button } from "@/components/ui";
 import { FIXED_LABELS } from "@/config/copy";
-import { Tag } from "lucide-react";
+import { Tag, MessageCircle } from "lucide-react";
 
-interface ResultPricingBannerProps {
+export interface ResultPricingBannerProps {
   readonly title: string;
   readonly durationDays: number;
   readonly totalBottles?: number;
   readonly onOpenPricing: () => void;
+  readonly onOpenShopMessage: () => void;
 }
 
 export function ResultPricingBanner({
@@ -17,11 +18,12 @@ export function ResultPricingBanner({
   durationDays,
   totalBottles,
   onOpenPricing,
+  onOpenShopMessage,
 }: ResultPricingBannerProps) {
   const bottleCount = totalBottles ?? durationDays * 5;
 
   return (
-    <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3.5 shadow-2xs">
+    <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-2xs">
       <div className="space-y-1">
         <span className="text-xs font-semibold text-primary block">
           {title} ({durationDays} ngày · {bottleCount} chai)
@@ -30,15 +32,28 @@ export function ResultPricingBanner({
           Xem bảng giá công khai và quyền lợi các combo detox tươi của quán.
         </p>
       </div>
-      <Button
-        type="button"
-        variant="primary"
-        onClick={onOpenPricing}
-        className="w-full sm:w-auto rounded-full text-xs sm:text-sm min-h-11 px-5 shrink-0 flex items-center justify-center gap-1.5 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
-      >
-        <Tag className="w-4 h-4" strokeWidth={1.75} />
-        <span>{FIXED_LABELS.ACTION_VIEW_PRICING}</span>
-      </Button>
+
+      <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full md:w-auto shrink-0">
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={onOpenPricing}
+          className="w-full sm:w-auto rounded-full text-xs sm:text-sm min-h-11 px-4.5 flex items-center justify-center gap-1.5 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+        >
+          <Tag className="w-4 h-4 text-primary" strokeWidth={1.75} />
+          <span>{FIXED_LABELS.ACTION_VIEW_PRICING}</span>
+        </Button>
+
+        <Button
+          type="button"
+          variant="primary"
+          onClick={onOpenShopMessage}
+          className="w-full sm:w-auto rounded-full text-xs sm:text-sm min-h-11 px-5 flex items-center justify-center gap-1.5 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+        >
+          <MessageCircle className="w-4 h-4" strokeWidth={1.75} />
+          <span>Nhắn cho Shop</span>
+        </Button>
+      </div>
     </div>
   );
 }

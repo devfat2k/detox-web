@@ -24,19 +24,22 @@ describe("PricingModal", () => {
     expect(html).toContain("570.000đ");
     expect(html).toContain("999.000đ");
     expect(html).toContain("1.110.000đ");
-    expect(html).toContain("Chọn combo");
-    expect(html).toContain("Đã chọn");
+    expect(html).toContain("Chọn combo này");
+    expect(html).toContain("Đã chọn gói này");
     expect(html).toContain("Bạn đang chọn:");
     expect(html).toContain("Nhắn shop gói này");
   });
 
-  it("highlights the matching user plan duration", () => {
+  it("selects the matching user plan duration on open", () => {
     const html = renderToStaticMarkup(
       <PricingModal isOpen={true} onClose={vi.fn()} selectedDurationDays={3} />
     );
 
-    expect(html).toContain("Gợi ý cho bạn");
     expect(html).toContain("Combo detox 3 ngày");
+    expect(html).toContain("Bạn đang chọn:");
+    expect(html).toContain("570.000đ");
+    expect(html).not.toContain("Gợi ý cho bạn");
+    expect(html).not.toContain("Khuyên dùng");
   });
 
   it("displays the shop footnote about continuous detox", () => {

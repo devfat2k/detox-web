@@ -70,26 +70,19 @@ export function buildThreadsMessage({
     THREADS_MESSAGE_VARIANTS[0];
 
   switch (variant.id) {
-    case "taste_adjustment":
-      return `Chào shop, ${identity}. Mình muốn theo lộ trình ${cleanPlanTitle} để ${targetGoal} (${allergyClause}). ${variant.questionTail}`;
+    case "weight_loss":
+      return `Chào shop, ${identity}. Mình đang quan tâm ${cleanPlanTitle} cho mục tiêu ${targetGoal} (${allergyClause}). ${variant.questionTail}`;
+
+    case "diet_and_hunger":
+      return `Chào shop, ${identity}. Mình định theo ${cleanPlanTitle} để ${targetGoal} (${allergyClause}). ${variant.questionTail}`;
 
     case "morning_delivery":
       return `Chào shop, ${identity}. Mình đang quan tâm ${cleanPlanTitle} cho mục tiêu ${targetGoal} (${allergyClause}). ${variant.questionTail}`;
 
-    case "light_diet":
-      return `Chào shop, ${identity}. Mình định theo ${cleanPlanTitle} để ${targetGoal} (${allergyClause}). ${variant.questionTail}`;
-
-    case "beginner_guidance": {
-      const guidanceTail = includeMetrics
-        ? "Nhờ shop xem thể trạng mình như vậy có cần lưu ý gì trong ngày đầu tiên không nhé!"
-        : "Vì mới bắt đầu nên nhờ shop tư vấn xem mình có cần lưu ý gì trong ngày đầu tiên không nhé!";
-      return `Chào shop, ${identity}. Đây là lần đầu mình tìm hiểu ${cleanPlanTitle} với mục tiêu ${targetGoal} (${allergyClause}). ${guidanceTail}`;
-    }
-
-    case "schedule_shipping":
-      return `Chào shop, ${identity}. Mình muốn đăng ký ${cleanPlanTitle} để ${targetGoal} (${allergyClause}). ${variant.questionTail}`;
+    case "taste_adjustment":
+      return `Chào shop, ${identity}. Mình muốn theo lộ trình ${cleanPlanTitle} để ${targetGoal} (${allergyClause}). ${variant.questionTail}`;
 
     default:
-      return `Chào shop, ${identity}. Mình quan tâm lộ trình ${cleanPlanTitle} để ${targetGoal} (${allergyClause}). ${variant.questionTail}`;
+      return `Chào shop, ${identity}. Mình đang tìm hiểu ${cleanPlanTitle} cho mục tiêu ${targetGoal} (${allergyClause}). ${variant.questionTail}`;
   }
 }

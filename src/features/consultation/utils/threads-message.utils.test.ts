@@ -50,10 +50,10 @@ describe("threads-message.utils", () => {
       allergies: ["cần tây"],
     };
 
-    it("formats taste_adjustment variant with metrics", () => {
+    it("formats weight_loss variant with metrics", () => {
       const message = buildThreadsMessage({
         ...baseParams,
-        variantId: "taste_adjustment",
+        variantId: "weight_loss",
         includeMetrics: true,
       });
 
@@ -62,7 +62,19 @@ describe("threads-message.utils", () => {
       expect(message).toContain("nhẹ bụng, giảm đầy hơi");
       expect(message).toContain("mình có dị ứng: cần tây");
       expect(message).toContain(
-        "Nếu có vị rau củ nào hơi khó uống thì quán có hỗ trợ đổi món nhẹ nhàng hơn không shop?",
+        "Shop cho mình hỏi theo lộ trình này thì thông thường giảm được khoảng bao nhiêu cân và giảm bụng có rõ không ạ?",
+      );
+    });
+
+    it("formats diet_and_hunger variant", () => {
+      const message = buildThreadsMessage({
+        ...baseParams,
+        variantId: "diet_and_hunger",
+        includeMetrics: true,
+      });
+
+      expect(message).toContain(
+        "Trong những ngày detox mình có được ăn thêm gì không shop?",
       );
     });
 
@@ -76,51 +88,19 @@ describe("threads-message.utils", () => {
       expect(message).toContain("mình là Minh");
       expect(message).not.toContain("165cm");
       expect(message).toContain(
-        "Quán thường giao nước ép tươi vào khung giờ nào buổi sáng để mình sắp xếp nhận vậy ạ?",
+        "Shop cho mình hỏi lộ trình này quán sẽ giao vào mấy giờ mỗi ngày và giao như thế nào để đảm bảo giữ lạnh vậy ạ? Chi phí ship đến khu vực của mình tính như thế nào shop nhỉ?",
       );
     });
 
-    it("formats light_diet variant", () => {
+    it("formats sensitive_stomach variant", () => {
       const message = buildThreadsMessage({
         ...baseParams,
-        variantId: "light_diet",
+        variantId: "sensitive_stomach",
         includeMetrics: true,
       });
 
       expect(message).toContain(
-        "Trong những ngày theo lộ trình, mình có cần ăn nhẹ thêm gì để không bị mệt không shop?",
-      );
-    });
-
-    it("formats beginner_guidance with metrics adapting question tail", () => {
-      const withMetrics = buildThreadsMessage({
-        ...baseParams,
-        variantId: "beginner_guidance",
-        includeMetrics: true,
-      });
-      expect(withMetrics).toContain(
-        "Nhờ shop xem thể trạng mình như vậy có cần lưu ý gì trong ngày đầu tiên không nhé!",
-      );
-
-      const withoutMetrics = buildThreadsMessage({
-        ...baseParams,
-        variantId: "beginner_guidance",
-        includeMetrics: false,
-      });
-      expect(withoutMetrics).toContain(
-        "Vì mới bắt đầu nên nhờ shop tư vấn xem mình có cần lưu ý gì trong ngày đầu tiên không nhé!",
-      );
-    });
-
-    it("formats schedule_shipping variant", () => {
-      const message = buildThreadsMessage({
-        ...baseParams,
-        variantId: "schedule_shipping",
-        includeMetrics: true,
-      });
-
-      expect(message).toContain(
-        "Shop kiểm tra giúp mình có thể bắt đầu giao từ ngày gần nhất nào và phí ship khu vực mình nhé!",
+        "Dạ dày mình hơi nhạy cảm, dễ bị xót nếu uống đồ chua thì theo lộ trình này có an toàn và êm bụng không shop?",
       );
     });
   });

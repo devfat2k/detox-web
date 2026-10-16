@@ -1,9 +1,14 @@
 export type ThreadsMessageVariantId =
-  | "taste_adjustment"
+  | "weight_loss"
+  | "diet_and_hunger"
   | "morning_delivery"
-  | "light_diet"
-  | "beginner_guidance"
-  | "schedule_shipping";
+  | "sensitive_stomach"
+  | "first_day_symptoms"
+  | "office_storage"
+  | "workout_routine"
+  | "coffee_and_meds"
+  | "taste_adjustment"
+  | "post_detox_diet";
 
 export interface ThreadsMessageVariantOption {
   readonly id: ThreadsMessageVariantId;
@@ -14,38 +19,73 @@ export interface ThreadsMessageVariantOption {
 
 export const THREADS_MESSAGE_VARIANTS: readonly ThreadsMessageVariantOption[] = [
   {
-    id: "taste_adjustment",
-    shortLabel: "Khẩu vị & Đổi món",
-    description: "Hỏi về điều chỉnh vị rau củ cho êm và dễ uống",
+    id: "weight_loss",
+    shortLabel: "Giảm cân & Vòng eo",
+    description: "Hỏi mức giảm cân ước tính và cách duy trì sau khi hết gói",
     questionTail:
-      "Nếu có vị rau củ nào hơi khó uống thì quán có hỗ trợ đổi món nhẹ nhàng hơn không shop?",
+      "Shop cho mình hỏi theo lộ trình này thì thông thường giảm được khoảng bao nhiêu cân và giảm bụng có rõ không ạ? Sau khi hết liệu trình có dễ bị tăng cân trở lại không shop?",
+  },
+  {
+    id: "diet_and_hunger",
+    shortLabel: "Có được ăn thêm không",
+    description: "Hỏi các món ăn nhẹ được phép ăn kèm nếu bị đói",
+    questionTail:
+      "Trong những ngày detox mình có được ăn thêm gì không shop? Nếu giữa các cữ uống mà thấy đói hoặc cồn cào thì mình nên ăn nhẹ món gì để không làm giảm hiệu quả thanh lọc ạ?",
   },
   {
     id: "morning_delivery",
-    shortLabel: "Khung giờ giao sáng",
-    description: "Hỏi giờ nhận nước ép tươi mỗi sáng để kịp lịch làm việc",
+    shortLabel: "Khung giờ & Phí ship",
+    description: "Hỏi giờ giao mỗi sáng, cách giữ nhiệt và phí vận chuyển",
     questionTail:
-      "Quán thường giao nước ép tươi vào khung giờ nào buổi sáng để mình sắp xếp nhận vậy ạ?",
+      "Shop cho mình hỏi lộ trình này quán sẽ giao vào mấy giờ mỗi ngày và giao như thế nào để đảm bảo giữ lạnh vậy ạ? Chi phí ship đến khu vực của mình tính như thế nào shop nhỉ?",
   },
   {
-    id: "light_diet",
-    shortLabel: "Chế độ ăn kèm",
-    description: "Hỏi cách ăn nhẹ thêm để không bị đói hay mệt",
+    id: "sensitive_stomach",
+    shortLabel: "Dạ dày & Xót ruột",
+    description: "Hỏi độ êm bụng cho người có tiền sử đau bao tử",
     questionTail:
-      "Trong những ngày theo lộ trình, mình có cần ăn nhẹ thêm gì để không bị mệt không shop?",
+      "Dạ dày mình hơi nhạy cảm, dễ bị xót nếu uống đồ chua thì theo lộ trình này có an toàn và êm bụng không shop? Quán có hỗ trợ gia giảm vị chua cho mình không ạ?",
   },
   {
-    id: "beginner_guidance",
-    shortLabel: "Người mới bắt đầu",
-    description: "Lần đầu thanh lọc, cần shop lưu ý trong ngày đầu",
+    id: "first_day_symptoms",
+    shortLabel: "Biểu hiện ngày đầu",
+    description: "Hỏi cách xử lý khi cơ thể bắt đầu thích nghi và thải độc",
     questionTail:
-      "Vì mới bắt đầu nên nhờ shop tư vấn xem mình có cần lưu ý gì trong ngày đầu tiên không nhé!",
+      "Lần đầu uống thanh lọc thì ngày đầu tiên có hay bị mệt mỏi, đau đầu nhẹ hay đi vệ sinh nhiều không shop? Nếu gặp tình trạng đó thì mình cần làm gì ạ?",
   },
   {
-    id: "schedule_shipping",
-    shortLabel: "Đặt lịch & Phí ship",
-    description: "Hỏi ngày bắt đầu giao sớm nhất và phí vận chuyển",
+    id: "office_storage",
+    shortLabel: "Bảo quản tại công ty",
+    description: "Hỏi thời gian bảo quản ngoài nhiệt độ phòng và cách giữ lạnh",
     questionTail:
-      "Shop kiểm tra giúp mình có thể bắt đầu giao từ ngày gần nhất nào và phí ship khu vực mình nhé!",
+      "Mình mang nước ép đi làm văn phòng cả ngày thì bảo quản thế nào ạ? Nếu chỗ làm không có tủ lạnh thì chai để nhiệt độ phòng được tối đa mấy tiếng vậy shop?",
+  },
+  {
+    id: "workout_routine",
+    shortLabel: "Tập gym & Vận động",
+    description: "Hỏi về việc duy trì tập thể dục trong những ngày detox",
+    questionTail:
+      "Trong những ngày đang uống liệu trình này thì mình có tập gym/yoga/chạy bộ như bình thường được không, hay phải tạm nghỉ hoặc giảm cường độ shop nhỉ?",
+  },
+  {
+    id: "coffee_and_meds",
+    shortLabel: "Cà phê & Thuốc uống",
+    description: "Hỏi cách uống thuốc hoặc cà phê trong thời gian detox",
+    questionTail:
+      "Trong đợt detox này mình có được uống cà phê sáng hay uống các loại vitamin/thuốc định kỳ không shop? Nếu có thì nên uống cách cữ nước ép bao lâu ạ?",
+  },
+  {
+    id: "taste_adjustment",
+    shortLabel: "Đổi vị theo khẩu vị",
+    description: "Yêu cầu thay đổi các món có nguyên liệu khó uống",
+    questionTail:
+      "Nếu trong menu có món nào chứa nguyên liệu mình khó uống (như cần tây/mướp đắng/cải xoăn) thì quán có hỗ trợ đổi sang món nước ép khác cùng nhóm công dụng không shop?",
+  },
+  {
+    id: "post_detox_diet",
+    shortLabel: "Ăn uống sau detox",
+    description: "Hướng dẫn chế độ ăn nhẹ sau khi hoàn thành số ngày",
+    questionTail:
+      "Sau khi kết thúc liệu trình thì những ngày tiếp theo mình nên ăn uống lại ra sao để giữ được cảm giác nhẹ bụng và không làm đường ruột bị sốc thức ăn ạ?",
   },
 ];
