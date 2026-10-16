@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { VALID_PLAN_IDS } from "@/data/plans";
 import { DRINKS_DATA } from "@/data/drinks";
-import { ARTICLES_DATA } from "@/data/articles";
 import { routes } from "@/config/routes";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://epxanhchualanh.vn";
@@ -16,8 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     routes.consultationSafety(),
     routes.plans(),
     routes.drinks(),
-    routes.articles(),
-    routes.policy(),
+    routes.about(),
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
@@ -41,12 +39,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  const articleEntries: MetadataRoute.Sitemap = ARTICLES_DATA.map((article) => ({
-    url: `${BASE_URL}${routes.article(article.slug)}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
-
-  return [...staticEntries, ...planEntries, ...drinkEntries, ...articleEntries];
+  return [...staticEntries, ...planEntries, ...drinkEntries];
 }

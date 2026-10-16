@@ -6,7 +6,7 @@ import Image from "next/image";
 import { SITE_CONFIG } from "@/config/site";
 import { FIXED_LABELS } from "@/config/copy";
 import { ROUTES } from "@/config/routes";
-import { LinkButton } from "@/components/ui";
+import { ConsultationCtaButton } from "@/components/common";
 import { NavLink } from "./nav-link";
 import { MobileNav } from "./mobile-nav";
 import { MAIN_NAV_ITEMS } from "./constants";
@@ -70,14 +70,10 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center ">
-            <LinkButton
-              href={ROUTES.CONSULTATION}
-              variant="primary"
-              className="rounded-full text-md sm:text-md font-semibold select-none transition-all duration-300 ease-soft whitespace-nowrap shrink-0 px-5 sm:px-7 py-2.5 sm:py-3 min-h-11 sm:min-h-12 flex items-center gap-2 shadow-sm hover:shadow-md ring-2 ring-primary/25 hover:ring-primary/50 hover:-translate-y-0.5 active:scale-95 group cursor-pointer"
-            >
-              <span>{FIXED_LABELS.CTA_CONSULTATION}</span>
-            </LinkButton>
+          <div className="flex items-center gap-2">
+            <ConsultationCtaButton size="md" icon="arrow">
+              {FIXED_LABELS.CTA_CONSULTATION}
+            </ConsultationCtaButton>
             <MobileNav />
           </div>
         </div>

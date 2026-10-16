@@ -8,8 +8,6 @@ describe("ROUTES config", () => {
     expect(ROUTES.PLANS).toBe("/plans");
     expect(ROUTES.PRICING).toBe("/pricing");
     expect(ROUTES.DRINKS).toBe("/drinks");
-    expect(ROUTES.ARTICLES).toBe("/articles");
-    expect(ROUTES.POLICY).toBe("/policy");
     expect(ROUTES.ABOUT).toBe("/about");
   });
 
@@ -18,7 +16,6 @@ describe("ROUTES config", () => {
     expect(ROUTES.PLAN_DETAIL("3-day")).toBe("/plans/3-day");
     expect(ROUTES.PLAN_DETAIL("6-day")).toBe("/plans/6-day");
     expect(ROUTES.DRINK_DETAIL("ep-tao-can-tay")).toBe("/drinks/ep-tao-can-tay");
-    expect(ROUTES.ARTICLE_DETAIL("meo-detox-an-toan")).toBe("/articles/meo-detox-an-toan");
   });
 
   it("defines consultation sub-routes correctly", () => {
@@ -44,9 +41,6 @@ describe("ROUTES config", () => {
     expect(routes.plan("3-day")).toBe("/plans/3-day");
     expect(routes.drinks()).toBe("/drinks");
     expect(routes.drink("cam-ca-rot")).toBe("/drinks/cam-ca-rot");
-    expect(routes.articles()).toBe("/articles");
-    expect(routes.article("bai-1")).toBe("/articles/bai-1");
-    expect(routes.policy()).toBe("/policy");
     expect(routes.about()).toBe("/about");
   });
 });

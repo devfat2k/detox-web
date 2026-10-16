@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { FIXED_LABELS } from "@/config/copy";
 import { ROUTES } from "@/config/routes";
 import { NavLink } from "./nav-link";
-import { LinkButton } from "@/components/ui";
+import { ConsultationCtaButton } from "@/components/common";
 import { MAIN_NAV_ITEMS } from "./constants";
 
 export function MobileNav() {
@@ -77,15 +77,14 @@ export function MobileNav() {
               </NavLink>
             ))}
             <div className="pt-2 border-t border-border">
-              <LinkButton
-                href={ROUTES.CONSULTATION}
-                variant="primary"
-                className="w-full font-semibold min-h-12 text-sm justify-center gap-2 rounded-xl shadow-xs ring-2 ring-primary/25"
+              <ConsultationCtaButton
+                size="md"
+                icon="sparkles"
+                className="w-full justify-center"
                 onClick={() => setIsOpen(false)}
               >
-                <Sparkles size={16} strokeWidth={1.75} className="text-bg/95" aria-hidden="true" />
-                <span>{FIXED_LABELS.CTA_CONSULTATION}</span>
-              </LinkButton>
+                {FIXED_LABELS.CTA_CONSULTATION}
+              </ConsultationCtaButton>
             </div>
           </nav>
         </div>

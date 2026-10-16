@@ -17,13 +17,10 @@ export const ROUTES = {
   PRICING: "/pricing" as Route,
   DRINKS: "/drinks" as Route,
   DRINK_DETAIL: (slug: string) => `/drinks/${slug}` as Route,
-  ARTICLES: "/articles" as Route,
-  ARTICLE_DETAIL: (slug: string) => `/articles/${slug}` as Route,
-  POLICY: "/policy" as Route,
   ABOUT: "/about" as Route,
 } as const;
 
-export type RoutePath = typeof ROUTES[keyof Omit<typeof ROUTES, "PLAN_DETAIL" | "DRINK_DETAIL" | "ARTICLE_DETAIL">];
+export type RoutePath = typeof ROUTES[keyof Omit<typeof ROUTES, "PLAN_DETAIL" | "DRINK_DETAIL">];
 
 /**
  * Trình hỗ trợ tạo đường dẫn hàm tiện ích.
@@ -43,8 +40,5 @@ export const routes = {
   plan: (planId: "1-day" | "3-day" | "6-day" | string) => ROUTES.PLAN_DETAIL(planId),
   drinks: () => ROUTES.DRINKS,
   drink: (slug: string) => ROUTES.DRINK_DETAIL(slug),
-  articles: () => ROUTES.ARTICLES,
-  article: (slug: string) => ROUTES.ARTICLE_DETAIL(slug),
-  policy: () => ROUTES.POLICY,
   about: () => ROUTES.ABOUT,
 } as const;

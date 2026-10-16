@@ -38,12 +38,18 @@ describe("Layout Components (Stage E)", () => {
   });
 
   describe("Footer", () => {
-    it("renders shop name, logo image, external Threads link, policy link, and medical disclaimer", () => {
+    it("renders brand info, logo, quick navigation links, and official channels without policy or medical disclaimer", () => {
       const html = renderToStaticMarkup(<Footer />);
 
       expect(html).toContain(SITE_CONFIG.name);
       expect(html).toContain(SITE_CONFIG.description);
       expect(html).toContain("logo.png");
+
+      // Quick links
+      expect(html).toContain(FIXED_LABELS.NAV_CONSULTATION);
+      expect(html).toContain(FIXED_LABELS.NAV_PLANS);
+      expect(html).toContain(FIXED_LABELS.NAV_DRINKS);
+      expect(html).toContain(FIXED_LABELS.NAV_ABOUT);
 
       // Threads link
       expect(html).toContain(FIXED_LABELS.ACTION_MESSAGE_THREADS);
@@ -52,12 +58,9 @@ describe("Layout Components (Stage E)", () => {
       expect(html).toContain('rel="noopener noreferrer"');
       expect(html).toContain(FIXED_LABELS.OPEN_IN_NEW_TAB);
 
-      // Policy link
-      expect(html).toContain(FIXED_LABELS.NAV_POLICY);
-      expect(html).toContain(`href="${ROUTES.POLICY}"`);
-
-      // Medical Disclaimer
-      expect(html).toContain(FIXED_LABELS.MEDICAL_DISCLAIMER);
+      // Policy and disclaimer must NOT be present
+      expect(html).not.toContain(FIXED_LABELS.NAV_POLICY);
+      expect(html).not.toContain(FIXED_LABELS.MEDICAL_DISCLAIMER);
     });
   });
 

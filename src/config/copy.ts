@@ -11,7 +11,6 @@ export const FIXED_LABELS = {
   NAV_PRICING: "Bảng giá",
   NAV_PLANS: "Liệu trình",
   NAV_DRINKS: "Thức uống",
-  NAV_ARTICLES: "Bài viết",
   NAV_ABOUT: "Về Shop",
 
   // Nút hành động nổi bật
@@ -85,13 +84,6 @@ export const FIXED_LABELS = {
   PAGE_DRINK_DETAIL_TITLE: "Chi tiết thức uống",
   PAGE_DRINK_DETAIL_DESC:
     "Thành phần nguyên liệu và đóng góp dinh dưỡng của thức uống.",
-
-  PAGE_ARTICLES_TITLE: "Bài viết và kiến thức",
-  PAGE_ARTICLES_DESC:
-    "Mẹo vặt, công thức và kiến thức dinh dưỡng detox có trích dẫn nguồn uy tín.",
-  PAGE_ARTICLE_DETAIL_TITLE: "Chi tiết bài viết",
-  PAGE_ARTICLE_DETAIL_DESC:
-    "Nội dung bài viết chia sẻ và tài liệu tham khảo khoa học.",
 
   PAGE_POLICY_TITLE: "Chính sách và miễn trừ",
   PAGE_POLICY_DESC:
