@@ -56,4 +56,16 @@ describe("PlanList component", () => {
     expect(html).not.toContain("Best Seller");
     expect(html).not.toContain("Bán chạy");
   });
+
+  it("renders 5-bottle portion breakdown and CTA button with sentence case", () => {
+    const html = renderToStaticMarkup(<PlanList plans={testPlans} />);
+    expect(html).toContain("Khẩu phần mỗi ngày (5 chai):");
+    expect(html).toContain("Xem chi tiết lộ trình");
+  });
+
+  it("does not contain dividing borders border-t or border-b inside cards", () => {
+    const html = renderToStaticMarkup(<PlanList plans={testPlans} />);
+    expect(html).not.toContain("border-t border-border");
+    expect(html).not.toContain("border-b border-border");
+  });
 });

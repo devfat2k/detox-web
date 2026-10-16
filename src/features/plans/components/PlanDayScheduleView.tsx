@@ -5,10 +5,11 @@ import Link from "next/link";
 import type { Plan } from "@/data/plans";
 import { routes } from "@/config/routes";
 import { Card, Heading, DetoxBottle } from "@/components/ui";
-import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Clock } from "lucide-react";
 
 export interface PlanDayScheduleViewProps {
   plan: Plan;
+  onOpenShopMessage?: () => void;
 }
 
 const BOTTLE_TYPE_LABELS: Record<string, string> = {
@@ -18,7 +19,10 @@ const BOTTLE_TYPE_LABELS: Record<string, string> = {
   herbal_tea: "Trà thảo mộc",
 };
 
-export function PlanDayScheduleView({ plan }: PlanDayScheduleViewProps) {
+export function PlanDayScheduleView({
+  plan,
+  onOpenShopMessage,
+}: PlanDayScheduleViewProps) {
   const [activeDayIndex, setActiveDayIndex] = useState(0);
   const days = plan.days ?? [];
   const totalDays = days.length;
@@ -51,10 +55,6 @@ export function PlanDayScheduleView({ plan }: PlanDayScheduleViewProps) {
     <Card className="p-6 sm:p-8 space-y-6">
       {/* Header thông tin lịch trình */}
       <div className="space-y-2 border-b border-border/60 pb-5">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft text-primary font-heading font-medium text-xs border border-border">
-          <Sparkles size={12} strokeWidth={1.75} className="text-primary" />
-          <span>Thực đơn 5 chai mỗi ngày</span>
-        </div>
         <Heading level={2} size="xl" className="font-semibold text-xl sm:text-2xl text-text">
           {totalDays > 1
             ? `Lịch ngày ${currentDay.dayNumber} · ${currentDay.theme ?? ""}`
@@ -66,6 +66,41 @@ export function PlanDayScheduleView({ plan }: PlanDayScheduleViewProps) {
         <p className="text-xs text-text-muted/80 font-body leading-relaxed">
           Mỗi ngày gồm 3 chai sinh tố xanh no lâu, 1 chai nước ép bù khoáng và 1 chai sữa hạt ấm bụng cữ tối.
         </p>
+      </div>
+
+      {/* Thông tin khung giờ giao nước ép tươi */}
+      <div className="p-3.5 sm:p-4 rounded-xl bg-accent-soft/30 border border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex items-start gap-3">
+          <div className="w-8 h-8 rounded-full bg-accent-soft flex items-center justify-center shrink-0 mt-0.5">
+            <Clock className="w-4 h-4 text-primary" strokeWidth={1.75} />
+          </div>
+          <div className="space-y-0.5">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs sm:text-sm font-semibold text-text">
+                Khung giờ giao sáng: 06:30 – 08:30
+              </span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary border border-primary/20">
+                Giao tươi mỗi sáng
+              </span>
+            </div>
+            <p className="font-body text-xs text-text-muted leading-relaxed">
+              Nước ép được đóng thùng giữ nhiệt và giao tận nơi đầu ngày để kịp lịch làm việc của bạn.
+            </p>
+          </div>
+        </div>
+        {onOpenShopMessage ? (
+          <button
+            type="button"
+            onClick={onOpenShopMessage}
+            className="text-xs text-primary hover:underline font-medium shrink-0 pl-11 sm:pl-0 cursor-pointer"
+          >
+            Hỏi giờ giao & phí ship →
+          </button>
+        ) : (
+          <div className="text-[11px] text-text-muted shrink-0 pl-11 sm:pl-0">
+            Có thể hẹn giờ linh hoạt khi nhắn shop
+          </div>
+        )}
       </div>
 
       {/* Thanh chọn ngày tách biệt hoàn toàn xuống dòng riêng */}
@@ -183,4 +218,3 @@ export function PlanDayScheduleView({ plan }: PlanDayScheduleViewProps) {
     </Card>
   );
 }
-

@@ -102,4 +102,10 @@ describe("PlanDetail component", () => {
     expect(html).toContain('href="/plans"');
     expect(html).toContain('href="/consultation"');
   });
+
+  it("does not have harsh horizontal dividers cutting through schedules or cards", () => {
+    const html = renderToStaticMarkup(<PlanDetail plan={testPlan} />);
+    expect(html).not.toContain("border-b border-border/70");
+    expect(html).not.toContain("border-t border-border/60");
+  });
 });
