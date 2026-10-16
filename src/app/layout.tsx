@@ -17,6 +17,13 @@ export const metadata: Metadata = {
     default: SITE_CONFIG.name,
   },
   description: SITE_CONFIG.description,
+  icons: {
+    icon: [
+      { url: "/images/logo.png" },
+      { url: "/icon.png" },
+    ],
+    apple: "/images/logo.png",
+  },
   openGraph: {
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
